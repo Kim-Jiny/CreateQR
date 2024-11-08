@@ -14,19 +14,19 @@ class CreateQRTypeView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-//        commonInit()
+        commonInit()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-//        commonInit()
+        commonInit()
     }
     
     // MARK: - XIB 로드 및 설정
     
-    private func commonInit() {
+    func commonInit() {
         // XIB 로드
-        let nib = UINib(nibName: String(describing: CreateQRURLType.self), bundle: Bundle(for: type(of: self)))
+        let nib = UINib(nibName: String(describing: Self.self), bundle: Bundle(for: type(of: self)))
         guard let loadedView = nib.instantiate(withOwner: self, options: nil).first as? UIView else {
             return
         }
@@ -35,5 +35,11 @@ class CreateQRTypeView: UIView {
         loadedView.frame = self.bounds
         loadedView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         addSubview(loadedView)
+        setupUI()
     }
+    
+    func setupUI() {
+        
+    }
+
 }
