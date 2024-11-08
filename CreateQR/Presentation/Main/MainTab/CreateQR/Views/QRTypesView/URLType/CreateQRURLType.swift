@@ -10,8 +10,10 @@ import CoreImage
 
 class CreateQRURLType: CreateQRTypeView {
 
+    @IBOutlet weak var mainScrollView: UIScrollView!
     @IBOutlet weak var urlTextField: UITextField!
     @IBOutlet weak var qrImg: UIImageView!
+    @IBOutlet weak var generateBtn: UIButton!
     
     override func setupUI() {
         
@@ -22,34 +24,88 @@ class CreateQRURLType: CreateQRTypeView {
 
         let attributedPlaceholder = NSAttributedString(string: placeholderText, attributes: attributes)
         urlTextField.attributedPlaceholder = attributedPlaceholder
+        
+        let scrollInset: CGFloat = 20
+        mainScrollView.contentInset = UIEdgeInsets(top: scrollInset, left: 0, bottom: scrollInset, right: 0)
+        
+        generateBtn.layer.cornerRadius = 10
+        generateBtn.layer.borderWidth = 2.0
+        generateBtn.layer.borderColor = UIColor.speedMain2.cgColor
     }
     
     @IBAction func generateBtn(_ sender: Any) {
         let url = getUrl()
-        if let img = generateQRCode(from: url) {
+        if let img = generateQR(from: url, color: .black, backgroundColor: .clear, logo: nil ) {
             qrImg.image = img
         }
     }
     
-    func generateQRCode(from string: String) -> UIImage? {
-        // 문자열을 QR 코드 데이터로 변환
-        let data = string.data(using: .utf8)
-        
-        // QR 코드 생성 필터
-        if let filter = CIFilter(name: "CIQRCodeGenerator") {
-            filter.setValue(data, forKey: "inputMessage")
-            
-            // QR 코드 이미지 생성
-            if let outputImage = filter.outputImage {
-                // 이미지 크기 조정
-                let transform = CGAffineTransform(scaleX: 10, y: 10) // 크기 조정 (여기서 10은 확대 배율)
-                let scaledImage = outputImage.transformed(by: transform)
-                
-                // CIImage를 UIImage로 변환하여 반환
-                return UIImage(ciImage: scaledImage)
-            }
+    func getAppIcon() -> UIImage? {
+        if let iconFileName = Bundle.main.infoDictionary?["CFBundleIcons"] as? [String: Any],
+           let primaryIcons = iconFileName["CFBundlePrimaryIcon"] as? [String: Any],
+           let iconFiles = primaryIcons["CFBundleIconFiles"] as? [String],
+           let iconName = iconFiles.first {
+            return UIImage(named: iconName)
         }
         return nil
+    }
+    // QR 코드 생성 함수 (색상 변경 및 커스텀 이미지 추가 포함)
+    func generateQR(from string: String, color: UIColor, backgroundColor: UIColor, logo: UIImage?) -> UIImage? {
+        // QR 코드 문자열을 CIImage로 변환
+        let data = string.data(using: .utf8)
+        
+        guard let filter = CIFilter(name: "CIQRCodeGenerator") else {
+            return nil
+        }
+        
+        filter.setValue(data, forKey: "inputMessage")
+        filter.setValue("Q", forKey: "inputCorrectionLevel")
+        
+        guard let qrImage = filter.outputImage else {
+            return nil
+        }
+        
+        // 색상 변경을 위한 필터 적용
+        let colorFilter = CIFilter(name: "CIFalseColor")
+        colorFilter?.setValue(qrImage, forKey: kCIInputImageKey)
+        colorFilter?.setValue(CIColor(color: color), forKey: "inputColor0")
+        colorFilter?.setValue(CIColor(color: backgroundColor), forKey: "inputColor1")
+        
+        guard let coloredQRImage = colorFilter?.outputImage else {
+            return nil
+        }
+        
+        // 이미지를 표시할 크기로 스케일 조정
+        let transform = CGAffineTransform(scaleX: 10, y: 10)
+        let scaledQRImage = coloredQRImage.transformed(by: transform)
+        
+        // UIImage로 변환
+        let qrUIImage = UIImage(ciImage: scaledQRImage)
+        
+        // 로고가 있는 경우 QR 코드 중앙에 추가
+        if let logo = logo {
+            return overlayLogo(on: qrUIImage, logo: logo)
+        }
+        
+        return qrUIImage
+    }
+
+    // QR 코드 위에 로고를 추가하는 함수
+    private func overlayLogo(on qrImage: UIImage, logo: UIImage) -> UIImage? {
+        let qrSize = qrImage.size
+        let logoSize = CGSize(width: qrSize.width / 4, height: qrSize.height / 4) // 로고 크기 조정
+        let logoOrigin = CGPoint(x: (qrSize.width - logoSize.width) / 2, y: (qrSize.height - logoSize.height) / 2)
+        
+        UIGraphicsBeginImageContext(qrSize)
+        qrImage.draw(in: CGRect(origin: .zero, size: qrSize))
+        
+        // 로고 그리기
+        logo.draw(in: CGRect(origin: logoOrigin, size: logoSize))
+        
+        let combinedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return combinedImage
     }
     
     func getUrl() -> String {

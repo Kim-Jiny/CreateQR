@@ -23,7 +23,7 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
             bind(to: viewModel)
         }
     }
-
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         guard !isFirstSelectionDone && qrTypeCollectionView.numberOfItems(inSection: 0) > 0 else { return }

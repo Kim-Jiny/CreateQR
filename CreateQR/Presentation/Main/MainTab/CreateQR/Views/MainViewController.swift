@@ -55,6 +55,16 @@ class MainViewController: UITabBarController, StoryboardInstantiable {
         // 뷰 컨트롤러들을 탭 바에 추가
         self.viewControllers = [firstVC, secondVC, fourthVC, thirdVC]
         self.tabBar.tintColor = .speedMain0
+        self.tabBar.backgroundColor = .speedMain3
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    // 키보드 내리기
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
 
     private func setupBehaviours() {
