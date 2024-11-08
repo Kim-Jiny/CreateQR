@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="QRTypeCollectionViewCell" reuseIdentifier="QRTypeCollectionViewCell" id="gTV-IL-0wX" customClass="QRTypeCollectionViewCell" customModule="CreateQR" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="46" height="71"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="46" height="71"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vr8-hE-pWG">
+                        <rect key="frame" x="3" y="8" width="40" height="40"/>
+                        <color key="tintColor" name="SpeedMain0"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="40" id="51d-cD-1Ek"/>
+                            <constraint firstAttribute="height" constant="40" id="DZ3-5n-LvN"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bpA-Jy-J9F">
+                        <rect key="frame" x="23" y="48" width="0.0" height="0.0"/>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                        <color key="textColor" name="SpeedMain0"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="vr8-hE-pWG" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="1fu-EW-sdt"/>
+                <constraint firstItem="bpA-Jy-J9F" firstAttribute="top" secondItem="vr8-hE-pWG" secondAttribute="bottom" id="6G7-Zx-5oS"/>
+                <constraint firstAttribute="bottom" secondItem="vr8-hE-pWG" secondAttribute="bottom" constant="23" id="HBJ-Me-7YI"/>
+                <constraint firstItem="bpA-Jy-J9F" firstAttribute="centerX" secondItem="vr8-hE-pWG" secondAttribute="centerX" id="JYx-Q6-4jj"/>
+                <constraint firstAttribute="trailing" secondItem="vr8-hE-pWG" secondAttribute="trailing" constant="3" id="SxL-iZ-uhh"/>
+                <constraint firstItem="vr8-hE-pWG" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="3" id="TSd-5g-LXM"/>
+            </constraints>
+            <size key="customSize" width="129" height="143"/>
+            <connections>
+                <outlet property="typeImg" destination="vr8-hE-pWG" id="ub0-k5-mMy"/>
+                <outlet property="typeLB" destination="bpA-Jy-J9F" id="6Bq-MV-bhQ"/>
+            </connections>
+            <point key="canvasLocation" x="106.10687022900763" y="53.169014084507047"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <namedColor name="SpeedMain0">
+            <color red="0.30980392156862746" green="0.46274509803921571" blue="0.4392156862745098" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+    </resources>
+</document>

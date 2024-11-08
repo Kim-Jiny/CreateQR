@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="FTf-1l-6kg">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Item 2-->
+        <scene sceneID="PYp-L7-2vU">
+            <objects>
+                <viewController storyboardIdentifier="MypageTabViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BCV-Xe-Tau" customClass="MypageTabViewController" customModule="CreateQR" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="jR8-eX-gM7">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="h0Y-nJ-M9h"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item 2" id="YED-bO-bB1"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xnM-5G-bqb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-25" y="-154"/>
+        </scene>
+        <!--Item 1-->
+        <scene sceneID="zc6-j4-ksH">
+            <objects>
+                <viewController storyboardIdentifier="CreateQRTabViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="gVs-bW-ZIO" customClass="CreateQRTabViewController" customModule="CreateQR" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="yvD-iU-7ki">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="cVt-Ry-Bf2">
+                                <rect key="frame" x="0.0" y="59" width="393" height="710"/>
+                                <subviews>
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="lJd-5a-ygE">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="90"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="90" id="r8S-sY-bCa"/>
+                                        </constraints>
+                                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="3nb-EZ-JfM">
+                                            <size key="itemSize" width="128" height="128"/>
+                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        </collectionViewFlowLayout>
+                                        <cells/>
+                                    </collectionView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gah-Ya-d1e">
+                                        <rect key="frame" x="0.0" y="90" width="393" height="620"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="WQU-zy-RvP"/>
+                        <color key="backgroundColor" name="SpeedMain4"/>
+                        <constraints>
+                            <constraint firstItem="cVt-Ry-Bf2" firstAttribute="top" secondItem="WQU-zy-RvP" secondAttribute="top" id="2Pb-yS-UoV"/>
+                            <constraint firstItem="WQU-zy-RvP" firstAttribute="trailing" secondItem="cVt-Ry-Bf2" secondAttribute="trailing" id="8IC-21-T8B"/>
+                            <constraint firstItem="WQU-zy-RvP" firstAttribute="bottom" secondItem="cVt-Ry-Bf2" secondAttribute="bottom" id="Nb1-mo-lu3"/>
+                            <constraint firstItem="cVt-Ry-Bf2" firstAttribute="leading" secondItem="WQU-zy-RvP" secondAttribute="leading" id="hNN-aY-mgJ"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item 1" id="ihB-xS-gWy"/>
+                    <connections>
+                        <outlet property="qrTypeCollectionView" destination="lJd-5a-ygE" id="EgN-GV-qiO"/>
+                        <outlet property="qrTypeView" destination="gah-Ya-d1e" id="rrB-81-aZH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cRn-FO-QGP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-943" y="-154"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="Oce-mb-HRV">
+            <objects>
+                <viewController storyboardIdentifier="MyHistoryTabViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="De8-6U-oJF" customClass="MyHistoryTabViewController" customModule="CreateQR" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="mPf-gb-a0o">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="tDt-TI-GRA"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="nTZ-NF-z9h"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nl9-4i-BBN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="869" y="-154"/>
+        </scene>
+        <!--Main View Controller-->
+        <scene sceneID="S8I-bQ-c6s">
+            <objects>
+                <tabBarController storyboardIdentifier="MainViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="FTf-1l-6kg" customClass="MainViewController" customModule="CreateQR" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="TgN-bB-82v">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" systemColor="systemYellowColor"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="gVs-bW-ZIO" kind="relationship" relationship="viewControllers" id="ehZ-hl-Rct"/>
+                        <segue destination="BCV-Xe-Tau" kind="relationship" relationship="viewControllers" id="3Y7-jZ-VX5"/>
+                        <segue destination="De8-6U-oJF" kind="relationship" relationship="viewControllers" id="thb-SN-ns0"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="L8i-Pq-PpS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1911" y="-153"/>
+        </scene>
+    </scenes>
+    <resources>
+        <namedColor name="SpeedMain4">
+            <color red="0.95686274509803926" green="0.95686274509803926" blue="0.95686274509803926" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemYellowColor">
+            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
