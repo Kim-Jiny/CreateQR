@@ -45,5 +45,8 @@ class CreateQRTypeView: UIView {
     func setupUI() {
         
     }
-
+    
+    func imageSaveCompleted() {
+        
+    }
 }

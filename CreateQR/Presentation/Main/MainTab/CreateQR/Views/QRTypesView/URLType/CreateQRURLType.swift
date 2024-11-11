@@ -16,6 +16,7 @@ class CreateQRURLType: CreateQRTypeView {
     @IBOutlet weak var qrImg: UIImageView!
     @IBOutlet weak var generateBtn: UIButton!
     @IBOutlet weak var saveBtn: UIButton!
+    private var activityIndicator: UIActivityIndicatorView!
     
     override func setupUI() {
         
@@ -37,6 +38,15 @@ class CreateQRURLType: CreateQRTypeView {
         saveBtn.layer.cornerRadius = 10
         saveBtn.layer.borderWidth = 2.0
         saveBtn.layer.borderColor = UIColor.speedMain2.cgColor
+        
+        
+        activityIndicator = UIActivityIndicatorView(style: .medium)
+        activityIndicator.color = .white
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        saveBtn.addSubview(activityIndicator)
+        activityIndicator.snp.makeConstraints { 
+            $0.center.equalTo(saveBtn.snp.center)
+        }
     }
     
     @IBAction func generateBtn(_ sender: Any) {
@@ -48,7 +58,8 @@ class CreateQRURLType: CreateQRTypeView {
     
     @IBAction func saveBtn(_ sender: Any) {
         if let img = qrImg.image {
-            //TODO: - 프로그래스 바 돌리고 이미지 저장
+            saveBtn.isEnabled = false
+            activityIndicator.startAnimating()
             self.delegate?.saveImage(img: img)
         }
     }
@@ -129,13 +140,21 @@ class CreateQRURLType: CreateQRTypeView {
     }
     
     func getUrl() -> String {
-           // urlTextField.text가 nil이거나 빈 문자열이면 기본 URL 반환
-           let defaultUrl = "https://nachocode.io"
-           
-           if let urlText = urlTextField.text, !urlText.isEmpty {
-               return urlText // 입력된 URL을 반환
-           } else {
-               return defaultUrl // 기본 URL 반환
-           }
-       }
+        // urlTextField.text가 nil이거나 빈 문자열이면 기본 URL 반환
+        let defaultUrl = "https://nachocode.io"
+
+        if let urlText = urlTextField.text, !urlText.isEmpty {
+            return urlText // 입력된 URL을 반환
+        } else {
+            return defaultUrl // 기본 URL 반환
+        }
+    }
+    
+    // 이미지 저장 완료 후 처리
+    override func imageSaveCompleted() {
+        // 인디케이터 중지
+        activityIndicator.stopAnimating()
+        // 버튼 다시 활성화
+        saveBtn.isEnabled = true
+    }
 }

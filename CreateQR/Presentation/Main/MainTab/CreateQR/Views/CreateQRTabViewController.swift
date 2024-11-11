@@ -13,6 +13,7 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
     @IBOutlet weak var qrTypeCollectionView: UICollectionView!
     @IBOutlet weak var qrTypeView: UIView!
     
+    var typeView: CreateQRTypeView? = nil
     private var isFirstSelectionDone = false
     var img : UIImage? = nil
     
@@ -46,7 +47,8 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
             $0.removeFromSuperview()
         }
         
-        let typeView = qrType.typeView
+        typeView = qrType.typeView
+        guard let typeView = self.typeView else { return }
         typeView.delegate = self
         qrTypeView.addSubview(typeView)
         print(qrTypeView.subviews)
@@ -70,25 +72,27 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
                 return
             }
             
-            UIImageWriteToSavedPhotosAlbum(img, self, #selector(self?.saveError), nil)
-//            viewModel.downloadImage(image: img, completion: {
-//                print(img)
-//                print("is download complete? \($0)")
-//                self?.img = nil
-//            })
+            viewModel.downloadImage(image: img, completion: {
+                print("is download complete? \($0)")
+                self?.img = nil
+                self?.showSaveAlert()
+            })
         }
         
-    } 
-    @objc func saveError(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
-        if let error = error {
-            print("error: \(error.localizedDescription)")
-        } else {
-            print("Save completed!")
-        }
     }
     
     private func updateItems() {
         self.qrTypeCollectionView.reloadData()
+    }
+    
+    private func showSaveAlert() {
+        let alert = UIAlertController(title: "다운로드 완료",
+                                      message: "QR이미지를 갤러리에 저장했습니다.",
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default) {_ in 
+            self.typeView?.imageSaveCompleted()
+        })
+        present(alert, animated: true)
     }
     
     private func showPermissionAlert() {
