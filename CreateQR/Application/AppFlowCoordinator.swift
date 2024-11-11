@@ -36,8 +36,10 @@ extension AppFlowCoordinator: MainCoordinatorDependencies {
     
     func makeMainViewModel(actions: MainViewModelActions) -> MainViewModel {
         DefaultMainViewModel(
+            permissionUseCase: makePermissionUseCase(),
             getQRListUseCase: makeGetQRListUseCase(),
             qrScannerUseCase: makeQRScannerUseCase(),
+            downloadImageUseCase: makeDownloadImageUseCase(),
             actions: actions
         )
     }
@@ -53,6 +55,10 @@ extension AppFlowCoordinator: MainCoordinatorDependencies {
     
     
     // MARK: - Use Cases
+    func makePermissionUseCase() -> PermissionUseCase {
+        PermissionUseCaseImpl(repository: makePermissionRepository())
+    }
+    
     func makeGetQRListUseCase() -> GetQRListUseCase {
         DefaultGetQRListUseCase(qrListRepository: makeQRListRepository())
     }
@@ -61,18 +67,34 @@ extension AppFlowCoordinator: MainCoordinatorDependencies {
         QRScannerUseCaseImpl(repository: makeQRScannerRepository())
     }
     
+    func makeDownloadImageUseCase() -> DownloadImageUseCase {
+        DownloadImageUseCase(repository: makeImageDownloadRepository())
+    }
+    
     // MARK: - Repositories
+    private func makePermissionRepository() -> PermissionRepository {
+        PermissionRepositoryImpl(cameraPermissionDataSource: makeCameraPermissionDataSource(),
+                                 photoLibraryPermissionDataSource: makePhotoLibraryPermissionDataSource())
+    }
+    
     private func makeQRListRepository() -> QRListRepository {
         DefaultRQListRepository()
     }
     
     private func makeQRScannerRepository() -> QRScannerRepository {
-        QRScannerRepositoryImpl(cameraPermissionDataSource: makeCameraPermissionDataSource())
+        QRScannerRepositoryImpl()
+    }
+    
+    private func makeImageDownloadRepository() -> ImageDownloadRepository {
+        ImageDownloadRepositoryImpl()
     }
     
     //MARK: - DataSource
-    
     private func makeCameraPermissionDataSource() -> CameraPermissionDataSource {
         CameraPermissionDataSource()
+    }
+    
+    private func makePhotoLibraryPermissionDataSource() -> PhotoLibraryPermissionDataSource {
+        PhotoLibraryPermissionDataSource()
     }
 }

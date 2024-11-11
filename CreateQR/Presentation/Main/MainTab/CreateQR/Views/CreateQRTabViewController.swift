@@ -14,6 +14,7 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
     @IBOutlet weak var qrTypeView: UIView!
     
     private var isFirstSelectionDone = false
+    var img : UIImage? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +47,7 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
         }
         
         let typeView = qrType.typeView
+        typeView.delegate = self
         qrTypeView.addSubview(typeView)
         print(qrTypeView.subviews)
         typeView.snp.makeConstraints {
@@ -59,10 +61,34 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
     
     private func bind(to viewModel: MainViewModel) {
         viewModel.items.observe(on: self) { [weak self] _ in self?.updateItems() }
+        
+        
+        viewModel.photoLibraryOnlyAddPermission.observe(on: self) { [weak self] hasPermission in
+            guard let hasPermission = hasPermission, let img = self?.img else { return }
+            guard hasPermission else {
+                self?.showPermissionAlert()
+                return
+            }
+            
+            viewModel.downloadImage(image: img, completion: {
+                print(img)
+                print("is download complete? \($0)")
+                self?.img = nil
+            })
+        }
+        
     }
     
     private func updateItems() {
         self.qrTypeCollectionView.reloadData()
+    }
+    
+    private func showPermissionAlert() {
+        let alert = UIAlertController(title: "사진 접근 권한 필요",
+                                      message: "사진을 저장하기 위해 사진 접근 권한이 필요합니다. 설정에서 권한을 변경해 주세요.",
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
     }
 }
 
@@ -97,5 +123,14 @@ extension CreateQRTabViewController: UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as? QRTypeCollectionViewCell
         cell?.setSelectedAppearance(false) // 선택 해제된 상태 테두리 제거
+    }
+}
+
+
+extension CreateQRTabViewController: QRTypeDelegate {
+    func saveImage(img: UIImage) {
+        //TODO: - 권한을 먼저 체크 하고 다운로드 시도~
+        self.img = img
+        viewModel?.checkPhotoLibraryOnlyAddPermission()
     }
 }

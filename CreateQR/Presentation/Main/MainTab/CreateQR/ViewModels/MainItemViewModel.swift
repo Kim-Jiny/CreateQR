@@ -14,7 +14,7 @@ struct MainItemViewModel: Equatable {
     let title: String
     let titleImage: UIImage?
     let detailImage: UIImage?
-    let typeView: UIView
+    let typeView: CreateQRTypeView
 }
 
 extension MainItemViewModel {

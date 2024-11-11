@@ -8,8 +8,12 @@
 import Foundation
 import UIKit
 
-class CreateQRTypeView: UIView {
+protocol QRTypeDelegate: AnyObject {
+    func saveImage(img: UIImage)
+}
 
+class CreateQRTypeView: UIView {
+    weak var delegate: QRTypeDelegate?
     // MARK: - Initialization
     
     override init(frame: CGRect) {

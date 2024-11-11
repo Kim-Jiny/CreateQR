@@ -9,7 +9,6 @@ import Foundation
 import AVFoundation
 
 protocol QRScannerUseCase {
-    func checkCameraPermission(completion: @escaping (Bool) -> Void)
     func startScanning(previewLayer: AVCaptureVideoPreviewLayer, completion: @escaping (String) -> Void)
     func stopScanning()
 }
@@ -19,10 +18,6 @@ class QRScannerUseCaseImpl: QRScannerUseCase {
 
     init(repository: QRScannerRepository) {
         self.repository = repository
-    }
-
-    func checkCameraPermission(completion: @escaping (Bool) -> Void) {
-        repository.requestCameraPermission(completion: completion)
     }
 
     func startScanning(previewLayer: AVCaptureVideoPreviewLayer, completion: @escaping (String) -> Void) {

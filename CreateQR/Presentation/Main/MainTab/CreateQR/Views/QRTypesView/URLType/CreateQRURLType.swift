@@ -8,12 +8,14 @@
 import UIKit
 import CoreImage
 
+
 class CreateQRURLType: CreateQRTypeView {
 
     @IBOutlet weak var mainScrollView: UIScrollView!
     @IBOutlet weak var urlTextField: UITextField!
     @IBOutlet weak var qrImg: UIImageView!
     @IBOutlet weak var generateBtn: UIButton!
+    @IBOutlet weak var saveBtn: UIButton!
     
     override func setupUI() {
         
@@ -31,12 +33,23 @@ class CreateQRURLType: CreateQRTypeView {
         generateBtn.layer.cornerRadius = 10
         generateBtn.layer.borderWidth = 2.0
         generateBtn.layer.borderColor = UIColor.speedMain2.cgColor
+        
+        saveBtn.layer.cornerRadius = 10
+        saveBtn.layer.borderWidth = 2.0
+        saveBtn.layer.borderColor = UIColor.speedMain2.cgColor
     }
     
     @IBAction func generateBtn(_ sender: Any) {
         let url = getUrl()
         if let img = generateQR(from: url, color: .black, backgroundColor: .clear, logo: nil ) {
             qrImg.image = img
+        }
+    }
+    
+    @IBAction func saveBtn(_ sender: Any) {
+        if let img = qrImg.image {
+            //TODO: - 프로그래스 바 돌리고 이미지 저장
+            self.delegate?.saveImage(img: img)
         }
     }
     

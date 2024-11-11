@@ -7,6 +7,7 @@
 
 import Foundation
 import AVFoundation
+import UIKit
 
 struct MainViewModelActions {
     let showDetail: (QRTypeItem) -> Void
@@ -15,7 +16,10 @@ struct MainViewModelActions {
 protocol MainViewModelInput {
     func viewDidLoad()
     func didSelectItem(at index: Int)
+    func downloadImage(image: UIImage, completion: @escaping (Bool) -> Void)
     func checkCameraPermission()
+    func checkPhotoLibraryOnlyAddPermission()
+    func checkPhotoLibraryPermission()
     func startScanning(previewLayer: AVCaptureVideoPreviewLayer)
     func stopScanning()
 }
@@ -26,6 +30,8 @@ protocol MainViewModelOutput {
     var error: Observable<String> { get }
     var scannedResult: Observable<String> { get }
     var cameraPermission: Observable<Bool?> { get }
+    var photoLibraryPermission: Observable<Bool?> { get }
+    var photoLibraryOnlyAddPermission: Observable<Bool?> { get }
     var isEmpty: Bool { get }
     var screenTitle: String { get }
     var errorTitle: String { get }
@@ -35,9 +41,10 @@ typealias MainViewModel = MainViewModelInput & MainViewModelOutput
 
 final class DefaultMainViewModel: MainViewModel {
     
-    
+    private let permissionUseCase: PermissionUseCase
     private let getQRListUseCase: GetQRListUseCase
     private let qrScannerUseCase: QRScannerUseCase
+    private let downloadImageUseCase: DownloadImageUseCase
     private let actions: MainViewModelActions?
     private let mainQueue: DispatchQueueType
     
@@ -51,6 +58,8 @@ final class DefaultMainViewModel: MainViewModel {
     let error: Observable<String> = Observable("")
     let scannedResult: Observable<String> = Observable("")
     let cameraPermission: Observable<Bool?> = Observable(nil)
+    let photoLibraryPermission: Observable<Bool?> = Observable(nil)
+    let photoLibraryOnlyAddPermission: Observable<Bool?> = Observable(nil)
     var isEmpty: Bool { return items.value.isEmpty }
     let screenTitle = NSLocalizedString(" List", comment: "")
     let errorTitle = NSLocalizedString("Error", comment: "")
@@ -58,13 +67,17 @@ final class DefaultMainViewModel: MainViewModel {
     // MARK: - Init
     
     init(
+        permissionUseCase: PermissionUseCase,
         getQRListUseCase: GetQRListUseCase,
         qrScannerUseCase: QRScannerUseCase,
+        downloadImageUseCase: DownloadImageUseCase,
         actions: MainViewModelActions? = nil,
         mainQueue: DispatchQueueType = DispatchQueue.main
     ) {
+        self.permissionUseCase = permissionUseCase
         self.getQRListUseCase = getQRListUseCase
         self.qrScannerUseCase = qrScannerUseCase
+        self.downloadImageUseCase = downloadImageUseCase
         self.actions = actions
         self.mainQueue = mainQueue
     }
@@ -95,10 +108,34 @@ final class DefaultMainViewModel: MainViewModel {
         self.error.value = NSLocalizedString("Failed get data", comment: "")
     }
     
+    func checkPhotoLibraryPermission() {
+        permissionUseCase.checkPhotoLibraryPermission {[weak self] isPermission in
+            self?.photoLibraryPermission.value = isPermission
+        }
+    }
+    
+    //MARK: - Image Download
+    
+     func checkPhotoLibraryOnlyAddPermission() {
+         permissionUseCase.checkPhotoLibraryAddOnlyPermission {[weak self] isPermission in
+             self?.photoLibraryOnlyAddPermission.value = isPermission
+         }
+     }
+    
+    func downloadImage(image: UIImage, completion: @escaping (Bool) -> Void) {
+        downloadImageUseCase.execute(image: image) { result in
+            switch result {
+            case .success(let success):
+                completion(success)
+            case .failure:
+                completion(false)
+            }
+        }
+    }
    
     //MARK: - QRScan
     func checkCameraPermission() {
-        qrScannerUseCase.checkCameraPermission {[weak self] isPermission in
+        permissionUseCase.checkCameraPermission {[weak self] isPermission in
             self?.cameraPermission.value = isPermission
         }
     }

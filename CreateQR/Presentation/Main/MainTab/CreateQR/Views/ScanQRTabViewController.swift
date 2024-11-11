@@ -89,6 +89,7 @@ class ScanQRTabViewController: UIViewController, StoryboardInstantiable {
         // QR 스캔 결과에 따라 처리
         viewModel?.scannedResult.observe(on: self) { [weak self] result in
             print("값 도착: \(result)")
+            //TODO: - url로 연결해줄 수 있는 버튼 화면에 추가 
         }
     }
     

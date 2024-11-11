@@ -9,24 +9,14 @@ import Foundation
 import AVFoundation
 
 protocol QRScannerRepository {
-    func requestCameraPermission(completion: @escaping (Bool) -> Void)
     func startScanning(previewLayer: AVCaptureVideoPreviewLayer, completion: @escaping (String) -> Void)
     func stopScanning()
 }
 
 class QRScannerRepositoryImpl: NSObject, QRScannerRepository, AVCaptureMetadataOutputObjectsDelegate {
-    private let cameraPermissionDataSource: CameraPermissionDataSource
     private var previewLayer: AVCaptureVideoPreviewLayer?
     private var captureSession: AVCaptureSession?
     private var completion: ((String) -> Void)?
-
-    init(cameraPermissionDataSource: CameraPermissionDataSource) {
-        self.cameraPermissionDataSource = cameraPermissionDataSource
-    }
-    // 카메라 권한 요청
-    func requestCameraPermission(completion: @escaping (Bool) -> Void) {
-        cameraPermissionDataSource.requestPermissionCamera(completion: completion)
-    }
 
     func startScanning(previewLayer: AVCaptureVideoPreviewLayer, completion: @escaping (String) -> Void) {
         self.completion = completion
