@@ -42,7 +42,7 @@ class MainViewController: UITabBarController, StoryboardInstantiable {
         let firstVC = CreateQRTabViewController.instantiateViewController(from: UIStoryboard(name: "MainViewController", bundle: nil))
         firstVC.tabBarItem = UITabBarItem(title: "QR 생성", image: UIImage(systemName: "1.circle"), tag: 0)
         firstVC.viewModel = viewModel
-        let secondVC = MypageTabViewController.instantiateViewController(from: UIStoryboard(name: "MainViewController", bundle: nil))
+        let secondVC = ScanQRTabViewController.instantiateViewController(from: UIStoryboard(name: "MainViewController", bundle: nil))
         secondVC.tabBarItem = UITabBarItem(title: "QR 스캔", image: UIImage(systemName: "2.circle"), tag: 1)
         secondVC.viewModel = viewModel
         let thirdVC = MyHistoryTabViewController.instantiateViewController(from: UIStoryboard(name: "MainViewController", bundle: nil))

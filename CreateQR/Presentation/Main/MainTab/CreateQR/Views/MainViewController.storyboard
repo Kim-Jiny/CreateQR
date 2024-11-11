@@ -12,14 +12,53 @@
         <!--Item 2-->
         <scene sceneID="PYp-L7-2vU">
             <objects>
-                <viewController storyboardIdentifier="MypageTabViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BCV-Xe-Tau" customClass="MypageTabViewController" customModule="CreateQR" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ScanQRTabViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BCV-Xe-Tau" customClass="ScanQRTabViewController" customModule="CreateQR" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jR8-eX-gM7">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2A2-xB-g6Z">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="769"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Raw-fQ-cpq">
+                                <rect key="frame" x="0.0" y="729" width="393" height="40"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oCi-qr-VHO">
+                                        <rect key="frame" x="30" y="5" width="333" height="30"/>
+                                        <color key="tintColor" name="SpeedMain0"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="앨범에서 스캔하기"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="oCi-qr-VHO" firstAttribute="leading" secondItem="Raw-fQ-cpq" secondAttribute="leading" constant="30" id="Fwa-6B-RHv"/>
+                                    <constraint firstAttribute="height" constant="40" id="de4-Lz-dhI"/>
+                                    <constraint firstAttribute="bottom" secondItem="oCi-qr-VHO" secondAttribute="bottom" constant="5" id="eg9-Ht-6de"/>
+                                    <constraint firstAttribute="trailing" secondItem="oCi-qr-VHO" secondAttribute="trailing" constant="30" id="h8s-TS-5bb"/>
+                                    <constraint firstItem="oCi-qr-VHO" firstAttribute="top" secondItem="Raw-fQ-cpq" secondAttribute="top" constant="5" id="ytc-2A-aRB"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="h0Y-nJ-M9h"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="h0Y-nJ-M9h" firstAttribute="bottom" secondItem="2A2-xB-g6Z" secondAttribute="bottom" id="ACm-sX-hLf"/>
+                            <constraint firstItem="2A2-xB-g6Z" firstAttribute="top" secondItem="jR8-eX-gM7" secondAttribute="top" id="Z2K-dm-W18"/>
+                            <constraint firstItem="h0Y-nJ-M9h" firstAttribute="trailing" secondItem="2A2-xB-g6Z" secondAttribute="trailing" id="ZxZ-aO-mOh"/>
+                            <constraint firstItem="Raw-fQ-cpq" firstAttribute="leading" secondItem="h0Y-nJ-M9h" secondAttribute="leading" id="iL1-w2-tbp"/>
+                            <constraint firstItem="h0Y-nJ-M9h" firstAttribute="bottom" secondItem="Raw-fQ-cpq" secondAttribute="bottom" id="o1F-5L-bx0"/>
+                            <constraint firstItem="h0Y-nJ-M9h" firstAttribute="trailing" secondItem="Raw-fQ-cpq" secondAttribute="trailing" id="rN8-Eo-4A4"/>
+                            <constraint firstItem="2A2-xB-g6Z" firstAttribute="leading" secondItem="h0Y-nJ-M9h" secondAttribute="leading" id="xrg-jv-bmz"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item 2" id="YED-bO-bB1"/>
+                    <connections>
+                        <outlet property="bottomView" destination="Raw-fQ-cpq" id="nxl-3g-P4g"/>
+                        <outlet property="cameraView" destination="2A2-xB-g6Z" id="t3c-Zz-o3z"/>
+                        <outlet property="photoBtn" destination="oCi-qr-VHO" id="p4e-0L-4jD"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xnM-5G-bqb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -114,6 +153,9 @@
         </scene>
     </scenes>
     <resources>
+        <namedColor name="SpeedMain0">
+            <color red="0.30980392156862746" green="0.46274509803921571" blue="0.4392156862745098" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
         <namedColor name="SpeedMain4">
             <color red="0.95686274509803926" green="0.95686274509803926" blue="0.95686274509803926" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>

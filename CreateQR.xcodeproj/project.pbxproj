@@ -13,6 +13,12 @@
 		303398D82CDDFA1E00977E8A /* CreateQRTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303398D72CDDFA1E00977E8A /* CreateQRTypeView.swift */; };
 		303398DB2CDDFA8000977E8A /* CreateQRURLType.xib in Resources */ = {isa = PBXBuildFile; fileRef = 303398DA2CDDFA8000977E8A /* CreateQRURLType.xib */; };
 		303398DD2CDDFD2A00977E8A /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303398DC2CDDFD2A00977E8A /* UIView+Extensions.swift */; };
+		303398DF2CE19EE200977E8A /* ScanQRTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303398DE2CE19EE200977E8A /* ScanQRTabViewController.swift */; };
+		303398E22CE19F5800977E8A /* QRScanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303398E12CE19F5800977E8A /* QRScanView.swift */; };
+		303398E62CE19FB500977E8A /* QRStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303398E52CE19FB500977E8A /* QRStatus.swift */; };
+		303398E82CE1A8EA00977E8A /* QRScannerUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303398E72CE1A8EA00977E8A /* QRScannerUseCase.swift */; };
+		303398EA2CE1A90100977E8A /* QRScannerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303398E92CE1A90100977E8A /* QRScannerRepository.swift */; };
+		303398ED2CE1A93A00977E8A /* CameraPermissionDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303398EC2CE1A93A00977E8A /* CameraPermissionDataSource.swift */; };
 		30BBA9F22CB501E300A84090 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBA9F12CB501E300A84090 /* AppDelegate.swift */; };
 		30BBA9F42CB501E300A84090 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBA9F32CB501E300A84090 /* SceneDelegate.swift */; };
 		30BBA9FB2CB501E400A84090 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30BBA9FA2CB501E400A84090 /* Assets.xcassets */; };
@@ -77,6 +83,12 @@
 		303398D72CDDFA1E00977E8A /* CreateQRTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQRTypeView.swift; sourceTree = "<group>"; };
 		303398DA2CDDFA8000977E8A /* CreateQRURLType.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateQRURLType.xib; sourceTree = "<group>"; };
 		303398DC2CDDFD2A00977E8A /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
+		303398DE2CE19EE200977E8A /* ScanQRTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanQRTabViewController.swift; sourceTree = "<group>"; };
+		303398E12CE19F5800977E8A /* QRScanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScanView.swift; sourceTree = "<group>"; };
+		303398E52CE19FB500977E8A /* QRStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRStatus.swift; sourceTree = "<group>"; };
+		303398E72CE1A8EA00977E8A /* QRScannerUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScannerUseCase.swift; sourceTree = "<group>"; };
+		303398E92CE1A90100977E8A /* QRScannerRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScannerRepository.swift; sourceTree = "<group>"; };
+		303398EC2CE1A93A00977E8A /* CameraPermissionDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPermissionDataSource.swift; sourceTree = "<group>"; };
 		30BBA9EE2CB501E300A84090 /* CreateQR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CreateQR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		30BBA9F12CB501E300A84090 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		30BBA9F32CB501E300A84090 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -166,6 +178,7 @@
 		303398D12CDDE8AA00977E8A /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				303398E52CE19FB500977E8A /* QRStatus.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -186,6 +199,22 @@
 				303398DA2CDDFA8000977E8A /* CreateQRURLType.xib */,
 			);
 			path = URLType;
+			sourceTree = "<group>";
+		};
+		303398E02CE19F2F00977E8A /* QRScanView */ = {
+			isa = PBXGroup;
+			children = (
+				303398E12CE19F5800977E8A /* QRScanView.swift */,
+			);
+			path = QRScanView;
+			sourceTree = "<group>";
+		};
+		303398EB2CE1A92700977E8A /* DataSources */ = {
+			isa = PBXGroup;
+			children = (
+				303398EC2CE1A93A00977E8A /* CameraPermissionDataSource.swift */,
+			);
+			path = DataSources;
 			sourceTree = "<group>";
 		};
 		30BBA9E52CB501E300A84090 = {
@@ -357,12 +386,14 @@
 		30BBAA5F2CB9005100A84090 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				303398E02CE19F2F00977E8A /* QRScanView */,
 				303398D62CDDF99100977E8A /* QRTypesView */,
 				303398CB2CDDE72500977E8A /* QRTypeCollectionView */,
 				30BBAA2A2CB5038E00A84090 /* MainViewController.swift */,
 				30BBAA542CB517E400A84090 /* MainViewController.storyboard */,
-				30BBAA462CB5140F00A84090 /* MypageTabViewController.swift */,
 				30BBAA4C2CB5143F00A84090 /* CreateQRTabViewController.swift */,
+				303398DE2CE19EE200977E8A /* ScanQRTabViewController.swift */,
+				30BBAA462CB5140F00A84090 /* MypageTabViewController.swift */,
 				30BBAA5D2CB8FFCE00A84090 /* MyHistoryTabViewController.swift */,
 			);
 			path = Views;
@@ -450,6 +481,7 @@
 		30BBAA7D2CB912E700A84090 /* Interfaces */ = {
 			isa = PBXGroup;
 			children = (
+				303398EB2CE1A92700977E8A /* DataSources */,
 				30BBAA7E2CB912ED00A84090 /* Repositories */,
 			);
 			path = Interfaces;
@@ -459,6 +491,7 @@
 			isa = PBXGroup;
 			children = (
 				30BBAA7F2CB9130500A84090 /* QRListRepository.swift */,
+				303398E92CE1A90100977E8A /* QRScannerRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -483,6 +516,7 @@
 			isa = PBXGroup;
 			children = (
 				30BBAA8C2CB9166300A84090 /* GetQRListUseCase.swift */,
+				303398E72CE1A8EA00977E8A /* QRScannerUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -643,6 +677,7 @@
 				30BBAA5E2CB8FFCE00A84090 /* MyHistoryTabViewController.swift in Sources */,
 				30BBAA232CB5028000A84090 /* AppFlowCoordinator.swift in Sources */,
 				30BBAA412CB509D100A84090 /* BlackStyleNavigationBarBehavior.swift in Sources */,
+				303398E22CE19F5800977E8A /* QRScanView.swift in Sources */,
 				303398DD2CDDFD2A00977E8A /* UIView+Extensions.swift in Sources */,
 				30BBAA882CB913E500A84090 /* NetworkService.swift in Sources */,
 				30BBAA3C2CB5096F00A84090 /* UIViewController+AddBehaviors.swift in Sources */,
@@ -650,9 +685,11 @@
 				30BBAA372CB5075C00A84090 /* DispatchQueueType.swift in Sources */,
 				30BBAA842CB9137800A84090 /* Cancellable.swift in Sources */,
 				303398D82CDDFA1E00977E8A /* CreateQRTypeView.swift in Sources */,
+				303398ED2CE1A93A00977E8A /* CameraPermissionDataSource.swift in Sources */,
 				30BBAA342CB506C300A84090 /* MainItemViewModel.swift in Sources */,
 				30BBAA2B2CB5038E00A84090 /* MainViewController.swift in Sources */,
 				30BBAA8A2CB9141800A84090 /* RepositoryTask.swift in Sources */,
+				303398EA2CE1A90100977E8A /* QRScannerRepository.swift in Sources */,
 				30BBAA8D2CB9166300A84090 /* GetQRListUseCase.swift in Sources */,
 				303398CF2CDDE76800977E8A /* QRTypeCollectionViewCell.swift in Sources */,
 				30BBAA262CB5030C00A84090 /* MainCoordinator.swift in Sources */,
@@ -663,8 +700,11 @@
 				30BBAA822CB9131700A84090 /* DefaultRQListRepository.swift in Sources */,
 				303398D52CDDF98D00977E8A /* CreateQRURLType.swift in Sources */,
 				30BBAA772CB90A5C00A84090 /* AccessibilityIdentifier.swift in Sources */,
+				303398E62CE19FB500977E8A /* QRStatus.swift in Sources */,
 				30BBAA802CB9130500A84090 /* QRListRepository.swift in Sources */,
 				30BBA9F22CB501E300A84090 /* AppDelegate.swift in Sources */,
+				303398E82CE1A8EA00977E8A /* QRScannerUseCase.swift in Sources */,
+				303398DF2CE19EE200977E8A /* ScanQRTabViewController.swift in Sources */,
 				30BBAA532CB517AA00A84090 /* StoryboardInstantiable.swift in Sources */,
 				30BBAA692CB9025E00A84090 /* IntervalUnit.swift in Sources */,
 				30BBAA722CB9091600A84090 /* QRDetailViewModel.swift in Sources */,

@@ -37,6 +37,7 @@ extension AppFlowCoordinator: MainCoordinatorDependencies {
     func makeMainViewModel(actions: MainViewModelActions) -> MainViewModel {
         DefaultMainViewModel(
             getQRListUseCase: makeGetQRListUseCase(),
+            qrScannerUseCase: makeQRScannerUseCase(),
             actions: actions
         )
     }
@@ -56,8 +57,22 @@ extension AppFlowCoordinator: MainCoordinatorDependencies {
         DefaultGetQRListUseCase(qrListRepository: makeQRListRepository())
     }
     
+    func makeQRScannerUseCase() -> QRScannerUseCase {
+        QRScannerUseCaseImpl(repository: makeQRScannerRepository())
+    }
+    
     // MARK: - Repositories
     private func makeQRListRepository() -> QRListRepository {
         DefaultRQListRepository()
+    }
+    
+    private func makeQRScannerRepository() -> QRScannerRepository {
+        QRScannerRepositoryImpl(cameraPermissionDataSource: makeCameraPermissionDataSource())
+    }
+    
+    //MARK: - DataSource
+    
+    private func makeCameraPermissionDataSource() -> CameraPermissionDataSource {
+        CameraPermissionDataSource()
     }
 }
