@@ -70,13 +70,21 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
                 return
             }
             
-            viewModel.downloadImage(image: img, completion: {
-                print(img)
-                print("is download complete? \($0)")
-                self?.img = nil
-            })
+            UIImageWriteToSavedPhotosAlbum(img, self, #selector(self?.saveError), nil)
+//            viewModel.downloadImage(image: img, completion: {
+//                print(img)
+//                print("is download complete? \($0)")
+//                self?.img = nil
+//            })
         }
         
+    } 
+    @objc func saveError(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+        if let error = error {
+            print("error: \(error.localizedDescription)")
+        } else {
+            print("Save completed!")
+        }
     }
     
     private func updateItems() {

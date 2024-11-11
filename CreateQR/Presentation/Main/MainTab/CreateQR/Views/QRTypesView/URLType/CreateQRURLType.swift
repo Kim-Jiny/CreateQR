@@ -93,11 +93,18 @@ class CreateQRURLType: CreateQRTypeView {
         let scaledQRImage = coloredQRImage.transformed(by: transform)
         
         // UIImage로 변환
-        let qrUIImage = UIImage(ciImage: scaledQRImage)
+        let qrUIImage = convert(scaledQRImage)
         
         // 로고가 있는 경우 QR 코드 중앙에 추가
-        if let logo = logo {
+        if let qrUIImage = qrUIImage, let logo = logo {
             return overlayLogo(on: qrUIImage, logo: logo)
+        }
+        
+        func convert(_ cmage:CIImage) -> UIImage? {
+            let context:CIContext = CIContext(options: nil)
+            guard let cgImage:CGImage = context.createCGImage(cmage, from: cmage.extent) else { return nil }
+            let image:UIImage = UIImage(cgImage: cgImage)
+            return image
         }
         
         return qrUIImage
