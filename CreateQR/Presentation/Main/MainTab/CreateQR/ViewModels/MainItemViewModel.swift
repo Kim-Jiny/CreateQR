@@ -14,7 +14,7 @@ struct MainItemViewModel: Equatable {
     let title: String
     let titleImage: UIImage?
     let detailImage: UIImage?
-    let typeView: CreateQRTypeView
+    let qrType: CreateType
 }
 
 extension MainItemViewModel {
@@ -24,6 +24,7 @@ extension MainItemViewModel {
         self.title = qrType.title ?? "unnkown"
         self.titleImage = qrType.titleImage
         self.detailImage = qrType.detailImage
-        self.typeView = CreateQRURLType()
+        self.qrType = qrType.type
     }
+
 }

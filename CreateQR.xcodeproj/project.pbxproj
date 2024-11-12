@@ -22,6 +22,8 @@
 		303398F32CE1F60700977E8A /* PhotoLibraryPermissionDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303398F22CE1F60700977E8A /* PhotoLibraryPermissionDataSource.swift */; };
 		303398F52CE1F63A00977E8A /* PermissionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303398F42CE1F63A00977E8A /* PermissionUseCase.swift */; };
 		303398F72CE1F6F800977E8A /* PermissionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303398F62CE1F6F800977E8A /* PermissionRepository.swift */; };
+		303398F92CE3287A00977E8A /* CreateQRCardType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303398F82CE3287900977E8A /* CreateQRCardType.swift */; };
+		303398FB2CE328AE00977E8A /* CreateQRCardType.xib in Resources */ = {isa = PBXBuildFile; fileRef = 303398FA2CE328AE00977E8A /* CreateQRCardType.xib */; };
 		30BBA9F22CB501E300A84090 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBA9F12CB501E300A84090 /* AppDelegate.swift */; };
 		30BBA9F42CB501E300A84090 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBA9F32CB501E300A84090 /* SceneDelegate.swift */; };
 		30BBA9FB2CB501E400A84090 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30BBA9FA2CB501E400A84090 /* Assets.xcassets */; };
@@ -95,6 +97,8 @@
 		303398F22CE1F60700977E8A /* PhotoLibraryPermissionDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryPermissionDataSource.swift; sourceTree = "<group>"; };
 		303398F42CE1F63A00977E8A /* PermissionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionUseCase.swift; sourceTree = "<group>"; };
 		303398F62CE1F6F800977E8A /* PermissionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionRepository.swift; sourceTree = "<group>"; };
+		303398F82CE3287900977E8A /* CreateQRCardType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQRCardType.swift; sourceTree = "<group>"; };
+		303398FA2CE328AE00977E8A /* CreateQRCardType.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateQRCardType.xib; sourceTree = "<group>"; };
 		30BBA9EE2CB501E300A84090 /* CreateQR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CreateQR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		30BBA9F12CB501E300A84090 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		30BBA9F32CB501E300A84090 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -195,6 +199,8 @@
 			children = (
 				303398D42CDDF98D00977E8A /* CreateQRURLType.swift */,
 				303398DA2CDDFA8000977E8A /* CreateQRURLType.xib */,
+				303398F82CE3287900977E8A /* CreateQRCardType.swift */,
+				303398FA2CE328AE00977E8A /* CreateQRCardType.xib */,
 			);
 			path = URLType;
 			sourceTree = "<group>";
@@ -633,6 +639,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				303398FB2CE328AE00977E8A /* CreateQRCardType.xib in Resources */,
 				30BBA9FB2CB501E400A84090 /* Assets.xcassets in Resources */,
 				303398DB2CDDFA8000977E8A /* CreateQRURLType.xib in Resources */,
 				30BBAA592CB522FA00A84090 /* AppColors.xcassets in Resources */,
@@ -704,6 +711,7 @@
 				303398F52CE1F63A00977E8A /* PermissionUseCase.swift in Sources */,
 				30BBAA692CB9025E00A84090 /* IntervalUnit.swift in Sources */,
 				30BBAA722CB9091600A84090 /* QRDetailViewModel.swift in Sources */,
+				303398F92CE3287A00977E8A /* CreateQRCardType.swift in Sources */,
 				30BBA9F42CB501E300A84090 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

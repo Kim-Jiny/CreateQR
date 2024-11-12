@@ -46,7 +46,7 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
             $0.removeFromSuperview()
         }
         
-        typeView = qrType.typeView
+        typeView = getTypeClass(qrType.qrType)
         guard let typeView = self.typeView else { return }
         typeView.delegate = self
         qrTypeView.addSubview(typeView)
@@ -100,6 +100,15 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
                                       preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         present(alert, animated: true)
+    }
+    
+    func getTypeClass(_ type: CreateType) -> CreateQRTypeView {
+        switch type {
+        case .url:
+            return CreateQRURLType()
+        case .card:
+            return CreateQRCardType()
+        }
     }
 }
 
