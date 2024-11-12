@@ -148,6 +148,23 @@ extension CreateQRTabViewController: UICollectionViewDelegate, UICollectionViewD
 
 
 extension CreateQRTabViewController: QRTypeDelegate {
+    func shareImage() {
+        
+        guard let qrImage = self.viewModel?.qrImg.value else {
+            print("공유할 이미지가 없습니다.")
+            return
+        }
+        
+        let activityViewController = UIActivityViewController(activityItems: [qrImage], applicationActivities: nil)
+        
+        // iPad에서의 팝오버 설정 (iPad에서는 이 설정이 없으면 앱이 충돌할 수 있음)
+        if let popoverController = activityViewController.popoverPresentationController {
+            popoverController.sourceView = self.view // 공유 버튼이 있는 뷰를 기준으로 팝오버 표시
+        }
+        
+        present(activityViewController, animated: true, completion: nil)
+    }
+    
     func saveImage() {
         //TODO: - 권한을 먼저 체크 하고 다운로드 시도~
         viewModel?.checkPhotoLibraryOnlyAddPermission()

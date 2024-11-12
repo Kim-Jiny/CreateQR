@@ -15,7 +15,8 @@
                 <outlet property="mainScrollView" destination="Oc4-lz-voy" id="PBG-ju-T65"/>
                 <outlet property="qrImg" destination="k5T-6b-1qJ" id="m2w-Jn-ElM"/>
                 <outlet property="qrStackView" destination="MIE-1W-7Kb" id="ygb-bT-EXe"/>
-                <outlet property="saveBtn" destination="K1H-s1-ooh" id="oGC-bX-SRn"/>
+                <outlet property="saveBtn" destination="9fM-qV-FYR" id="YDr-Mz-Kt6"/>
+                <outlet property="shareBtn" destination="cKx-C2-jwn" id="qYf-EK-gJf"/>
                 <outlet property="urlTextField" destination="ocO-3x-lg7" id="wtw-GF-8E9"/>
             </connections>
         </placeholder>
@@ -91,25 +92,40 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HOn-CW-obX">
                                             <rect key="frame" x="0.0" y="333" width="393" height="50"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K1H-s1-ooh">
+                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="aJ7-I9-1UK">
                                                     <rect key="frame" x="30" y="0.0" width="333" height="50"/>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9fM-qV-FYR">
+                                                            <rect key="frame" x="0.0" y="0.0" width="156.66666666666666" height="50"/>
+                                                            <color key="tintColor" name="SpeedMain0"/>
+                                                            <state key="normal" title="Button"/>
+                                                            <buttonConfiguration key="configuration" style="plain" title="QR 저장"/>
+                                                            <connections>
+                                                                <action selector="saveBtn:" destination="-1" eventType="touchUpInside" id="hrX-zv-xkW"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cKx-C2-jwn">
+                                                            <rect key="frame" x="176.66666666666663" y="0.0" width="156.33333333333337" height="50"/>
+                                                            <color key="tintColor" name="SpeedMain0"/>
+                                                            <state key="normal" title="Button"/>
+                                                            <buttonConfiguration key="configuration" style="plain" title="공유하기"/>
+                                                            <connections>
+                                                                <action selector="shareBtn:" destination="-1" eventType="touchUpInside" id="V4q-MD-C6n"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="50" id="m5U-c5-aDR"/>
+                                                        <constraint firstAttribute="height" constant="50" id="V1Y-gK-DQN"/>
+                                                        <constraint firstItem="9fM-qV-FYR" firstAttribute="width" secondItem="cKx-C2-jwn" secondAttribute="width" id="hsu-0Y-1o8"/>
                                                     </constraints>
-                                                    <color key="tintColor" name="SpeedMain0"/>
-                                                    <state key="normal" title="Button"/>
-                                                    <buttonConfiguration key="configuration" style="plain" title="QR저장"/>
-                                                    <connections>
-                                                        <action selector="saveBtn:" destination="-1" eventType="touchUpInside" id="jeT-Kn-GCO"/>
-                                                    </connections>
-                                                </button>
+                                                </stackView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstItem="K1H-s1-ooh" firstAttribute="top" secondItem="HOn-CW-obX" secondAttribute="top" id="KiZ-MD-91j"/>
-                                                <constraint firstItem="K1H-s1-ooh" firstAttribute="leading" secondItem="HOn-CW-obX" secondAttribute="leading" constant="30" id="V0O-R8-7NG"/>
-                                                <constraint firstAttribute="bottom" secondItem="K1H-s1-ooh" secondAttribute="bottom" id="vGO-9k-5Na"/>
-                                                <constraint firstAttribute="trailing" secondItem="K1H-s1-ooh" secondAttribute="trailing" constant="30" id="vLp-AD-qLk"/>
+                                                <constraint firstItem="aJ7-I9-1UK" firstAttribute="top" secondItem="HOn-CW-obX" secondAttribute="top" id="NpM-QA-n23"/>
+                                                <constraint firstItem="aJ7-I9-1UK" firstAttribute="leading" secondItem="HOn-CW-obX" secondAttribute="leading" constant="30" id="WND-dO-bju"/>
+                                                <constraint firstAttribute="trailing" secondItem="aJ7-I9-1UK" secondAttribute="trailing" constant="30" id="aMz-Sy-adC"/>
+                                                <constraint firstAttribute="bottom" secondItem="aJ7-I9-1UK" secondAttribute="bottom" id="cQn-aI-Oth"/>
                                             </constraints>
                                         </view>
                                     </subviews>

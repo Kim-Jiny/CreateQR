@@ -16,8 +16,9 @@ class CreateQRURLType: CreateQRTypeView {
     @IBOutlet weak var qrImg: UIImageView!
     @IBOutlet weak var generateBtn: UIButton!
     @IBOutlet weak var saveBtn: UIButton!
+    @IBOutlet weak var shareBtn: UIButton!
     @IBOutlet weak var qrStackView: UIStackView!
-    private var activityIndicator: UIActivityIndicatorView!
+    private var saveBtnIndicator: UIActivityIndicatorView!
     
     override func setupUI() {
         
@@ -39,13 +40,16 @@ class CreateQRURLType: CreateQRTypeView {
         saveBtn.layer.cornerRadius = 10
         saveBtn.layer.borderWidth = 2.0
         saveBtn.layer.borderColor = UIColor.speedMain2.cgColor
+        shareBtn.layer.cornerRadius = 10
+        shareBtn.layer.borderWidth = 2.0
+        shareBtn.layer.borderColor = UIColor.speedMain2.cgColor
+    
         
-        
-        activityIndicator = UIActivityIndicatorView(style: .medium)
-        activityIndicator.color = .white
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-        saveBtn.addSubview(activityIndicator)
-        activityIndicator.snp.makeConstraints { 
+        saveBtnIndicator = UIActivityIndicatorView(style: .medium)
+        saveBtnIndicator.color = .white
+        saveBtnIndicator.translatesAutoresizingMaskIntoConstraints = false
+        saveBtn.addSubview(saveBtnIndicator)
+        saveBtnIndicator.snp.makeConstraints { 
             $0.center.equalTo(saveBtn.snp.center)
         }
     }
@@ -62,9 +66,16 @@ class CreateQRURLType: CreateQRTypeView {
     @IBAction func saveBtn(_ sender: Any) {
         if let _ = qrImg.image {
             saveBtn.isEnabled = false
-            activityIndicator.startAnimating()
+            saveBtnIndicator.startAnimating()
             self.delegate?.saveImage()
         }
+    }
+    @IBAction func shareBtn(_ sender: Any) {
+        guard let _ = qrImg.image else {
+            print("공유할 이미지가 없습니다.")
+            return
+        }
+        self.delegate?.shareImage()
     }
     
     func getAppIcon() -> UIImage? {
@@ -156,8 +167,9 @@ class CreateQRURLType: CreateQRTypeView {
     // 이미지 저장 완료 후 처리
     override func imageSaveCompleted() {
         // 인디케이터 중지
-        activityIndicator.stopAnimating()
+        saveBtnIndicator.stopAnimating()
         // 버튼 다시 활성화
         saveBtn.isEnabled = true
     }
+    
 }

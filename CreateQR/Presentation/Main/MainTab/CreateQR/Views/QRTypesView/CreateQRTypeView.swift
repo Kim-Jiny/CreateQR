@@ -11,6 +11,7 @@ import UIKit
 protocol QRTypeDelegate: AnyObject {
     func createQR(img: UIImage)
     func saveImage()
+    func shareImage()
 }
 
 class CreateQRTypeView: UIView {
@@ -43,11 +44,6 @@ class CreateQRTypeView: UIView {
         setupUI()
     }
     
-    func setupUI() {
-        
-    }
-    
-    func imageSaveCompleted() {
-        
-    }
+    func setupUI() {}
+    func imageSaveCompleted() {}
 }
