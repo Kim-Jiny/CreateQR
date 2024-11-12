@@ -16,6 +16,7 @@ class CreateQRURLType: CreateQRTypeView {
     @IBOutlet weak var qrImg: UIImageView!
     @IBOutlet weak var generateBtn: UIButton!
     @IBOutlet weak var saveBtn: UIButton!
+    @IBOutlet weak var qrStackView: UIStackView!
     private var activityIndicator: UIActivityIndicatorView!
     
     override func setupUI() {
@@ -52,15 +53,17 @@ class CreateQRURLType: CreateQRTypeView {
     @IBAction func generateBtn(_ sender: Any) {
         let url = getUrl()
         if let img = generateQR(from: url, color: .black, backgroundColor: .clear, logo: nil ) {
+            self.delegate?.createQR(img: img)
             qrImg.image = img
+            qrStackView.isHidden = false
         }
     }
     
     @IBAction func saveBtn(_ sender: Any) {
-        if let img = qrImg.image {
+        if let _ = qrImg.image {
             saveBtn.isEnabled = false
             activityIndicator.startAnimating()
-            self.delegate?.saveImage(img: img)
+            self.delegate?.saveImage()
         }
     }
     

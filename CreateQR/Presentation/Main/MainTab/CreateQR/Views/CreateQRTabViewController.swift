@@ -15,7 +15,6 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
     
     var typeView: CreateQRTypeView? = nil
     private var isFirstSelectionDone = false
-    var img : UIImage? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,7 +65,7 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
         
         
         viewModel.photoLibraryOnlyAddPermission.observe(on: self) { [weak self] hasPermission in
-            guard let hasPermission = hasPermission, let img = self?.img else { return }
+            guard let hasPermission = hasPermission, let img = self?.viewModel?.qrImg.value else { return }
             guard hasPermission else {
                 self?.showPermissionAlert()
                 return
@@ -74,7 +73,7 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
             
             viewModel.downloadImage(image: img, completion: {
                 print("is download complete? \($0)")
-                self?.img = nil
+                self?.viewModel?.qrImg.value = nil
                 self?.showSaveAlert()
             })
         }
@@ -140,9 +139,12 @@ extension CreateQRTabViewController: UICollectionViewDelegate, UICollectionViewD
 
 
 extension CreateQRTabViewController: QRTypeDelegate {
-    func saveImage(img: UIImage) {
+    func saveImage() {
         //TODO: - 권한을 먼저 체크 하고 다운로드 시도~
-        self.img = img
         viewModel?.checkPhotoLibraryOnlyAddPermission()
+    }
+    
+    func createQR(img: UIImage) {
+        viewModel?.qrImg.value = img
     }
 }

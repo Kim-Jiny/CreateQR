@@ -9,7 +9,8 @@ import Foundation
 import UIKit
 
 protocol QRTypeDelegate: AnyObject {
-    func saveImage(img: UIImage)
+    func createQR(img: UIImage)
+    func saveImage()
 }
 
 class CreateQRTypeView: UIView {

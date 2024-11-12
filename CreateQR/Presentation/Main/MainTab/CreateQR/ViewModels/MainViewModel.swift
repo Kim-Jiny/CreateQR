@@ -32,6 +32,7 @@ protocol MainViewModelOutput {
     var cameraPermission: Observable<Bool?> { get }
     var photoLibraryPermission: Observable<Bool?> { get }
     var photoLibraryOnlyAddPermission: Observable<Bool?> { get }
+    var qrImg: Observable<UIImage?> { get }
     var isEmpty: Bool { get }
     var screenTitle: String { get }
     var errorTitle: String { get }
@@ -60,6 +61,7 @@ final class DefaultMainViewModel: MainViewModel {
     let cameraPermission: Observable<Bool?> = Observable(nil)
     let photoLibraryPermission: Observable<Bool?> = Observable(nil)
     let photoLibraryOnlyAddPermission: Observable<Bool?> = Observable(nil)
+    var qrImg: Observable<UIImage?> = Observable(nil)
     var isEmpty: Bool { return items.value.isEmpty }
     let screenTitle = NSLocalizedString(" List", comment: "")
     let errorTitle = NSLocalizedString("Error", comment: "")
