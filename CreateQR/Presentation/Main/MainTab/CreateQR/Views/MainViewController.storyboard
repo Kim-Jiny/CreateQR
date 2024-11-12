@@ -23,19 +23,22 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Raw-fQ-cpq">
-                                <rect key="frame" x="0.0" y="729" width="393" height="40"/>
+                                <rect key="frame" x="0.0" y="719" width="393" height="50"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oCi-qr-VHO">
-                                        <rect key="frame" x="30" y="5" width="333" height="30"/>
+                                        <rect key="frame" x="30" y="5" width="333" height="40"/>
                                         <color key="tintColor" name="SpeedMain0"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="앨범에서 스캔하기"/>
+                                        <connections>
+                                            <action selector="selectImageFromAlbum:" destination="BCV-Xe-Tau" eventType="touchUpInside" id="b3K-Bp-mal"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="oCi-qr-VHO" firstAttribute="leading" secondItem="Raw-fQ-cpq" secondAttribute="leading" constant="30" id="Fwa-6B-RHv"/>
-                                    <constraint firstAttribute="height" constant="40" id="de4-Lz-dhI"/>
+                                    <constraint firstAttribute="height" constant="50" id="de4-Lz-dhI"/>
                                     <constraint firstAttribute="bottom" secondItem="oCi-qr-VHO" secondAttribute="bottom" constant="5" id="eg9-Ht-6de"/>
                                     <constraint firstAttribute="trailing" secondItem="oCi-qr-VHO" secondAttribute="trailing" constant="30" id="h8s-TS-5bb"/>
                                     <constraint firstItem="oCi-qr-VHO" firstAttribute="top" secondItem="Raw-fQ-cpq" secondAttribute="top" constant="5" id="ytc-2A-aRB"/>

@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import AVFoundation
 
-class ScanQRTabViewController: UIViewController, StoryboardInstantiable {
+class ScanQRTabViewController: UIViewController, StoryboardInstantiable, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     var viewModel: MainViewModel?
     @IBOutlet weak var cameraView: UIView!
     @IBOutlet weak var bottomView: UIView!
@@ -94,11 +94,46 @@ class ScanQRTabViewController: UIViewController, StoryboardInstantiable {
     }
     
     // 권한 요청 알림
-       private func showPermissionAlert() {
-           let alert = UIAlertController(title: "Camera Permission Needed",
-                                         message: "Please allow camera access to scan QR codes.",
-                                         preferredStyle: .alert)
-           alert.addAction(UIAlertAction(title: "OK", style: .default))
-           present(alert, animated: true)
-       }
+    private func showPermissionAlert() {
+        let alert = UIAlertController(title: "Camera Permission Needed",
+                                      message: "Please allow camera access to scan QR codes.",
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
+    
+    @IBAction func selectImageFromAlbum(_ sender: UIButton) {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    // 이미지가 선택되었을 때 호출되는 델리게이트 메서드
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        picker.dismiss(animated: true, completion: nil)
+        
+        if let selectedImage = info[.originalImage] as? UIImage {
+            scanQRCode(from: selectedImage)
+        }
+    }
+
+    // QR 코드 스캔 함수
+    func scanQRCode(from image: UIImage) {
+        guard let ciImage = CIImage(image: image) else { return }
+        
+        let detector = CIDetector(ofType: CIDetectorTypeQRCode, context: nil, options: [CIDetectorAccuracy: CIDetectorAccuracyHigh])
+        let features = detector?.features(in: ciImage) as? [CIQRCodeFeature]
+        
+        if let qrCode = features?.first?.messageString {
+            // QR 코드 스캔 성공, QR 코드 내용을 처리합니다.
+            print("QR 코드 내용: \(qrCode)")
+            // 알림 또는 화면에 표시할 수도 있습니다.
+            let alert = UIAlertController(title: "QR 코드", message: qrCode, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+            present(alert, animated: true, completion: nil)
+        } else {
+            print("QR 코드가 없습니다.")
+        }
+    }
 }
