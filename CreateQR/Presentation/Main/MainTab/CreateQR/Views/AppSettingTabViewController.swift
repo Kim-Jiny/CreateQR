@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class MyHistoryTabViewController: UIViewController, StoryboardInstantiable {
+class AppSettingTabViewController: UIViewController, StoryboardInstantiable {
     
     var viewModel: MainViewModel?
     

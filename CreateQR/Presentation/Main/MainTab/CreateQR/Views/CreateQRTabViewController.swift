@@ -166,8 +166,32 @@ extension CreateQRTabViewController: QRTypeDelegate {
     }
     
     func saveImage() {
-        //TODO: - 권한을 먼저 체크 하고 다운로드 시도~
-        viewModel?.checkPhotoLibraryOnlyAddPermission()
+        //TODO: - 권한을 체크하기전에 앱에 저장할지 디바이스 이미지로 저장할지를 선택하는 액션시트 구현
+        let actionSheet = UIAlertController(title: nil, message: "QR을 저장할 방법을 선택하세요.", preferredStyle: .actionSheet)
+        
+        let option1 = UIAlertAction(title: "갤러리에 QR 이미지 저장", style: .default) { action in
+            self.viewModel?.checkPhotoLibraryOnlyAddPermission()
+        }
+        let option2 = UIAlertAction(title: "내 QR로 저장", style: .default) { action in
+            print("앱 데이터에 저장")
+            self.typeView?.imageSaveCompleted()
+        }
+        let cancel = UIAlertAction(title: "취소", style: .cancel) { action in
+            print("취소 선택")
+            self.typeView?.imageSaveCompleted()
+        }
+        
+        actionSheet.addAction(option1)
+        actionSheet.addAction(option2)
+        actionSheet.addAction(cancel)
+        
+        // iPad에서 Action Sheet가 팝오버로 나타나도록 설정 (iPad에서는 필수)
+        if let popoverController = actionSheet.popoverPresentationController {
+            popoverController.sourceView = self.view
+            popoverController.sourceRect = self.view.bounds
+        }
+        
+        present(actionSheet, animated: true, completion: nil)
     }
     
     func createQR(img: UIImage) {

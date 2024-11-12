@@ -122,7 +122,7 @@
         <!--Item-->
         <scene sceneID="Oce-mb-HRV">
             <objects>
-                <viewController storyboardIdentifier="MyHistoryTabViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="De8-6U-oJF" customClass="MyHistoryTabViewController" customModule="CreateQR" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AppSettingTabViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="De8-6U-oJF" customClass="AppSettingTabViewController" customModule="CreateQR" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mPf-gb-a0o">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -154,6 +154,22 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L8i-Pq-PpS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1911" y="-153"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="AgR-wx-hk5">
+            <objects>
+                <viewController storyboardIdentifier="MypageTabViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="wz7-xS-CPy" customClass="MypageTabViewController" customModule="CreateQR" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="IRN-1g-EWD">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="wCJ-hE-5Ph"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="vxQ-4K-2ds"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ERG-2d-63o" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1674" y="-154"/>
         </scene>
     </scenes>
     <resources>

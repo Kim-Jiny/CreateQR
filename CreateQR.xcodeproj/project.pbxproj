@@ -48,7 +48,7 @@
 		30BBAA552CB517E400A84090 /* MainViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30BBAA542CB517E400A84090 /* MainViewController.storyboard */; };
 		30BBAA592CB522FA00A84090 /* AppColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30BBAA582CB522FA00A84090 /* AppColors.xcassets */; };
 		30BBAA5C2CB7DBA800A84090 /* GoogleMaps in Frameworks */ = {isa = PBXBuildFile; productRef = 30BBAA5B2CB7DBA800A84090 /* GoogleMaps */; };
-		30BBAA5E2CB8FFCE00A84090 /* MyHistoryTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBAA5D2CB8FFCE00A84090 /* MyHistoryTabViewController.swift */; };
+		30BBAA5E2CB8FFCE00A84090 /* AppSettingTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBAA5D2CB8FFCE00A84090 /* AppSettingTabViewController.swift */; };
 		30BBAA692CB9025E00A84090 /* IntervalUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBAA682CB9025E00A84090 /* IntervalUnit.swift */; };
 		30BBAA6F2CB9085B00A84090 /* QRDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30BBAA6E2CB9085B00A84090 /* QRDetailViewController.xib */; };
 		30BBAA702CB9085B00A84090 /* QRDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBAA6D2CB9085B00A84090 /* QRDetailViewController.swift */; };
@@ -126,7 +126,7 @@
 		30BBAA522CB517AA00A84090 /* StoryboardInstantiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardInstantiable.swift; sourceTree = "<group>"; };
 		30BBAA542CB517E400A84090 /* MainViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainViewController.storyboard; sourceTree = "<group>"; };
 		30BBAA582CB522FA00A84090 /* AppColors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppColors.xcassets; sourceTree = "<group>"; };
-		30BBAA5D2CB8FFCE00A84090 /* MyHistoryTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyHistoryTabViewController.swift; sourceTree = "<group>"; };
+		30BBAA5D2CB8FFCE00A84090 /* AppSettingTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingTabViewController.swift; sourceTree = "<group>"; };
 		30BBAA682CB9025E00A84090 /* IntervalUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalUnit.swift; sourceTree = "<group>"; };
 		30BBAA6D2CB9085B00A84090 /* QRDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRDetailViewController.swift; sourceTree = "<group>"; };
 		30BBAA6E2CB9085B00A84090 /* QRDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QRDetailViewController.xib; sourceTree = "<group>"; };
@@ -390,7 +390,7 @@
 				30BBAA4C2CB5143F00A84090 /* CreateQRTabViewController.swift */,
 				303398DE2CE19EE200977E8A /* ScanQRTabViewController.swift */,
 				30BBAA462CB5140F00A84090 /* MypageTabViewController.swift */,
-				30BBAA5D2CB8FFCE00A84090 /* MyHistoryTabViewController.swift */,
+				30BBAA5D2CB8FFCE00A84090 /* AppSettingTabViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -675,7 +675,7 @@
 				30BBAA322CB5057D00A84090 /* Observable.swift in Sources */,
 				30BBAA702CB9085B00A84090 /* QRDetailViewController.swift in Sources */,
 				303398F12CE1EE7300977E8A /* ImageDownloadRepository.swift in Sources */,
-				30BBAA5E2CB8FFCE00A84090 /* MyHistoryTabViewController.swift in Sources */,
+				30BBAA5E2CB8FFCE00A84090 /* AppSettingTabViewController.swift in Sources */,
 				30BBAA232CB5028000A84090 /* AppFlowCoordinator.swift in Sources */,
 				30BBAA412CB509D100A84090 /* BlackStyleNavigationBarBehavior.swift in Sources */,
 				303398DD2CDDFD2A00977E8A /* UIView+Extensions.swift in Sources */,
