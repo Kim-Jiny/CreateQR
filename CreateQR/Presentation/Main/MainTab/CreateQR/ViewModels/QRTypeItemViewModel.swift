@@ -1,5 +1,5 @@
 //
-//  MainItemViewModel.swift
+//  QRTypeItemViewModel.swift
 //  CreateQR
 //
 //  Created by 김미진 on 10/8/24.
@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-struct MainItemViewModel: Equatable {
+struct QRTypeItemViewModel: Equatable {
     typealias Identifier = String
     let id: Identifier
     let title: String
@@ -17,7 +17,7 @@ struct MainItemViewModel: Equatable {
     let qrType: CreateType
 }
 
-extension MainItemViewModel {
+extension QRTypeItemViewModel {
 
     init(qrType: QRTypeItem) {
         self.id = qrType.id

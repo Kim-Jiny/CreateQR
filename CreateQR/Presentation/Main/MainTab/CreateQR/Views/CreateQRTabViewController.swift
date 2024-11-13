@@ -41,7 +41,7 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
         qrTypeCollectionView.register(UINib(nibName: QRTypeCollectionViewCell.id, bundle: .main), forCellWithReuseIdentifier: QRTypeCollectionViewCell.id)
     }
     
-    private func selecteTypeView(_ qrType: MainItemViewModel) {
+    private func selecteTypeView(_ qrType: QRTypeItemViewModel) {
         qrTypeView.subviews.forEach {
             $0.removeFromSuperview()
         }
@@ -61,7 +61,7 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
     }
     
     private func bind(to viewModel: MainViewModel) {
-        viewModel.items.observe(on: self) { [weak self] _ in self?.updateItems() }
+        viewModel.typeItems.observe(on: self) { [weak self] _ in self?.updateItems() }
         
         
         viewModel.photoLibraryOnlyAddPermission.observe(on: self) { [weak self] hasPermission in
@@ -120,12 +120,12 @@ extension CreateQRTabViewController: UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel?.items.value.count ?? 0
+        return viewModel?.typeItems.value.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: QRTypeCollectionViewCell.id, for: indexPath) as? QRTypeCollectionViewCell, let viewModel = viewModel else { return UICollectionViewCell() }
-        cell.fill(with: viewModel.items.value[indexPath.row])
+        cell.fill(with: viewModel.typeItems.value[indexPath.row])
         return cell
     }
     
@@ -135,7 +135,7 @@ extension CreateQRTabViewController: UICollectionViewDelegate, UICollectionViewD
         let cell = collectionView.cellForItem(at: indexPath) as? QRTypeCollectionViewCell
         cell?.setSelectedAppearance(true) // 선택된 상태 테두리 설정
         if let viewModel = viewModel {
-            selecteTypeView(viewModel.items.value[indexPath.row])
+            selecteTypeView(viewModel.typeItems.value[indexPath.row])
         }
     }
 

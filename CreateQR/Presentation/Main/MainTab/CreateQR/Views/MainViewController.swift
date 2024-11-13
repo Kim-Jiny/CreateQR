@@ -32,7 +32,7 @@ class MainViewController: UITabBarController, StoryboardInstantiable {
     }
     
     private func bind(to viewModel: MainViewModel) {
-        viewModel.items.observe(on: self) { [weak self] _ in self?.updateItems() }
+        viewModel.typeItems.observe(on: self) { [weak self] _ in self?.updateItems() }
     }
     
     // MARK: - Private
@@ -52,7 +52,7 @@ class MainViewController: UITabBarController, StoryboardInstantiable {
         thirdVC.viewModel = viewModel
         
         let fourthVC = AppSettingTabViewController.instantiateViewController(from: UIStoryboard(name: "MainViewController", bundle: nil))
-        fourthVC.tabBarItem = UITabBarItem(title: "설정", image: UIImage(systemName: "gearshape"), tag: 2)
+        fourthVC.tabBarItem = UITabBarItem(title: "설정", image: UIImage(systemName: "gearshape"), tag: 3)
         fourthVC.viewModel = viewModel
         
         // 뷰 컨트롤러들을 탭 바에 추가
@@ -76,7 +76,7 @@ class MainViewController: UITabBarController, StoryboardInstantiable {
     }
     
     private func updateItems() {
-        print("success get main\(viewModel.items.value)")
+        print("success get main\(viewModel.typeItems.value)")
         
     }
 }

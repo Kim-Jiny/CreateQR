@@ -15,11 +15,11 @@ class QRTypeCollectionViewCell: UICollectionViewCell {
     static var id: String {
         return NSStringFromClass(Self.self).components(separatedBy: ".").last!
     }
-    private var viewModel: MainItemViewModel!
+    private var viewModel: QRTypeItemViewModel!
     private let mainQueue: DispatchQueueType = DispatchQueue.main
 
     func fill(
-        with viewModel: MainItemViewModel
+        with viewModel: QRTypeItemViewModel
     ) {
         self.viewModel = viewModel
         self.typeImg.image = viewModel.titleImage

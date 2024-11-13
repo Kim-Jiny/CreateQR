@@ -25,7 +25,7 @@ protocol MainViewModelInput {
 }
 
 protocol MainViewModelOutput {
-    var items: Observable<[MainItemViewModel]> { get } /// Also we can calculate view model items on demand:  https://github.com/kudoleh/iOS-Clean-Architecture-MVVM/pull/10/files
+    var typeItems: Observable<[QRTypeItemViewModel]> { get } /// Also we can calculate view model items on demand:  https://github.com/kudoleh/iOS-Clean-Architecture-MVVM/pull/10/files
 //    var loading: Observable<MoviesListViewModelLoading?> { get }
     var error: Observable<String> { get }
     var scannedResult: Observable<String> { get }
@@ -54,7 +54,7 @@ final class DefaultMainViewModel: MainViewModel {
     
     // MARK: - OUTPUT
 
-    let items: Observable<[MainItemViewModel]> = Observable([])
+    let typeItems: Observable<[QRTypeItemViewModel]> = Observable([])
 //    let loading: Observable<MoviesListViewModelLoading?> = Observable(.none)
     let error: Observable<String> = Observable("")
     let scannedResult: Observable<String> = Observable("")
@@ -62,7 +62,7 @@ final class DefaultMainViewModel: MainViewModel {
     let photoLibraryPermission: Observable<Bool?> = Observable(nil)
     let photoLibraryOnlyAddPermission: Observable<Bool?> = Observable(nil)
     var qrImg: Observable<UIImage?> = Observable(nil)
-    var isEmpty: Bool { return items.value.isEmpty }
+    var isEmpty: Bool { return typeItems.value.isEmpty }
     let screenTitle = NSLocalizedString(" List", comment: "")
     let errorTitle = NSLocalizedString("Error", comment: "")
     
@@ -101,7 +101,7 @@ final class DefaultMainViewModel: MainViewModel {
     }
     
     private func fetchList(_ courses: [QRTypeItem]) {
-        items.value = courses.map(MainItemViewModel.init)
+        typeItems.value = courses.map(QRTypeItemViewModel.init)
         List = courses
     }
     

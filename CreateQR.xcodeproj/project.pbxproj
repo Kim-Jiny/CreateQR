@@ -36,7 +36,7 @@
 		30BBAA2B2CB5038E00A84090 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBAA2A2CB5038E00A84090 /* MainViewController.swift */; };
 		30BBAA2E2CB503D500A84090 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBAA2D2CB503D500A84090 /* MainViewModel.swift */; };
 		30BBAA322CB5057D00A84090 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBAA312CB5057D00A84090 /* Observable.swift */; };
-		30BBAA342CB506C300A84090 /* MainItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBAA332CB506C300A84090 /* MainItemViewModel.swift */; };
+		30BBAA342CB506C300A84090 /* QRTypeItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBAA332CB506C300A84090 /* QRTypeItemViewModel.swift */; };
 		30BBAA372CB5075C00A84090 /* DispatchQueueType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBAA362CB5075C00A84090 /* DispatchQueueType.swift */; };
 		30BBAA392CB5081800A84090 /* XibInstantiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBAA382CB5081800A84090 /* XibInstantiable.swift */; };
 		30BBAA3C2CB5096F00A84090 /* UIViewController+AddBehaviors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBAA3B2CB5096F00A84090 /* UIViewController+AddBehaviors.swift */; };
@@ -115,7 +115,7 @@
 		30BBAA2A2CB5038E00A84090 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		30BBAA2D2CB503D500A84090 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		30BBAA312CB5057D00A84090 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
-		30BBAA332CB506C300A84090 /* MainItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainItemViewModel.swift; sourceTree = "<group>"; };
+		30BBAA332CB506C300A84090 /* QRTypeItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRTypeItemViewModel.swift; sourceTree = "<group>"; };
 		30BBAA362CB5075C00A84090 /* DispatchQueueType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchQueueType.swift; sourceTree = "<group>"; };
 		30BBAA382CB5081800A84090 /* XibInstantiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XibInstantiable.swift; sourceTree = "<group>"; };
 		30BBAA3B2CB5096F00A84090 /* UIViewController+AddBehaviors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+AddBehaviors.swift"; sourceTree = "<group>"; };
@@ -308,7 +308,7 @@
 			isa = PBXGroup;
 			children = (
 				30BBAA2D2CB503D500A84090 /* MainViewModel.swift */,
-				30BBAA332CB506C300A84090 /* MainItemViewModel.swift */,
+				30BBAA332CB506C300A84090 /* QRTypeItemViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -686,7 +686,7 @@
 				30BBAA842CB9137800A84090 /* Cancellable.swift in Sources */,
 				303398D82CDDFA1E00977E8A /* CreateQRTypeView.swift in Sources */,
 				303398ED2CE1A93A00977E8A /* CameraPermissionDataSource.swift in Sources */,
-				30BBAA342CB506C300A84090 /* MainItemViewModel.swift in Sources */,
+				30BBAA342CB506C300A84090 /* QRTypeItemViewModel.swift in Sources */,
 				303398F32CE1F60700977E8A /* PhotoLibraryPermissionDataSource.swift in Sources */,
 				30BBAA2B2CB5038E00A84090 /* MainViewController.swift in Sources */,
 				303398EF2CE1EE5A00977E8A /* DownloadImageUseCase.swift in Sources */,
