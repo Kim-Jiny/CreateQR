@@ -21,9 +21,9 @@ class MypageTabViewController: UIViewController, StoryboardInstantiable {
     }
     
     private func setupCV() {
-//        self.myQRTableView.dragInteractionEnabled = true
-//        self.myQRTableView.dragDelegate = self
-//        self.myQRTableView.dropDelegate = self
+        self.myQRTableView.dragInteractionEnabled = true
+        self.myQRTableView.dragDelegate = self
+        self.myQRTableView.dropDelegate = self
         self.myQRTableView.delegate = self
         self.myQRTableView.dataSource = self
         
@@ -54,43 +54,44 @@ extension MypageTabViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-//extension MypageTabViewController: UITableViewDragDelegate, UITableViewDropDelegate {
-//    
-//    // 드래그가 시작될 때 호출
-//    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-//        guard let item = viewModel?.myQRItems.value[indexPath.row] else { return [] }
-//        let itemProvider = NSItemProvider(object: item as NSString)
-//        let dragItem = UIDragItem(itemProvider: itemProvider)
-//        dragItem.localObject = item
-//        return [dragItem]
-//    }
-//    
-//    // 드롭할 때 호출
-//    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
-//        guard let destinationIndexPath = coordinator.destinationIndexPath else { return }
-//        
-//        for item in coordinator.items {
-//            if let sourceIndexPath = item.sourceIndexPath,
-//               let draggedItem = item.dragItem.localObject as? String {
-//                // ViewModel의 데이터 업데이트
-//                viewModel?.myQRItems.value.remove(at: sourceIndexPath.row)
-//                viewModel?.myQRItems.value.insert(draggedItem, at: destinationIndexPath.row)
-//                
-//                // 테이블 뷰 업데이트
-//                tableView.performBatchUpdates({
-//                    tableView.deleteRows(at: [sourceIndexPath], with: .automatic)
-//                    tableView.insertRows(at: [destinationIndexPath], with: .automatic)
-//                }, completion: nil)
-//                
-//                coordinator.drop(item.dragItem, toRowAt: destinationIndexPath)
-//            }
-//        }
-//    }
-//    
-//    // 드래그할 셀의 스타일을 커스터마이즈할 수 있음
-//    func tableView(_ tableView: UITableView, dragPreviewParametersForRowAt indexPath: IndexPath) -> UIDragPreviewParameters? {
-//        let parameters = UIDragPreviewParameters()
-//        parameters.backgroundColor = .clear
-//        return parameters
-//    }
-//}
+extension MypageTabViewController: UITableViewDragDelegate, UITableViewDropDelegate {
+
+    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        guard let viewModel = viewModel else { return [] }
+        let item = viewModel.myQRItems.value[indexPath.row]
+        let itemProvider = NSItemProvider(object: item.id as NSString)
+        let dragItem = UIDragItem(itemProvider: itemProvider)
+        dragItem.localObject = item
+        return [dragItem]
+    }
+    
+    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
+        guard let viewModel = viewModel else { return }
+        guard let destinationIndexPath = coordinator.destinationIndexPath else { return }
+
+        for item in coordinator.items {
+            if let sourceIndexPath = item.sourceIndexPath,
+               let qrItem = item.dragItem.localObject as? QRItem {
+
+                // 데이터 소스 배열에서 항목의 위치를 변경합니다.
+                let sourceItem = viewModel.myQRItems.value.remove(at: sourceIndexPath.row)
+                viewModel.myQRItems.value.insert(sourceItem, at: destinationIndexPath.row)
+
+                // 테이블 뷰를 업데이트하여 항목의 순서를 반영합니다.
+                tableView.moveRow(at: sourceIndexPath, to: destinationIndexPath)
+            }
+        }
+    }
+
+    func tableView(_ tableView: UITableView, canHandle session: UIDropSession) -> Bool {
+        return session.canLoadObjects(ofClass: NSString.self)
+    }
+
+    func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
+        if tableView.hasActiveDrag {
+            return UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
+        } else {
+            return UITableViewDropProposal(operation: .forbidden)
+        }
+    }
+}

@@ -62,7 +62,7 @@
                         </constraints>
                     </view>
                 </subviews>
-                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <color key="backgroundColor" name="SpeedMain3"/>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="LrJ-Rn-THI" secondAttribute="bottom" constant="2" id="H8Y-fy-LaX"/>
                     <constraint firstItem="LrJ-Rn-THI" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="iJH-zZ-sff"/>
@@ -88,6 +88,9 @@
         </namedColor>
         <namedColor name="SpeedMain2">
             <color red="0.5725490196078431" green="0.74509803921568629" blue="0.66274509803921566" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="SpeedMain3">
+            <color red="0.77254901960784317" green="0.87058823529411766" blue="0.85490196078431369" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
     </resources>
 </document>
