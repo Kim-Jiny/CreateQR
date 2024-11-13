@@ -27,6 +27,7 @@ protocol MainViewModelInput {
     func startScanning(previewLayer: AVCaptureVideoPreviewLayer)
     func stopScanning()
     func addMyQR(_ type: CreateType)
+    func saveMyQRList()
 }
 
 // Output 프로토콜: 뷰모델에서 뷰로 전달될 데이터들
@@ -126,6 +127,10 @@ final class DefaultMainViewModel: MainViewModel {
             qrItemUseCase.addQRItem(qrItem)
         }
         fetchMyQRList()
+    }
+    
+    func saveMyQRList() {
+        qrItemUseCase.saveQRList(myQRItems.value)
     }
     
     // 저장된 내 QRList Fetch

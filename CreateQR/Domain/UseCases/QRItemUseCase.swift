@@ -21,4 +21,8 @@ class QRItemUseCase {
     func addQRItem(_ item: QRItem) {
         repository.addQRItem(newItem: item)
     }
+    
+    func saveQRList(_ items: [QRItem]) {
+        repository.saveQRItems(qrItems: items)
+    }
 }

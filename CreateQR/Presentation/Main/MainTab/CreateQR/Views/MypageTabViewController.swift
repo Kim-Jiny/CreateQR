@@ -81,6 +81,8 @@ extension MypageTabViewController: UITableViewDragDelegate, UITableViewDropDeleg
                 tableView.moveRow(at: sourceIndexPath, to: destinationIndexPath)
             }
         }
+        
+        self.viewModel?.saveMyQRList()
     }
 
     func tableView(_ tableView: UITableView, canHandle session: UIDropSession) -> Bool {
