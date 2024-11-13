@@ -40,6 +40,7 @@ extension AppFlowCoordinator: MainCoordinatorDependencies {
             getQRListUseCase: makeGetQRListUseCase(),
             qrScannerUseCase: makeQRScannerUseCase(),
             downloadImageUseCase: makeDownloadImageUseCase(),
+            qrItemUseCase: makeQRItemUseCase(),
             actions: actions
         )
     }
@@ -71,6 +72,10 @@ extension AppFlowCoordinator: MainCoordinatorDependencies {
         DownloadImageUseCase(repository: makeImageDownloadRepository())
     }
     
+    func makeQRItemUseCase() -> QRItemUseCase {
+        QRItemUseCase(repository: makeQRItemRepository())
+    }
+    
     // MARK: - Repositories
     private func makePermissionRepository() -> PermissionRepository {
         PermissionRepositoryImpl(cameraPermissionDataSource: makeCameraPermissionDataSource(),
@@ -87,6 +92,10 @@ extension AppFlowCoordinator: MainCoordinatorDependencies {
     
     private func makeImageDownloadRepository() -> ImageDownloadRepository {
         ImageDownloadRepositoryImpl()
+    }
+    
+    private func makeQRItemRepository() -> QRItemRepository {
+        QRItemRepository()
     }
     
     //MARK: - DataSource

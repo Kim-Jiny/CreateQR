@@ -1,5 +1,5 @@
 //
-//  IntervalUnit.swift
+//  QRTypeItem.swift
 //  CreateQR
 //
 //  Created by 김미진 on 10/11/24.
@@ -8,9 +8,10 @@
 import Foundation
 import UIKit
 
-enum CreateType {
-    case url, card
+enum CreateType: Codable {
+    case url, card, other
 }
+
 struct QRTypeItem: Equatable, Identifiable {
     typealias Identifier = String
     let id: Identifier

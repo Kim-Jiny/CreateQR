@@ -20,4 +20,16 @@ extension UIView {
         shapeLayer.path = maskPath.cgPath
         self.layer.mask = shapeLayer
     }
+    
+    func roundLeftCorners(cornerRadius: CGFloat) {
+        let maskPath = UIBezierPath(
+            roundedRect: self.bounds,
+            byRoundingCorners: [.topLeft, .bottomLeft], // 좌측 두 모서리만 둥글게
+            cornerRadii: CGSize(width: cornerRadius, height: cornerRadius)
+        )
+        
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.path = maskPath.cgPath
+        self.layer.mask = shapeLayer
+    }
 }

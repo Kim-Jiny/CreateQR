@@ -108,6 +108,8 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
             return CreateQRURLType()
         case .card:
             return CreateQRCardType()
+        case .other:
+            return CreateQRCardType()
         }
     }
 }
@@ -174,7 +176,9 @@ extension CreateQRTabViewController: QRTypeDelegate {
         }
         let option2 = UIAlertAction(title: "내 QR로 저장", style: .default) { action in
             print("앱 데이터에 저장")
+            self.viewModel?.addMyQR(.url)
             self.typeView?.imageSaveCompleted()
+            //TODO: - 저장완료된 이펙트 개발필요
         }
         let cancel = UIAlertAction(title: "취소", style: .cancel) { action in
             print("취소 선택")

@@ -16,7 +16,6 @@ class QRTypeCollectionViewCell: UICollectionViewCell {
         return NSStringFromClass(Self.self).components(separatedBy: ".").last!
     }
     private var viewModel: QRTypeItemViewModel!
-    private let mainQueue: DispatchQueueType = DispatchQueue.main
 
     func fill(
         with viewModel: QRTypeItemViewModel
