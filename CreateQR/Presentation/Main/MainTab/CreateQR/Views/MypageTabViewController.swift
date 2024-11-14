@@ -15,6 +15,7 @@ class MypageTabViewController: UIViewController, StoryboardInstantiable {
     // QR 목록을 보여줄 테이블 뷰 아웃렛
     @IBOutlet weak var myQRTableView: UITableView!
     @IBOutlet weak var emptyView: UIView!
+    private var isKeyboardVisible = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -121,13 +122,6 @@ class MypageTabViewController: UIViewController, StoryboardInstantiable {
         present(alert, animated: true)
     }
     
-    
-    // QRDetailView를 중앙으로 이동하기 위한 메서드
-    private func updateViewForKeyboard(height: CGFloat) {
-        self.myQRTableView.snp.updateConstraints {
-            $0.bottom.equalToSuperview().inset(height)
-        }
-    }
 
     // 키보드 등장 및 사라짐에 대한 알림 처리
     private func setupKeyboardObservers() {
@@ -140,17 +134,26 @@ class MypageTabViewController: UIViewController, StoryboardInstantiable {
         // 키보드 높이 가져오기
         if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
             let keyboardHeight = keyboardFrame.height
-            print("키보드 높이: \(keyboardHeight)")
             
             // 필요한 UI 업데이트 수행
-            updateViewForKeyboard(height: keyboardHeight)
+            self.myQRTableView.snp.updateConstraints {
+                $0.bottom.equalToSuperview().inset(keyboardHeight)
+            }
+            UIView.animate(withDuration: 5) { [weak self] in
+                self?.view.layoutIfNeeded()
+            }
         }
+        isKeyboardVisible = true // 키보드 상태 업데이트
     }
 
     // 키보드가 사라질 때 호출
     @objc private func keyboardWillHide(_ notification: Notification) {
         self.myQRTableView.snp.updateConstraints {
             $0.bottom.equalToSuperview()
+        }
+        isKeyboardVisible = false // 키보드 상태 업데이트
+        UIView.animate(withDuration: 5) { [weak self] in
+            self?.view.layoutIfNeeded()
         }
     }
 }
@@ -202,7 +205,8 @@ extension MypageTabViewController: UITableViewDragDelegate, UITableViewDropDeleg
                 viewModel.myQRItems.value.insert(sourceItem, at: destinationIndexPath.row)
 
                 // 테이블 뷰 업데이트
-                tableView.moveRow(at: sourceIndexPath, to: destinationIndexPath)
+                updateItems()
+//                tableView.moveRow(at: sourceIndexPath, to: destinationIndexPath)
             }
         }
         
@@ -241,8 +245,13 @@ extension MypageTabViewController: QRDetailDelegate {
     }
     
     func backTab() {
-        let screenHeight = UIScreen.main.bounds.height
-        let windowHeight = self.view.safeAreaLayoutGuide.layoutFrame.height
-        print("screenHeight \(screenHeight) / windowHeight \(windowHeight)")
+        if isKeyboardVisible {
+            view.endEditing(true) // 키보드가 올라와 있으면 내리기
+        } else {
+            // QRDetailView가 있는지 확인하고, 있다면 제거
+            if let qrDetailView = view.subviews.first(where: { $0 is QRDetailView }) {
+                qrDetailView.removeFromSuperview()
+            }
+        }
     }
 }
