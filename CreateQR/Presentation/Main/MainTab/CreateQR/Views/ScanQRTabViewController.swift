@@ -78,7 +78,9 @@ class ScanQRTabViewController: UIViewController, StoryboardInstantiable, UIImage
         viewModel?.cameraPermission.observe(on: self) { [weak self] hasPermission in
             guard let hasPermission = hasPermission else { return }
             guard hasPermission else {
-                self?.showPermissionAlert()
+                DispatchQueue.main.async {
+                    self?.showPermissionAlert()
+                }
                 return
             }
             if let previewLayer = self?.previewLayer {
@@ -95,10 +97,14 @@ class ScanQRTabViewController: UIViewController, StoryboardInstantiable, UIImage
     
     // 권한 요청 알림
     private func showPermissionAlert() {
-        let alert = UIAlertController(title: "Camera Permission Needed",
-                                      message: "Please allow camera access to scan QR codes.",
+        let alert = UIAlertController(title: "카메라 권한이 필요합니다.",
+                                      message: "QR을 스캔하기 위해 카메라 권한을 허용해 주세요.",
                                       preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        
+        alert.addAction(UIAlertAction(title: "취소", style: .cancel))
+        alert.addAction(UIAlertAction(title: "설정으로 이동", style: .default, handler: { [weak self] _ in
+            self?.viewModel?.openAppSettings()
+        }))
         present(alert, animated: true)
     }
     
@@ -134,6 +140,9 @@ class ScanQRTabViewController: UIViewController, StoryboardInstantiable, UIImage
             present(alert, animated: true, completion: nil)
         } else {
             print("QR 코드가 없습니다.")
+            let alert = UIAlertController(title: "발견된 QR코드가 없습니다.", message: nil, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+            present(alert, animated: true, completion: nil)
         }
     }
 }

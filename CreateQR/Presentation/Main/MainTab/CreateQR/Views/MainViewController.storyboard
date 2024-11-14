@@ -20,7 +20,7 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2A2-xB-g6Z">
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="769"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" name="SpeedMain3"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Raw-fQ-cpq">
                                 <rect key="frame" x="0.0" y="719" width="393" height="50"/>
@@ -167,18 +167,49 @@
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="818"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ol6-Z8-pbR">
+                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="저장된 QR이 없습니다. QR을 생성하거나 스캔해 보세요." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="op0-O8-WwR">
+                                        <rect key="frame" x="100.00000000000001" y="414.66666666666669" width="193.33333333333337" height="36"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                        <color key="textColor" name="SpeedMain4"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="note" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="RCh-hk-0cg">
+                                        <rect key="frame" x="171.66666666666666" y="356.33333333333337" width="50" height="47"/>
+                                        <color key="tintColor" name="SpeedMain4"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="R2B-lT-yvd"/>
+                                            <constraint firstAttribute="width" secondItem="RCh-hk-0cg" secondAttribute="height" multiplier="1:1" id="pml-Ig-FbQ"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="RCh-hk-0cg" firstAttribute="centerX" secondItem="Ol6-Z8-pbR" secondAttribute="centerX" id="3qd-YP-1Tm"/>
+                                    <constraint firstItem="op0-O8-WwR" firstAttribute="centerX" secondItem="RCh-hk-0cg" secondAttribute="centerX" id="OoX-gZ-BsC"/>
+                                    <constraint firstItem="RCh-hk-0cg" firstAttribute="centerY" secondItem="Ol6-Z8-pbR" secondAttribute="centerY" id="TRa-0w-mzq"/>
+                                    <constraint firstItem="op0-O8-WwR" firstAttribute="top" secondItem="RCh-hk-0cg" secondAttribute="bottom" constant="10" id="giv-4y-rlF"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="wCJ-hE-5Ph"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Icj-pl-cXg" firstAttribute="leading" secondItem="wCJ-hE-5Ph" secondAttribute="leading" id="IGu-gi-Spd"/>
+                            <constraint firstItem="Ol6-Z8-pbR" firstAttribute="top" secondItem="wCJ-hE-5Ph" secondAttribute="top" id="PhA-Ge-kl7"/>
+                            <constraint firstItem="wCJ-hE-5Ph" firstAttribute="trailing" secondItem="Ol6-Z8-pbR" secondAttribute="trailing" id="Sit-lm-hld"/>
                             <constraint firstItem="wCJ-hE-5Ph" firstAttribute="trailing" secondItem="Icj-pl-cXg" secondAttribute="trailing" id="VNn-wO-tSK"/>
+                            <constraint firstItem="wCJ-hE-5Ph" firstAttribute="bottom" secondItem="Ol6-Z8-pbR" secondAttribute="bottom" id="hHk-D0-i5i"/>
+                            <constraint firstItem="Ol6-Z8-pbR" firstAttribute="leading" secondItem="wCJ-hE-5Ph" secondAttribute="leading" id="hXy-5X-iFb"/>
                             <constraint firstItem="wCJ-hE-5Ph" firstAttribute="bottom" secondItem="Icj-pl-cXg" secondAttribute="bottom" id="ukg-id-fE4"/>
                             <constraint firstItem="Icj-pl-cXg" firstAttribute="top" secondItem="IRN-1g-EWD" secondAttribute="top" id="yNa-1a-nC8"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="vxQ-4K-2ds"/>
                     <connections>
+                        <outlet property="emptyView" destination="Ol6-Z8-pbR" id="Esw-Dr-JR2"/>
                         <outlet property="myQRTableView" destination="Icj-pl-cXg" id="EoC-Ma-Hd4"/>
                     </connections>
                 </viewController>
@@ -188,8 +219,12 @@
         </scene>
     </scenes>
     <resources>
+        <image name="note" catalog="system" width="128" height="107"/>
         <namedColor name="SpeedMain0">
             <color red="0.30980392156862746" green="0.46274509803921571" blue="0.4392156862745098" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="SpeedMain3">
+            <color red="0.77254901960784317" green="0.87058823529411766" blue="0.85490196078431369" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="SpeedMain4">
             <color red="0.95686274509803926" green="0.95686274509803926" blue="0.95686274509803926" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>

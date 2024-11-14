@@ -9,6 +9,8 @@ import UIKit
 protocol QRDetailDelegate: AnyObject {
     func saveImage()
     func shareImage()
+    
+    func backTab()
 }
 
 class QRDetailView: UIView {
@@ -90,6 +92,6 @@ class QRDetailView: UIView {
     }
     
     @objc private func backDarkViewTapped() {
-        self.removeFromSuperview()
+        self.delegate?.backTab()
     }
 }

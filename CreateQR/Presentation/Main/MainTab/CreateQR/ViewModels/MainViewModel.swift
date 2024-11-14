@@ -21,6 +21,7 @@ protocol MainViewModelInput {
     func viewDidLoad()
     func didSelectItem(at index: Int)
     func downloadImage(image: UIImage, completion: @escaping (Bool) -> Void)
+    func openAppSettings()
     func checkCameraPermission()
     func checkPhotoLibraryOnlyAddPermission()
     func checkPhotoLibraryPermission()
@@ -28,6 +29,7 @@ protocol MainViewModelInput {
     func stopScanning()
     func addMyQR(_ type: CreateType)
     func saveMyQRList()
+    func fetchMyQRList()
 }
 
 // Output 프로토콜: 뷰모델에서 뷰로 전달될 데이터들
@@ -109,9 +111,6 @@ final class DefaultMainViewModel: MainViewModel {
                 }
             }
         )
-        
-        // QR 항목을 로딩하여 myQRItems에 설정
-        fetchMyQRList()
     }
     
     // QR 항목 뷰모델로 변환하여 typeItems에 설정
@@ -143,6 +142,11 @@ final class DefaultMainViewModel: MainViewModel {
     
     // MARK: - Permissions Check (권한 확인)
 
+    // 설정 화면으로 이동하는 메서드
+    func openAppSettings() {
+        permissionUseCase.openAppSettings()
+    }
+    
     // 사진 라이브러리 권한 확인
     func checkPhotoLibraryPermission() {
         permissionUseCase.checkPhotoLibraryPermission { [weak self] isPermission in

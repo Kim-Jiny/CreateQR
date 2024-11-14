@@ -67,7 +67,9 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
         viewModel.photoLibraryOnlyAddPermission.observe(on: self) { [weak self] hasPermission in
             guard let hasPermission = hasPermission, let img = self?.viewModel?.qrImg.value else { return }
             guard hasPermission else {
-                self?.showPermissionAlert()
+                DispatchQueue.main.async {
+                    self?.showPermissionAlert()
+                }
                 return
             }
             
@@ -98,7 +100,10 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
         let alert = UIAlertController(title: "사진 접근 권한 필요",
                                       message: "사진을 저장하기 위해 사진 접근 권한이 필요합니다. 설정에서 권한을 변경해 주세요.",
                                       preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        alert.addAction(UIAlertAction(title: "취소", style: .cancel))
+        alert.addAction(UIAlertAction(title: "설정으로 이동", style: .default, handler: { [weak self] _ in
+            self?.viewModel?.openAppSettings()
+        }))
         present(alert, animated: true)
     }
     
