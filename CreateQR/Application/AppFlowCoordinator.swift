@@ -45,13 +45,13 @@ extension AppFlowCoordinator: MainCoordinatorDependencies {
         )
     }
     
-    func makeQRDetailsViewController(qr: QRTypeItem) -> QRDetailViewController {
+    func makeQRDetailsViewController(qr: QRItem) -> QRDetailViewController {
         QRDetailViewController.create(with: makeMoviesDetailsViewModel(qr: qr))
     }
     
     
-    func makeMoviesDetailsViewModel(qr: QRTypeItem) -> QRDetailViewModel {
-        DefaultQRDetailViewModel(course: qr)
+    func makeMoviesDetailsViewModel(qr: QRItem) -> QRDetailViewModel {
+        DefaultQRDetailViewModel(qrData: qr)
     }
     
     

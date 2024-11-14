@@ -23,10 +23,10 @@ final class DefaultQRDetailViewModel: QRDetailViewModel {
     private let mainQueue: DispatchQueueType
     
     init(
-        course: QRTypeItem,
+        qrData: QRItem,
         mainQueue: DispatchQueueType = DispatchQueue.main
     ) {
-        self.title = course.title ?? ""
+        self.title = qrData.title
         self.mainQueue = mainQueue
     }
 }

@@ -38,6 +38,24 @@ class MypageTabViewController: UIViewController, StoryboardInstantiable {
     private func updateItems() {
         self.myQRTableView.reloadData()
     }
+    
+    private func showQRDetailView(_ data: QRItem) {
+        // 이미 QRDetailView가 있는지 확인
+        if view.subviews.contains(where: { $0 is QRDetailView }) {
+            print("QRDetailView already exists.")
+            return
+        }
+        
+        // QRDetailView가 없으므로 새로 추가
+        let qrDetailView = QRDetailView()
+        qrDetailView.fill(with: data)
+        view.addSubview(qrDetailView)
+        
+        // 레이아웃 설정
+        qrDetailView.snp.makeConstraints {
+            $0.top.bottom.leading.trailing.equalToSuperview()
+        }
+    }
 }
 
 extension MypageTabViewController: UITableViewDelegate, UITableViewDataSource {
@@ -51,6 +69,12 @@ extension MypageTabViewController: UITableViewDelegate, UITableViewDataSource {
         }
         cell.fill(with: viewModel.myQRItems.value[indexPath.row])
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let data = viewModel?.myQRItems.value[indexPath.row] {
+            showQRDetailView(data)
+        }
     }
 }
 

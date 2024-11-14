@@ -10,7 +10,7 @@ import UIKit
 
 protocol MainCoordinatorDependencies {
     func makeMainViewController(actions: MainViewModelActions) -> MainViewController
-    func makeQRDetailsViewController(qr: QRTypeItem) -> QRDetailViewController
+    func makeQRDetailsViewController(qr: QRItem) -> QRDetailViewController
 }
 
 
@@ -36,8 +36,8 @@ final class MainCoordinator {
         mainVC = vc
     }
     
-    private func showQRDetails(course: QRTypeItem) {
-        let vc = dependencies.makeQRDetailsViewController(qr: course)
+    private func showQRDetails(qr: QRItem) {
+        let vc = dependencies.makeQRDetailsViewController(qr: qr)
         navigationController?.pushViewController(vc, animated: true)
     }
     

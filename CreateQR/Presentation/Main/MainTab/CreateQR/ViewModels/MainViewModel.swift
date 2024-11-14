@@ -11,7 +11,7 @@ import UIKit
 
 // MARK: - Actions (ViewModel에서 호출될 액션 정의)
 struct MainViewModelActions {
-    let showDetail: (QRTypeItem) -> Void // QR 항목 세부 사항을 보여주는 액션
+    let showDetail: (QRItem) -> Void // QR 항목 세부 사항을 보여주는 액션
 }
 
 // MARK: - MainViewModel의 Input, Output 정의
@@ -60,7 +60,6 @@ final class DefaultMainViewModel: MainViewModel {
     private let actions: MainViewModelActions?
     private let mainQueue: DispatchQueueType
     
-    private var List: [QRTypeItem] = [] // QR 항목 리스트
     private var ListLoadTask: Cancellable? { willSet { ListLoadTask?.cancel() } } // QR 항목 로딩을 위한 Cancellable 객체
     
     // MARK: - Output (출력 프로퍼티)
@@ -118,7 +117,6 @@ final class DefaultMainViewModel: MainViewModel {
     // QR 항목 뷰모델로 변환하여 typeItems에 설정
     private func fetchList(_ qrTypes: [QRTypeItem]) {
         typeItems.value = qrTypes.map(QRTypeItemViewModel.init)
-        List = qrTypes
     }
     
     func addMyQR(_ type: CreateType) {
@@ -208,6 +206,6 @@ extension DefaultMainViewModel {
     
     // 항목 선택 시 호출
     func didSelectItem(at index: Int) {
-        actions?.showDetail(List[index]) // 선택된 항목에 대한 세부 정보 표시
+        actions?.showDetail(myQRItems.value[index]) // 선택된 항목에 대한 세부 정보 표시
     }
 }
