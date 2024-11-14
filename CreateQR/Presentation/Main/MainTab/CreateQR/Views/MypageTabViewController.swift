@@ -206,7 +206,6 @@ extension MypageTabViewController: UITableViewDragDelegate, UITableViewDropDeleg
 
                 // 테이블 뷰 업데이트
                 updateItems()
-//                tableView.moveRow(at: sourceIndexPath, to: destinationIndexPath)
             }
         }
         

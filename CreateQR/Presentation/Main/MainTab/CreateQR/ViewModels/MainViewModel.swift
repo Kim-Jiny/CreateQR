@@ -30,6 +30,7 @@ protocol MainViewModelInput {
     func addMyQR(_ type: CreateType)
     func saveMyQRList()
     func fetchMyQRList()
+    func loadLatestVersion(completion: @escaping (String?) -> Void)
 }
 
 // Output 프로토콜: 뷰모델에서 뷰로 전달될 데이터들
@@ -59,6 +60,7 @@ final class DefaultMainViewModel: MainViewModel {
     private let qrScannerUseCase: QRScannerUseCase
     private let downloadImageUseCase: DownloadImageUseCase
     private let qrItemUseCase: QRItemUseCase
+    private let fetchAppVersionUseCase: FetchAppVersionUseCase
     private let actions: MainViewModelActions?
     private let mainQueue: DispatchQueueType
     
@@ -83,6 +85,7 @@ final class DefaultMainViewModel: MainViewModel {
         qrScannerUseCase: QRScannerUseCase,
         downloadImageUseCase: DownloadImageUseCase,
         qrItemUseCase: QRItemUseCase,
+        fetchAppVersionUseCase: FetchAppVersionUseCase,
         actions: MainViewModelActions? = nil,
         mainQueue: DispatchQueueType = DispatchQueue.main
     ) {
@@ -91,6 +94,7 @@ final class DefaultMainViewModel: MainViewModel {
         self.qrScannerUseCase = qrScannerUseCase
         self.downloadImageUseCase = downloadImageUseCase
         self.qrItemUseCase = qrItemUseCase
+        self.fetchAppVersionUseCase = fetchAppVersionUseCase
         self.actions = actions
         self.mainQueue = mainQueue
     }
@@ -196,6 +200,14 @@ final class DefaultMainViewModel: MainViewModel {
     // QR 코드 스캔 중지
     func stopScanning() {
         qrScannerUseCase.stopScanning()
+    }
+    
+    // MARK: App Setting
+    
+    func loadLatestVersion(completion: @escaping (String?) -> Void) {
+        fetchAppVersionUseCase.execute { [weak self] latestVersion in
+            completion(latestVersion)
+        }
     }
 }
 

@@ -32,6 +32,8 @@
 		303399112CE482D000977E8A /* MyQRTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3033990F2CE482D000977E8A /* MyQRTableViewCell.xib */; };
 		303399142CE4A89700977E8A /* QRDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303399132CE4A89600977E8A /* QRDetailView.swift */; };
 		303399162CE4A91300977E8A /* QRDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 303399152CE4A91300977E8A /* QRDetailView.xib */; };
+		303399182CE5F61400977E8A /* AppVersionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303399172CE5F61400977E8A /* AppVersionRepository.swift */; };
+		3033991A2CE5F63200977E8A /* FetchAppVersionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303399192CE5F63200977E8A /* FetchAppVersionUseCase.swift */; };
 		30BBA9F22CB501E300A84090 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBA9F12CB501E300A84090 /* AppDelegate.swift */; };
 		30BBA9F42CB501E300A84090 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBA9F32CB501E300A84090 /* SceneDelegate.swift */; };
 		30BBA9FB2CB501E400A84090 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30BBA9FA2CB501E400A84090 /* Assets.xcassets */; };
@@ -115,6 +117,8 @@
 		3033990F2CE482D000977E8A /* MyQRTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyQRTableViewCell.xib; sourceTree = "<group>"; };
 		303399132CE4A89600977E8A /* QRDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRDetailView.swift; sourceTree = "<group>"; };
 		303399152CE4A91300977E8A /* QRDetailView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QRDetailView.xib; sourceTree = "<group>"; };
+		303399172CE5F61400977E8A /* AppVersionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersionRepository.swift; sourceTree = "<group>"; };
+		303399192CE5F63200977E8A /* FetchAppVersionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchAppVersionUseCase.swift; sourceTree = "<group>"; };
 		30BBA9EE2CB501E300A84090 /* CreateQR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CreateQR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		30BBA9F12CB501E300A84090 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		30BBA9F32CB501E300A84090 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -536,6 +540,7 @@
 				303398E92CE1A90100977E8A /* QRScannerRepository.swift */,
 				303398F02CE1EE7300977E8A /* ImageDownloadRepository.swift */,
 				303398F62CE1F6F800977E8A /* PermissionRepository.swift */,
+				303399172CE5F61400977E8A /* AppVersionRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -564,6 +569,7 @@
 				303398EE2CE1EE5A00977E8A /* DownloadImageUseCase.swift */,
 				303398F42CE1F63A00977E8A /* PermissionUseCase.swift */,
 				303399082CE4728400977E8A /* QRItemUseCase.swift */,
+				303399192CE5F63200977E8A /* FetchAppVersionUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -748,6 +754,7 @@
 				30BBAA8D2CB9166300A84090 /* GetQRListUseCase.swift in Sources */,
 				303398CF2CDDE76800977E8A /* QRTypeCollectionViewCell.swift in Sources */,
 				30BBAA262CB5030C00A84090 /* MainCoordinator.swift in Sources */,
+				303399182CE5F61400977E8A /* AppVersionRepository.swift in Sources */,
 				30BBAA392CB5081800A84090 /* XibInstantiable.swift in Sources */,
 				30BBAA7C2CB9121B00A84090 /* UserDefaultsManager.swift in Sources */,
 				30BBAA4F2CB5143F00A84090 /* CreateQRTabViewController.swift in Sources */,
@@ -759,6 +766,7 @@
 				30BBAA772CB90A5C00A84090 /* AccessibilityIdentifier.swift in Sources */,
 				3033990B2CE472D400977E8A /* QRItemRepository.swift in Sources */,
 				30BBAA802CB9130500A84090 /* QRListRepository.swift in Sources */,
+				3033991A2CE5F63200977E8A /* FetchAppVersionUseCase.swift in Sources */,
 				30BBA9F22CB501E300A84090 /* AppDelegate.swift in Sources */,
 				303398E82CE1A8EA00977E8A /* QRScannerUseCase.swift in Sources */,
 				303398DF2CE19EE200977E8A /* ScanQRTabViewController.swift in Sources */,
