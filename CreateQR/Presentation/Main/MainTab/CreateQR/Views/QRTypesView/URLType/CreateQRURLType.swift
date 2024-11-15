@@ -22,7 +22,7 @@ class CreateQRURLType: CreateQRTypeView {
     
     override func setupUI() {
         
-        let placeholderText = "https://nachocode.io"
+        let placeholderText = "https://yourURL.com"
         let attributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.speedMain3 // 플레이스홀더 색상 변경
         ]
@@ -93,7 +93,7 @@ class CreateQRURLType: CreateQRTypeView {
     
     func getUrl() -> String {
         // urlTextField.text가 nil이거나 빈 문자열이면 기본 URL 반환
-        let defaultUrl = "https://nachocode.io"
+        let defaultUrl = "You made it blank"
 
         if let urlText = urlTextField.text, !urlText.isEmpty {
             return urlText // 입력된 URL을 반환

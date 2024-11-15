@@ -47,7 +47,7 @@
                                                 <action selector="generateBtn:" destination="-1" eventType="touchUpInside" id="mpS-UA-vKJ"/>
                                             </connections>
                                         </button>
-                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="https://nachocode.io" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ocO-3x-lg7">
+                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ocO-3x-lg7">
                                             <rect key="frame" x="40" y="5" width="228" height="40"/>
                                             <color key="backgroundColor" name="SpeedMain4"/>
                                             <constraints>

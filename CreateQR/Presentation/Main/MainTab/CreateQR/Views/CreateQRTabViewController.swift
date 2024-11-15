@@ -174,7 +174,7 @@ extension CreateQRTabViewController: QRTypeDelegate {
     }
     
     func saveImage() {
-        //TODO: - 권한을 체크하기전에 앱에 저장할지 디바이스 이미지로 저장할지를 선택하는 액션시트 구현
+        // TODO: - 권한을 체크하기전에 앱에 저장할지 디바이스 이미지로 저장할지를 선택하는 액션시트 구현
         let actionSheet = UIAlertController(title: nil, message: NSLocalizedString("Choose how to save the QR.", comment:"Choose how to save the QR."), preferredStyle: .actionSheet)
         
         let option1 = UIAlertAction(title: NSLocalizedString("Save QR Image to Gallery", comment:"Save QR Image to Gallery"), style: .default) { action in
@@ -183,7 +183,7 @@ extension CreateQRTabViewController: QRTypeDelegate {
         let option2 = UIAlertAction(title: NSLocalizedString("Save to My QR", comment:"Save to My QR"), style: .default) { action in
             self.viewModel?.addMyQR(nil)
             self.typeView?.imageSaveCompleted()
-            //TODO: - 저장완료된 이펙트 개발필요
+            // TODO: - 저장완료된 이펙트 개발필요
         }
         let cancel = UIAlertAction(title: NSLocalizedString("Cancel", comment:"Cancel"), style: .cancel) { action in
             self.typeView?.imageSaveCompleted()
@@ -195,8 +195,9 @@ extension CreateQRTabViewController: QRTypeDelegate {
         
         // iPad에서 Action Sheet가 팝오버로 나타나도록 설정 (iPad에서는 필수)
         if let popoverController = actionSheet.popoverPresentationController {
-            popoverController.sourceView = self.view
-            popoverController.sourceRect = self.view.bounds
+            popoverController.sourceView = self.view // 액션시트가 나타날 뷰 설정
+            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 1, height: 1) // 팝오버의 위치를 화면 중앙으로 설정
+            popoverController.permittedArrowDirections = [] // 화살표 방향을 없애는 설정 (선택 사항)
         }
         
         present(actionSheet, animated: true, completion: nil)
