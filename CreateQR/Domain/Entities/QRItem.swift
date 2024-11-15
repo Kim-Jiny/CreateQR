@@ -10,7 +10,7 @@ import Foundation
 struct QRItem: Equatable, Codable {
     typealias Identifier = String
     let id: Identifier
-    let title: String
+    var title: String
     let qrImageData: Data?
     let createdAt: TimeInterval
     let qrType: CreateType

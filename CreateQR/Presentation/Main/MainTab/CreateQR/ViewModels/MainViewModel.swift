@@ -29,6 +29,7 @@ protocol MainViewModelInput {
     func stopScanning()
     func addMyQR(_ type: CreateType)
     func saveMyQRList()
+    func updateQRItem(_ item: QRItem)
     func fetchMyQRList()
     func loadLatestVersion(completion: @escaping (String?) -> Void)
 }
@@ -124,7 +125,7 @@ final class DefaultMainViewModel: MainViewModel {
     
     func addMyQR(_ type: CreateType) {
         if let data = qrImg.value?.pngData() {
-            let qrItem = QRItem(title: "제목", qrImageData: data, qrType: type)
+            let qrItem = QRItem(title: "제목 없음", qrImageData: data, qrType: type)
             qrItemUseCase.addQRItem(qrItem)
         }
         fetchMyQRList()
@@ -137,6 +138,13 @@ final class DefaultMainViewModel: MainViewModel {
     // 저장된 내 QRList Fetch
     func fetchMyQRList() {
         myQRItems.value = qrItemUseCase.getQRItems() ?? []
+    }
+    
+    func updateQRItem(_ item: QRItem) {
+        if let index = myQRItems.value.firstIndex(where: { $0.id == item.id }) {
+            myQRItems.value[index] = item // 기존 항목을 새로운 항목으로 업데이트
+            qrItemUseCase.updateQRItem(item) // 저장소에서도 업데이트
+        }
     }
     
     // 오류 처리

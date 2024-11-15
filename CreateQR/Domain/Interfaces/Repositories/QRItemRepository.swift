@@ -40,4 +40,17 @@ class QRItemRepository {
         qrItems.append(newItem)
         saveQRItems(qrItems: qrItems)
     }
+    
+    // QRItem 업데이트
+    func updateQRItem(item: QRItem) {
+        var qrItems = loadQRItems() ?? []
+
+        // 업데이트할 항목의 인덱스 찾기
+        if let index = qrItems.firstIndex(where: { $0.id == item.id }) {
+            qrItems[index] = item // 해당 인덱스의 항목을 업데이트된 항목으로 변경
+            saveQRItems(qrItems: qrItems) // 변경 사항 저장
+        } else {
+            print("Item with ID \(item.id) not found.")
+        }
+    }
 }

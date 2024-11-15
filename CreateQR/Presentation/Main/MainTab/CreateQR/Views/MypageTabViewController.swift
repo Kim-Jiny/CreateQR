@@ -253,4 +253,8 @@ extension MypageTabViewController: QRDetailDelegate {
             }
         }
     }
+    
+    func changeQRData(_ data: QRItem) {
+        self.viewModel?.updateQRItem(data)
+    }
 }

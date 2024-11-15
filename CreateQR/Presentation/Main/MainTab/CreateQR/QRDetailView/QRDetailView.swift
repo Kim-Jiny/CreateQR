@@ -11,10 +11,12 @@ protocol QRDetailDelegate: AnyObject {
     func shareImage()
     
     func backTab()
+    func changeQRData(_ data: QRItem)
 }
 
 class QRDetailView: UIView {
     weak var delegate: QRDetailDelegate?
+    var data: QRItem? = nil
     
     @IBOutlet weak var backView: UIView!
     @IBOutlet weak var qrImg: UIImageView!
@@ -33,11 +35,7 @@ class QRDetailView: UIView {
         super.init(coder: aDecoder)
         viewInit()
     }
-    
-    deinit {
-        print("view 지워짐")
-    }
-    
+
     func viewInit() {
         // XIB 로드
         let nib = UINib(nibName: String(describing: Self.self), bundle: Bundle(for: type(of: self)))
@@ -68,11 +66,14 @@ class QRDetailView: UIView {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(backDarkViewTapped))
         backDarkView.isUserInteractionEnabled = true // 터치 이벤트를 받을 수 있게 설정
         backDarkView.addGestureRecognizer(tapGesture)
+        
+        titleTextView.delegate = self
     }
     
     func fill(
         with item: QRItem
     ) {
+        self.data = item
         self.titleTextView.text = item.title
         let qrCreateType = item.qrType == .other ? "스캔됨" : "생성됨"
         self.timeLB.text = "\(TimestampProvider().getFormattedDate(item.createdAt)) \(qrCreateType)"
@@ -93,5 +94,21 @@ class QRDetailView: UIView {
     
     @objc private func backDarkViewTapped() {
         self.delegate?.backTab()
+    }
+}
+
+
+extension QRDetailView: UITextFieldDelegate {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if self.data != nil {
+            data?.title = textField.text ?? "제목 없음"
+            self.delegate?.changeQRData(self.data!)
+        }
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if textField.text == "제목" || textField.text == "제목 없음" {
+            textField.text = ""
+        }
     }
 }
