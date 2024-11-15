@@ -92,6 +92,14 @@ class ScanQRTabViewController: UIViewController, StoryboardInstantiable, UIImage
         viewModel?.scannedResult.observe(on: self) { [weak self] result in
             print("값 도착: \(result)")
             //TODO: - url로 연결해줄 수 있는 버튼 화면에 추가 
+            if result != "" {
+                self?.viewModel?.stopScanning()
+                self?.qrDataAlert(result)
+            }else {
+                if let previewLayer = self?.previewLayer {
+                    self?.viewModel?.startScanning(previewLayer: previewLayer)
+                }
+            }
         }
     }
     
@@ -134,15 +142,28 @@ class ScanQRTabViewController: UIViewController, StoryboardInstantiable, UIImage
         if let qrCode = features?.first?.messageString {
             // QR 코드 스캔 성공, QR 코드 내용을 처리합니다.
             print("QR 코드 내용: \(qrCode)")
-            // 알림 또는 화면에 표시할 수도 있습니다.
-            let alert = UIAlertController(title: "QR 코드", message: qrCode, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-            present(alert, animated: true, completion: nil)
+            qrDataAlert(qrCode)
         } else {
             print("QR 코드가 없습니다.")
             let alert = UIAlertController(title: "발견된 QR코드가 없습니다.", message: nil, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
             present(alert, animated: true, completion: nil)
         }
+    }
+    
+    func qrDataAlert(_ qrCode: String) {
+        // 알림 또는 화면에 표시할 수도 있습니다.
+        let alert = UIAlertController(title: "QR 내용 확인", message: qrCode, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
+            self.viewModel?.scannedResult.value = ""
+        }))
+        
+        if let url = URL(string: qrCode), UIApplication.shared.canOpenURL(url) {
+            alert.addAction(UIAlertAction(title: "사파리로 이동", style: .default, handler: { _ in
+                self.viewModel?.scannedResult.value = ""
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }))
+        }
+        present(alert, animated: true, completion: nil)
     }
 }
