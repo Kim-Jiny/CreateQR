@@ -34,6 +34,7 @@
 		303399162CE4A91300977E8A /* QRDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 303399152CE4A91300977E8A /* QRDetailView.xib */; };
 		303399182CE5F61400977E8A /* AppVersionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303399172CE5F61400977E8A /* AppVersionRepository.swift */; };
 		3033991A2CE5F63200977E8A /* FetchAppVersionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303399192CE5F63200977E8A /* FetchAppVersionUseCase.swift */; };
+		3033991C2CE71D8400977E8A /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 3033991B2CE71D8400977E8A /* Localizable.xcstrings */; };
 		30BBA9F22CB501E300A84090 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBA9F12CB501E300A84090 /* AppDelegate.swift */; };
 		30BBA9F42CB501E300A84090 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBA9F32CB501E300A84090 /* SceneDelegate.swift */; };
 		30BBA9FB2CB501E400A84090 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30BBA9FA2CB501E400A84090 /* Assets.xcassets */; };
@@ -119,6 +120,7 @@
 		303399152CE4A91300977E8A /* QRDetailView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QRDetailView.xib; sourceTree = "<group>"; };
 		303399172CE5F61400977E8A /* AppVersionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersionRepository.swift; sourceTree = "<group>"; };
 		303399192CE5F63200977E8A /* FetchAppVersionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchAppVersionUseCase.swift; sourceTree = "<group>"; };
+		3033991B2CE71D8400977E8A /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		30BBA9EE2CB501E300A84090 /* CreateQR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CreateQR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		30BBA9F12CB501E300A84090 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		30BBA9F32CB501E300A84090 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -422,6 +424,7 @@
 				30BBA9FF2CB501E400A84090 /* Info.plist */,
 				30BBA9FA2CB501E400A84090 /* Assets.xcassets */,
 				30BBAA582CB522FA00A84090 /* AppColors.xcassets */,
+				3033991B2CE71D8400977E8A /* Localizable.xcstrings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -698,6 +701,7 @@
 				303399112CE482D000977E8A /* MyQRTableViewCell.xib in Resources */,
 				303398DB2CDDFA8000977E8A /* CreateQRURLType.xib in Resources */,
 				30BBAA592CB522FA00A84090 /* AppColors.xcassets in Resources */,
+				3033991C2CE71D8400977E8A /* Localizable.xcstrings in Resources */,
 				30BBAA552CB517E400A84090 /* MainViewController.storyboard in Resources */,
 				303398D02CDDE76800977E8A /* QRTypeCollectionViewCell.xib in Resources */,
 				30BBAA6F2CB9085B00A84090 /* QRDetailViewController.xib in Resources */,
@@ -968,8 +972,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.4;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jiny.swift.CreateQR;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jiny.swift.GenerateQR;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1002,8 +1006,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.4;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jiny.swift.CreateQR;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jiny.swift.GenerateQR;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

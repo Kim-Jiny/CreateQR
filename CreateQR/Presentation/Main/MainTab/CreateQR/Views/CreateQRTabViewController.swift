@@ -65,7 +65,7 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
         
         
         viewModel.photoLibraryOnlyAddPermission.observe(on: self) { [weak self] hasPermission in
-            guard let hasPermission = hasPermission, let img = self?.viewModel?.qrImg.value else { return }
+            guard let hasPermission = hasPermission, let imgData = self?.viewModel?.createQRItem.value?.qrImageData, let img = UIImage(data: imgData) else { return }
             guard hasPermission else {
                 DispatchQueue.main.async {
                     self?.showPermissionAlert()
@@ -75,8 +75,9 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
             
             viewModel.downloadImage(image: img, completion: {
                 print("is download complete? \($0)")
-                self?.viewModel?.qrImg.value = nil
-                self?.showSaveAlert()
+                DispatchQueue.main.async {
+                    self?.showSaveAlert()
+                }
             })
         }
         
@@ -87,21 +88,21 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
     }
     
     private func showSaveAlert() {
-        let alert = UIAlertController(title: "다운로드 완료",
-                                      message: "QR이미지를 갤러리에 저장했습니다.",
+        let alert = UIAlertController(title: NSLocalizedString("Download Complete", comment: "Download Complete"),
+                                      message: NSLocalizedString("The QR image has been saved to the gallery.", comment: "The QR image has been saved to the gallery."),
                                       preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default) {_ in 
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment:"OK"), style: .default) {_ in
             self.typeView?.imageSaveCompleted()
         })
         present(alert, animated: true)
     }
     
     private func showPermissionAlert() {
-        let alert = UIAlertController(title: "사진 접근 권한 필요",
-                                      message: "사진을 저장하기 위해 사진 접근 권한이 필요합니다. 설정에서 권한을 변경해 주세요.",
+        let alert = UIAlertController(title: NSLocalizedString("Photo Access Permission Required", comment:"Photo Access Permission Required"),
+                                      message: NSLocalizedString("Photo access permission is required to save the photo. Please change the permission in Settings.", comment:"Photo access permission is required to save the photo. Please change the permission in Settings."),
                                       preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "취소", style: .cancel))
-        alert.addAction(UIAlertAction(title: "설정으로 이동", style: .default, handler: { [weak self] _ in
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment:"Cancel"), style: .cancel))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Go to Settings", comment:"Go to Settings"), style: .default, handler: { [weak self] _ in
             self?.viewModel?.openAppSettings()
         }))
         present(alert, animated: true)
@@ -157,7 +158,7 @@ extension CreateQRTabViewController: UICollectionViewDelegate, UICollectionViewD
 extension CreateQRTabViewController: QRTypeDelegate {
     func shareImage() {
         
-        guard let qrImage = self.viewModel?.qrImg.value else {
+        guard let imageData = self.viewModel?.createQRItem.value?.qrImageData, let qrImage = UIImage(data: imageData) else {
             print("공유할 이미지가 없습니다.")
             return
         }
@@ -174,17 +175,17 @@ extension CreateQRTabViewController: QRTypeDelegate {
     
     func saveImage() {
         //TODO: - 권한을 체크하기전에 앱에 저장할지 디바이스 이미지로 저장할지를 선택하는 액션시트 구현
-        let actionSheet = UIAlertController(title: nil, message: "QR을 저장할 방법을 선택하세요.", preferredStyle: .actionSheet)
+        let actionSheet = UIAlertController(title: nil, message: NSLocalizedString("Choose how to save the QR.", comment:"Choose how to save the QR."), preferredStyle: .actionSheet)
         
-        let option1 = UIAlertAction(title: "갤러리에 QR 이미지 저장", style: .default) { action in
+        let option1 = UIAlertAction(title: NSLocalizedString("Save QR Image to Gallery", comment:"Save QR Image to Gallery"), style: .default) { action in
             self.viewModel?.checkPhotoLibraryOnlyAddPermission()
         }
-        let option2 = UIAlertAction(title: "내 QR로 저장", style: .default) { action in
-            self.viewModel?.addMyQR(.url)
+        let option2 = UIAlertAction(title: NSLocalizedString("Save to My QR", comment:"Save to My QR"), style: .default) { action in
+            self.viewModel?.addMyQR(nil)
             self.typeView?.imageSaveCompleted()
             //TODO: - 저장완료된 이펙트 개발필요
         }
-        let cancel = UIAlertAction(title: "취소", style: .cancel) { action in
+        let cancel = UIAlertAction(title: NSLocalizedString("Cancel", comment:"Cancel"), style: .cancel) { action in
             self.typeView?.imageSaveCompleted()
         }
         
@@ -201,7 +202,11 @@ extension CreateQRTabViewController: QRTypeDelegate {
         present(actionSheet, animated: true, completion: nil)
     }
     
-    func createQR(img: UIImage) {
-        viewModel?.qrImg.value = img
+    func generateQR(url: String) -> UIImage? {
+        let qrImg = self.viewModel?.generateQR(from: url, color: .black, backgroundColor: .white, logo: nil)
+        let item = QRItem(title: NSLocalizedString("Untitled", comment:"Untitled"), qrImageData: qrImg?.pngData(), qrType: .url, qrData: url)
+        
+        viewModel?.createQRItem.value = item
+        return qrImg
     }
 }

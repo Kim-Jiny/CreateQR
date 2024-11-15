@@ -11,7 +11,7 @@ class CreateQRCardType: CreateQRTypeView {
     
     @IBOutlet weak var noticeLB: UILabel!
     override func setupUI() {
-        //TODO: - 공사중 안내 
-        noticeLB.text = "현재 공사중입니다.\n다음 버전에 공개됩니다."
+        //TODO: - 공사중 안내
+        noticeLB.text =  NSLocalizedString("The feature will be available in the next version.", comment: "")
     }
 }

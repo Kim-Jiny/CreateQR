@@ -37,7 +37,7 @@ class MyQRTableViewCell: UITableViewCell {
         self.backView.backgroundColor = .speedMain4
         self.titleLB.text = item.title
         self.timeLB.text = TimestampProvider().getFormattedDate(item.createdAt)
-        self.subtitleLB.text = item.qrType == .other ? "스캔으로 저장됨" : "이 앱에서 생성됨"
+        self.subtitleLB.text = item.qrType == .other ? NSLocalizedString("Saved by Scan", comment: "Saved by Scan") : NSLocalizedString("App Created", comment: "App Created")
         if let imgdata = item.qrImageData, let img = UIImage(data: imgdata) {
             self.qrImg.image = img
         }else {

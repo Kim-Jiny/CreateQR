@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 protocol QRTypeDelegate: AnyObject {
-    func createQR(img: UIImage)
+    func generateQR(url : String) -> UIImage?
     func saveImage()
     func shareImage()
 }

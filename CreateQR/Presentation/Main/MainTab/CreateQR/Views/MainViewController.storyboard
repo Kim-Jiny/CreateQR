@@ -27,9 +27,9 @@
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oCi-qr-VHO">
                                         <rect key="frame" x="30" y="5" width="333" height="40"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                         <color key="tintColor" name="SpeedMain0"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="앨범에서 스캔하기"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <connections>
                                             <action selector="selectImageFromAlbum:" destination="BCV-Xe-Tau" eventType="touchUpInside" id="b3K-Bp-mal"/>
                                         </connections>
@@ -132,10 +132,10 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vvF-aV-17B">
-                                <rect key="frame" x="0.0" y="0.0" width="393" height="829"/>
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="862"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="JTy-3Y-fW6">
-                                        <rect key="frame" x="0.0" y="0.0" width="393" height="829"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="862"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1cY-Hj-tCn">
                                                 <rect key="frame" x="0.0" y="0.0" width="393" height="100"/>
@@ -145,16 +145,16 @@
                                                 </constraints>
                                             </view>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="qWb-71-poq">
-                                                <rect key="frame" x="0.0" y="100" width="393" height="58"/>
+                                                <rect key="frame" x="0.0" y="100" width="393" height="91"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jN3-Kd-MaM">
-                                                        <rect key="frame" x="0.0" y="0.0" width="393" height="57"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="393" height="90"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="800" verticalHuggingPriority="800" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="9Q6-1t-i00">
-                                                                <rect key="frame" x="30" y="30" width="333" height="17"/>
+                                                                <rect key="frame" x="30" y="30" width="333" height="50"/>
                                                                 <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="800" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KPR-yU-khk">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="333" height="17"/>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="800" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KPR-yU-khk">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="333" height="50"/>
                                                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                                                         <color key="textColor" name="SpeedMain0"/>
                                                                         <nil key="highlightedColor"/>
@@ -177,17 +177,18 @@
                                                         </constraints>
                                                     </view>
                                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mE5-VR-6Ek">
-                                                        <rect key="frame" x="0.0" y="57" width="393" height="60"/>
+                                                        <rect key="frame" x="0.0" y="90" width="393" height="60"/>
                                                         <subviews>
-                                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q3K-AU-ZEo">
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q3K-AU-ZEo">
                                                                 <rect key="frame" x="15" y="5" width="363" height="45"/>
                                                                 <color key="backgroundColor" name="SpeedMain2"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="45" id="Qmn-zg-ENX"/>
                                                                 </constraints>
+                                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                                                 <color key="tintColor" name="SpeedMain4"/>
-                                                                <state key="normal" title="Button"/>
-                                                                <buttonConfiguration key="configuration" style="plain" title="최신 버전 업데이트"/>
+                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                <state key="normal" title="최신 버전 업데이트"/>
                                                                 <connections>
                                                                     <action selector="appUpdateBtn:" destination="De8-6U-oJF" eventType="touchUpInside" id="NaH-4E-EGO"/>
                                                                 </connections>
@@ -202,7 +203,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cdp-qL-eQQ">
-                                                        <rect key="frame" x="0.0" y="57" width="393" height="1"/>
+                                                        <rect key="frame" x="0.0" y="90" width="393" height="1"/>
                                                         <color key="backgroundColor" name="SpeedMain4"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="1" id="Lax-cE-c0F"/>
@@ -211,7 +212,7 @@
                                                 </subviews>
                                             </stackView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KeW-LE-0iX">
-                                                <rect key="frame" x="0.0" y="158" width="393" height="65"/>
+                                                <rect key="frame" x="0.0" y="191" width="393" height="65"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F9s-QQ-Ty8">
                                                         <rect key="frame" x="0.0" y="0.0" width="393" height="65"/>
@@ -224,7 +225,7 @@
                                                             <action selector="sendDeveloper:" destination="De8-6U-oJF" eventType="touchUpInside" id="bQ1-5w-xRT"/>
                                                         </connections>
                                                     </button>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="문의 하기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hD7-0l-w3u">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hD7-0l-w3u">
                                                         <rect key="frame" x="60" y="15" width="318" height="35"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                         <color key="textColor" name="SpeedMain0"/>
@@ -264,7 +265,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yTm-qb-GJC">
-                                                <rect key="frame" x="0.0" y="223" width="393" height="606"/>
+                                                <rect key="frame" x="0.0" y="256" width="393" height="606"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </view>
                                         </subviews>
@@ -299,6 +300,7 @@
                     <connections>
                         <outlet property="appUpdateBtn" destination="q3K-AU-ZEo" id="q2M-jm-fyK"/>
                         <outlet property="appUpdateView" destination="mE5-VR-6Ek" id="vBg-z4-OaN"/>
+                        <outlet property="contactUsLB" destination="hD7-0l-w3u" id="e2V-ID-BAm"/>
                         <outlet property="newAppVersion" destination="14H-Yb-1ul" id="tMe-aM-VlJ"/>
                         <outlet property="nowAppVersion" destination="KPR-yU-khk" id="dbU-Eh-BHC"/>
                         <outlet property="safeAreaTopConstraints" destination="wf5-7K-3sQ" id="coD-K5-PPN"/>

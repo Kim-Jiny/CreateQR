@@ -14,15 +14,17 @@ struct QRItem: Equatable, Codable {
     let qrImageData: Data?
     let createdAt: TimeInterval
     let qrType: CreateType
+    let qrData: String
 }
 
 extension QRItem {
     
-    init(title: String, qrImageData: Data?, qrType: CreateType) {
+    init(title: String, qrImageData: Data?, qrType: CreateType, qrData: String) {
         self.id = UUID().uuidString
         self.title = title
         self.qrImageData = qrImageData
         self.createdAt = TimestampProvider().getCurrentTimestamp()
         self.qrType = qrType
+        self.qrData = qrData
     }
 }

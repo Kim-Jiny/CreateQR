@@ -19,6 +19,7 @@ class QRScannerRepositoryImpl: NSObject, QRScannerRepository, AVCaptureMetadataO
     private var completion: ((String) -> Void)?
 
     func startScanning(previewLayer: AVCaptureVideoPreviewLayer, completion: @escaping (String) -> Void) {
+        stopScanning()
         self.completion = completion
         self.previewLayer = previewLayer
         setupCaptureSession()

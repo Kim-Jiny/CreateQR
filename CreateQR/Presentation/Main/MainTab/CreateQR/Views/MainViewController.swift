@@ -40,19 +40,19 @@ class MainViewController: UITabBarController, StoryboardInstantiable {
     private func setupViews() {
         // 각 ViewController를 xib에서 불러오기
         let firstVC = CreateQRTabViewController.instantiateViewController(from: UIStoryboard(name: "MainViewController", bundle: nil))
-        firstVC.tabBarItem = UITabBarItem(title: "QR 생성", image: UIImage(systemName: "plus.square"), tag: 0)
+        firstVC.tabBarItem = UITabBarItem(title: NSLocalizedString("Create QR", comment: "Create QR"), image: UIImage(systemName: "plus.square"), tag: 0)
         firstVC.viewModel = viewModel
         
         let secondVC = ScanQRTabViewController.instantiateViewController(from: UIStoryboard(name: "MainViewController", bundle: nil))
-        secondVC.tabBarItem = UITabBarItem(title: "QR 스캔", image: UIImage(systemName: "qrcode.viewfinder"), tag: 1)
+        secondVC.tabBarItem = UITabBarItem(title: NSLocalizedString("QR Scan", comment: "QR Scan"), image: UIImage(systemName: "qrcode.viewfinder"), tag: 1)
         secondVC.viewModel = viewModel
         
         let thirdVC = MypageTabViewController.instantiateViewController(from: UIStoryboard(name: "MainViewController", bundle: nil))
-        thirdVC.tabBarItem = UITabBarItem(title: "내 QR", image: UIImage(systemName: "star.square.on.square"), tag: 2)
+        thirdVC.tabBarItem = UITabBarItem(title: NSLocalizedString("My QR", comment: "My QR"), image: UIImage(systemName: "star.square.on.square"), tag: 2)
         thirdVC.viewModel = viewModel
         
         let fourthVC = AppSettingTabViewController.instantiateViewController(from: UIStoryboard(name: "MainViewController", bundle: nil))
-        fourthVC.tabBarItem = UITabBarItem(title: "설정", image: UIImage(systemName: "gearshape"), tag: 3)
+        fourthVC.tabBarItem = UITabBarItem(title: NSLocalizedString("Settings", comment: "Settings"), image: UIImage(systemName: "gearshape"), tag: 3)
         fourthVC.viewModel = viewModel
         
         // 뷰 컨트롤러들을 탭 바에 추가

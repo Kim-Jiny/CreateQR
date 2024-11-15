@@ -29,4 +29,8 @@ class QRItemUseCase {
     func updateQRItem(_ item: QRItem) {
         repository.updateQRItem(item: item)
     }
+    
+    func removeQRItem(_ item: QRItem) {
+        repository.removeQRItem(item: item)
+    }
 }

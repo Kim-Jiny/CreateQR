@@ -103,20 +103,20 @@ class MypageTabViewController: UIViewController, StoryboardInstantiable {
     
     // 저장 완료 알림 표시 메서드
     private func showSaveAlert() {
-        let alert = UIAlertController(title: "다운로드 완료",
-                                      message: "QR 이미지를 갤러리에 저장했습니다.",
+        let alert = UIAlertController(title: NSLocalizedString("Download Complete", comment:"Download Complete"),
+                                      message: NSLocalizedString("The QR image has been saved to the gallery.", comment:"The QR image has been saved to the gallery."),
                                       preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment:"OK"), style: .default))
         present(alert, animated: true)
     }
     
     // 사진 접근 권한 요청 알림 표시 메서드
     private func showPermissionAlert() {
-        let alert = UIAlertController(title: "사진 접근 권한 필요",
-                                      message: "사진을 저장하기 위해 사진 접근 권한이 필요합니다. 설정에서 권한을 변경해 주세요.",
+        let alert = UIAlertController(title: NSLocalizedString("Photo Access Permission Required", comment:"Photo Access Permission Required"),
+                                      message: NSLocalizedString("Photo access permission is required to save the photo. Please change the permission in Settings.", comment:"Photo access permission is required to save the photo. Please change the permission in Settings."),
                                       preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "취소", style: .cancel))
-        alert.addAction(UIAlertAction(title: "설정으로 이동", style: .default, handler: { [weak self] _ in
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment:"Cancel"), style: .cancel))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Go to Settings", comment:"Go to Settings"), style: .default, handler: { [weak self] _ in
             self?.viewModel?.openAppSettings()
         }))
         present(alert, animated: true)
@@ -256,5 +256,33 @@ extension MypageTabViewController: QRDetailDelegate {
     
     func changeQRData(_ data: QRItem) {
         self.viewModel?.updateQRItem(data)
+    }
+    
+    func removeData(_ data: QRItem) {
+        self.viewModel?.removeMyQR(data)
+        // QRDetailView가 있는지 확인하고, 있다면 제거
+        if let qrDetailView = view.subviews.first(where: { $0 is QRDetailView }) {
+            qrDetailView.removeFromSuperview()
+        }
+    }
+    
+    func readData(_ data: QRItem) {
+        qrDataAlert(data.qrData)
+    }
+    
+    func qrDataAlert(_ qrCode: String) {
+        // 알림 또는 화면에 표시할 수도 있습니다.
+        let alert = UIAlertController(title: NSLocalizedString("View QR Content", comment:"View QR Content"), message: qrCode, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment:"OK"), style: .default, handler: { _ in
+            self.viewModel?.scannedResult.value = ""
+        }))
+        
+        if let url = URL(string: qrCode), UIApplication.shared.canOpenURL(url) {
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Open in Safari", comment:"Open in Safari"), style: .default, handler: { _ in
+                self.viewModel?.scannedResult.value = ""
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }))
+        }
+        present(alert, animated: true, completion: nil)
     }
 }

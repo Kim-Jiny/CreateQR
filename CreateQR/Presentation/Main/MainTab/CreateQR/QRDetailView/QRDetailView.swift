@@ -12,6 +12,8 @@ protocol QRDetailDelegate: AnyObject {
     
     func backTab()
     func changeQRData(_ data: QRItem)
+    func removeData(_ data: QRItem)
+    func readData(_ data: QRItem)
 }
 
 class QRDetailView: UIView {
@@ -24,6 +26,8 @@ class QRDetailView: UIView {
     @IBOutlet weak var titleTextView: UITextField!
     @IBOutlet weak var saveBtn: UIButton!
     @IBOutlet weak var shareBtn: UIButton!
+    @IBOutlet weak var removeBtn: UIButton!
+    @IBOutlet weak var readBtn: UIButton!
     @IBOutlet weak var backDarkView: UIView!
     // MARK: - Initialization
     override init(frame: CGRect) {
@@ -51,13 +55,25 @@ class QRDetailView: UIView {
         backView.layer.cornerRadius = 20
         backView.backgroundColor = .speedMain4
         
+        saveBtn.setTitle(NSLocalizedString("Save", comment:"Save"), for: .normal)
         saveBtn.layer.cornerRadius = 10
         saveBtn.layer.borderWidth = 2
         saveBtn.layer.borderColor = UIColor.speedMain2.cgColor
         
+        shareBtn.setTitle(NSLocalizedString("Share", comment:"Share"), for: .normal)
         shareBtn.layer.cornerRadius = 10
         shareBtn.layer.borderWidth = 2
         shareBtn.layer.borderColor = UIColor.speedMain2.cgColor
+        
+        readBtn.setTitle(NSLocalizedString("Read QR", comment:"Read QR"), for: .normal)
+        readBtn.layer.cornerRadius = 10
+        readBtn.layer.borderWidth = 2
+        readBtn.layer.borderColor = UIColor.speedMain2.cgColor
+        
+        removeBtn.setTitle(NSLocalizedString("Remove", comment:"Remove"), for: .normal)
+        removeBtn.layer.cornerRadius = 10
+        removeBtn.layer.borderWidth = 2
+        removeBtn.layer.borderColor = UIColor.speedMain2.cgColor
         
         qrImg.layer.borderWidth = 5
         qrImg.layer.borderColor = UIColor.speedMain3.cgColor
@@ -75,7 +91,7 @@ class QRDetailView: UIView {
     ) {
         self.data = item
         self.titleTextView.text = item.title
-        let qrCreateType = item.qrType == .other ? "스캔됨" : "생성됨"
+        let qrCreateType = item.qrType == .other ? NSLocalizedString("Scanned", comment: "Scanned") :  NSLocalizedString("Created", comment: "Created")
         self.timeLB.text = "\(TimestampProvider().getFormattedDate(item.createdAt)) \(qrCreateType)"
         if let imgdata = item.qrImageData, let img = UIImage(data: imgdata) {
             self.qrImg.image = img
@@ -92,6 +108,18 @@ class QRDetailView: UIView {
         self.delegate?.shareImage()
     }
     
+    @IBAction func readBtn(_ sender: Any) {
+        if self.data != nil {
+            self.delegate?.readData(self.data!)
+        }
+    }
+    
+    @IBAction func removeBtn(_ sender: Any) {
+        if self.data != nil {
+            self.delegate?.removeData(self.data!)
+        }
+    }
+    
     @objc private func backDarkViewTapped() {
         self.delegate?.backTab()
     }
@@ -101,13 +129,13 @@ class QRDetailView: UIView {
 extension QRDetailView: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         if self.data != nil {
-            data?.title = textField.text ?? "제목 없음"
+            data?.title = textField.text ??  NSLocalizedString("Untitled", comment: "Untitled")
             self.delegate?.changeQRData(self.data!)
         }
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        if textField.text == "제목" || textField.text == "제목 없음" {
+        if textField.text ==  NSLocalizedString("Untitled", comment: "Untitled") {
             textField.text = ""
         }
     }

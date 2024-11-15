@@ -1,0 +1,164 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "[QR Creation] App Inquiry" : {
+
+    },
+    "An unknown error occurred." : {
+      "comment" : "알 수 없는 오류가 발생했습니다."
+    },
+    "App Created" : {
+      "comment" : "App Created"
+    },
+    "appid" : {
+      "comment" : "Appid",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "6472643559"
+          }
+        }
+      }
+    },
+    "Camera Permission Required" : {
+      "comment" : "Camera Permission Required"
+    },
+    "Cancel" : {
+      "comment" : "Cancel"
+    },
+    "Choose how to save the QR." : {
+      "comment" : "Choose how to save the QR."
+    },
+    "Contact Us" : {
+
+    },
+    "Create QR" : {
+      "comment" : "Create QR"
+    },
+    "Created" : {
+      "comment" : "Created"
+    },
+    "Current Version: %@" : {
+
+    },
+    "Download Complete" : {
+      "comment" : "Download Complete"
+    },
+    "Error" : {
+
+    },
+    "Failed to send the email." : {
+      "comment" : "메일 전송에 실패하였습니다."
+    },
+    "Generate" : {
+
+    },
+    "Go to Settings" : {
+      "comment" : "Go to Settings"
+    },
+    "Latest version on store: %@" : {
+
+    },
+    "Mail Canceled" : {
+
+    },
+    "Mail Failed" : {
+
+    },
+    "Mail Saved" : {
+
+    },
+    "Mail Sent" : {
+
+    },
+    "My QR" : {
+      "comment" : "My QR"
+    },
+    "No QR code found" : {
+      "comment" : "No QR code found"
+    },
+    "OK" : {
+      "comment" : "OK"
+    },
+    "Open in Safari" : {
+      "comment" : "Open in Safari"
+    },
+    "Photo access permission is required to save the photo. Please change the permission in Settings." : {
+      "comment" : "Photo access permission is required to save the photo. Please change the permission in Settings."
+    },
+    "Photo Access Permission Required" : {
+      "comment" : "Photo Access Permission Required"
+    },
+    "Please allow camera access to scan the QR code." : {
+      "comment" : "Please allow camera access to scan the QR code."
+    },
+    "Please write your inquiry regarding the app." : {
+
+    },
+    "QR Scan" : {
+      "comment" : "QR Scan"
+    },
+    "Read QR" : {
+      "comment" : "Read QR"
+    },
+    "Remove" : {
+      "comment" : "Remove"
+    },
+    "Save" : {
+      "comment" : "Save"
+    },
+    "Save QR Image to Gallery" : {
+      "comment" : "Save QR Image to Gallery"
+    },
+    "Save to My QR" : {
+      "comment" : "Save to My QR"
+    },
+    "Saved by Scan" : {
+      "comment" : "Saved by Scan"
+    },
+    "Scan from Gallery" : {
+
+    },
+    "Scanned" : {
+      "comment" : "Scanned"
+    },
+    "Settings" : {
+      "comment" : "Settings"
+    },
+    "Share" : {
+      "comment" : "Share"
+    },
+    "The email has been saved as a draft." : {
+      "comment" : "메일이 임시 저장되었습니다."
+    },
+    "The email sending was canceled." : {
+      "comment" : "메일 전송이 취소되었습니다."
+    },
+    "The email was successfully sent." : {
+      "comment" : "메일이 성공적으로 전송되었습니다."
+    },
+    "The feature will be available in the next version." : {
+
+    },
+    "The QR image has been saved to the gallery." : {
+      "comment" : "The QR image has been saved to the gallery."
+    },
+    "This is the latest version." : {
+
+    },
+    "Unable to send email." : {
+
+    },
+    "Untitled" : {
+      "comment" : "Untitled"
+    },
+    "Update to the Latest Version" : {
+
+    },
+    "View QR Content" : {
+      "comment" : "View QR Content"
+    }
+  },
+  "version" : "1.0"
+}

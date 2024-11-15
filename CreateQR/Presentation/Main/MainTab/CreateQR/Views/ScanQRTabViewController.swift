@@ -48,6 +48,8 @@ class ScanQRTabViewController: UIViewController, StoryboardInstantiable, UIImage
     private func setupView() {
         bottomView.backgroundColor = .speedMain3
         bottomView.roundTopCorners(cornerRadius: 30)
+        
+        photoBtn.setTitle(NSLocalizedString("Scan from Gallery", comment: ""), for: .normal)
         photoBtn.layer.cornerRadius = 10
         photoBtn.layer.borderWidth = 2.0
         photoBtn.layer.borderColor = UIColor.speedMain2.cgColor
@@ -70,6 +72,8 @@ class ScanQRTabViewController: UIViewController, StoryboardInstantiable, UIImage
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         print("ScanQRTabViewController viewDidDisappear")
+        previewLayer?.removeFromSuperlayer()
+        self.previewLayer = nil
         viewModel?.stopScanning()  // 뷰가 사라질 때 스캔 중단
     }
     
@@ -105,12 +109,12 @@ class ScanQRTabViewController: UIViewController, StoryboardInstantiable, UIImage
     
     // 권한 요청 알림
     private func showPermissionAlert() {
-        let alert = UIAlertController(title: "카메라 권한이 필요합니다.",
-                                      message: "QR을 스캔하기 위해 카메라 권한을 허용해 주세요.",
+        let alert = UIAlertController(title: NSLocalizedString("Camera Permission Required", comment:"Camera Permission Required"),
+                                      message: NSLocalizedString("Please allow camera access to scan the QR code.", comment:"Please allow camera access to scan the QR code."),
                                       preferredStyle: .alert)
         
-        alert.addAction(UIAlertAction(title: "취소", style: .cancel))
-        alert.addAction(UIAlertAction(title: "설정으로 이동", style: .default, handler: { [weak self] _ in
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment:"Cancel"), style: .cancel))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Go to Settings", comment:"Go to Settings"), style: .default, handler: { [weak self] _ in
             self?.viewModel?.openAppSettings()
         }))
         present(alert, animated: true)
@@ -145,25 +149,33 @@ class ScanQRTabViewController: UIViewController, StoryboardInstantiable, UIImage
             qrDataAlert(qrCode)
         } else {
             print("QR 코드가 없습니다.")
-            let alert = UIAlertController(title: "발견된 QR코드가 없습니다.", message: nil, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+            let alert = UIAlertController(title: NSLocalizedString("No QR code found", comment:"No QR code found"), message: nil, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment:"OK"), style: .default, handler: nil))
             present(alert, animated: true, completion: nil)
         }
     }
     
     func qrDataAlert(_ qrCode: String) {
         // 알림 또는 화면에 표시할 수도 있습니다.
-        let alert = UIAlertController(title: "QR 내용 확인", message: qrCode, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
+        let alert = UIAlertController(title: NSLocalizedString("View QR Content", comment:"View QR Content"), message: qrCode, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment:"OK"), style: .default, handler: { _ in
             self.viewModel?.scannedResult.value = ""
         }))
         
         if let url = URL(string: qrCode), UIApplication.shared.canOpenURL(url) {
-            alert.addAction(UIAlertAction(title: "사파리로 이동", style: .default, handler: { _ in
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Open in Safari", comment:"Open in Safari"), style: .default, handler: { _ in
                 self.viewModel?.scannedResult.value = ""
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
             }))
         }
+        
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Save", comment:"Save"), style: .default, handler: { _ in
+            let qrImg = self.viewModel?.generateQR(from: qrCode, color: .black, backgroundColor: .white, logo: nil)
+            let item = QRItem(title: NSLocalizedString("Untitled", comment:"Untitled"), qrImageData: qrImg?.pngData(), qrType: .other, qrData: qrCode)
+            self.viewModel?.addMyQR(item)
+            self.viewModel?.scannedResult.value = ""
+        }))
+        
         present(alert, animated: true, completion: nil)
     }
 }
