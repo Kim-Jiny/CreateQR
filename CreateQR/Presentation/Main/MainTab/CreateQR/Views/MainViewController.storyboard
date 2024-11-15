@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="FTf-1l-6kg">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="FTf-1l-6kg">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -345,7 +345,7 @@
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ol6-Z8-pbR">
                                 <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="저장된 QR이 없습니다. QR을 생성하거나 스캔해 보세요." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="op0-O8-WwR">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="op0-O8-WwR">
                                         <rect key="frame" x="100.00000000000001" y="414.66666666666669" width="193.33333333333337" height="36"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                         <color key="textColor" name="SpeedMain4"/>
@@ -384,6 +384,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="vxQ-4K-2ds"/>
                     <connections>
+                        <outlet property="emptyLB" destination="op0-O8-WwR" id="qna-IJ-Q23"/>
                         <outlet property="emptyView" destination="Ol6-Z8-pbR" id="Esw-Dr-JR2"/>
                         <outlet property="myQRTableView" destination="Icj-pl-cXg" id="EoC-Ma-Hd4"/>
                     </connections>
@@ -394,8 +395,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="cursorarrow" catalog="system" width="92" height="128"/>
-        <image name="note" catalog="system" width="128" height="107"/>
+        <image name="cursorarrow" catalog="system" width="32" height="32"/>
+        <image name="note" catalog="system" width="32" height="32"/>
         <namedColor name="SpeedMain0">
             <color red="0.30980392156862746" green="0.46274509803921571" blue="0.4392156862745098" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>

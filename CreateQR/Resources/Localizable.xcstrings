@@ -16,7 +16,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "6472643559"
+            "value" : "6738270501"
           }
         }
       }
@@ -143,6 +143,9 @@
     },
     "The QR image has been saved to the gallery." : {
       "comment" : "The QR image has been saved to the gallery."
+    },
+    "There are no saved QR's.\nPlease generate or scan a QR." : {
+
     },
     "This is the latest version." : {
 

@@ -15,11 +15,12 @@ class MypageTabViewController: UIViewController, StoryboardInstantiable {
     // QR 목록을 보여줄 테이블 뷰 아웃렛
     @IBOutlet weak var myQRTableView: UITableView!
     @IBOutlet weak var emptyView: UIView!
+    @IBOutlet weak var emptyLB: UILabel!
     private var isKeyboardVisible = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setupView()
         setupTableView()
         
         // 뷰모델이 설정되어 있으면 바인딩 설정
@@ -34,6 +35,12 @@ class MypageTabViewController: UIViewController, StoryboardInstantiable {
         viewModel?.fetchMyQRList()
     }
     
+    private func setupView() {
+        // 배경 색상 설정
+        view.backgroundColor = .speedMain3
+        emptyLB.text = NSLocalizedString("There are no saved QR's.\nPlease generate or scan a QR.", comment: "")
+    }
+    
     // 테이블 뷰 초기 설정 및 등록 메서드
     private func setupTableView() {
         myQRTableView.dragInteractionEnabled = true
@@ -43,8 +50,6 @@ class MypageTabViewController: UIViewController, StoryboardInstantiable {
         myQRTableView.dataSource = self
         myQRTableView.register(UINib(nibName: MyQRTableViewCell.id, bundle: nil), forCellReuseIdentifier: MyQRTableViewCell.id)
         
-        // 배경 색상 설정
-        view.backgroundColor = .speedMain3
     }
     
     // 뷰모델의 데이터와 뷰를 바인딩
