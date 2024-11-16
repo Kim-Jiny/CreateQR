@@ -36,6 +36,7 @@
 		3033991A2CE5F63200977E8A /* FetchAppVersionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303399192CE5F63200977E8A /* FetchAppVersionUseCase.swift */; };
 		3033991C2CE71D8400977E8A /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 3033991B2CE71D8400977E8A /* Localizable.xcstrings */; };
 		30A2B1C22CE7B06600063D92 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 30A2B1C12CE7B06600063D92 /* SnapKit */; };
+		30A2B1C92CE8C13B00063D92 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 30A2B1CB2CE8C13B00063D92 /* InfoPlist.strings */; };
 		30BBA9F22CB501E300A84090 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBA9F12CB501E300A84090 /* AppDelegate.swift */; };
 		30BBA9F42CB501E300A84090 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBA9F32CB501E300A84090 /* SceneDelegate.swift */; };
 		30BBA9FB2CB501E400A84090 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30BBA9FA2CB501E400A84090 /* Assets.xcassets */; };
@@ -120,6 +121,8 @@
 		303399172CE5F61400977E8A /* AppVersionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersionRepository.swift; sourceTree = "<group>"; };
 		303399192CE5F63200977E8A /* FetchAppVersionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchAppVersionUseCase.swift; sourceTree = "<group>"; };
 		3033991B2CE71D8400977E8A /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		30A2B1CA2CE8C13B00063D92 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		30A2B1CC2CE8C2F900063D92 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		30BBA9EE2CB501E300A84090 /* CreateQR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CreateQR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		30BBA9F12CB501E300A84090 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		30BBA9F32CB501E300A84090 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -416,6 +419,7 @@
 				30BBA9FA2CB501E400A84090 /* Assets.xcassets */,
 				30BBAA582CB522FA00A84090 /* AppColors.xcassets */,
 				3033991B2CE71D8400977E8A /* Localizable.xcstrings */,
+				30A2B1CB2CE8C13B00063D92 /* InfoPlist.strings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -663,6 +667,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ko,
 			);
 			mainGroup = 30BBA9E52CB501E300A84090;
 			packageReferences = (
@@ -684,6 +689,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30A2B1C92CE8C13B00063D92 /* InfoPlist.strings in Resources */,
 				303398FB2CE328AE00977E8A /* CreateQRCardType.xib in Resources */,
 				30BBA9FB2CB501E400A84090 /* Assets.xcassets in Resources */,
 				303399112CE482D000977E8A /* MyQRTableViewCell.xib in Resources */,
@@ -805,6 +811,15 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		30A2B1CB2CE8C13B00063D92 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				30A2B1CA2CE8C13B00063D92 /* en */,
+				30A2B1CC2CE8C2F900063D92 /* ko */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		30BBA9FC2CB501E400A84090 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -821,6 +836,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -884,6 +900,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -946,14 +963,14 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CreateQR/Resources/Info.plist;
 				INFOPLIST_KEY_NSAppleMusicUsageDescription = "";
-				INFOPLIST_KEY_NSCameraUsageDescription = "QR이미지를 스캔하기위해 카메라 권한이 필요합니다.";
-				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "QR이미지를 저장하기 위해 해당 권한이 필요합니다.";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "갤러리에서 QR이미지를 가지고 오기 위해 해당 권한이 필요합니다.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "${NSCameraUsageDescription}";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "${NSPhotoLibraryAddUsageDescription}";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "${NSPhotoLibraryUsageDescription}";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -978,14 +995,14 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CreateQR/Resources/Info.plist;
 				INFOPLIST_KEY_NSAppleMusicUsageDescription = "";
-				INFOPLIST_KEY_NSCameraUsageDescription = "QR이미지를 스캔하기위해 카메라 권한이 필요합니다.";
-				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "QR이미지를 저장하기 위해 해당 권한이 필요합니다.";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "갤러리에서 QR이미지를 가지고 오기 위해 해당 권한이 필요합니다.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "${NSCameraUsageDescription}";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "${NSPhotoLibraryAddUsageDescription}";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "${NSPhotoLibraryUsageDescription}";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

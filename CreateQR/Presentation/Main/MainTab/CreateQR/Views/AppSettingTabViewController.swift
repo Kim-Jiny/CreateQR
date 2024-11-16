@@ -90,7 +90,7 @@ class AppSettingTabViewController: UIViewController, StoryboardInstantiable, MFM
         let mailComposeVC = MFMailComposeViewController()
         mailComposeVC.mailComposeDelegate = self
         mailComposeVC.setToRecipients(["kjinyz@naver.com"]) // 수신인 설정
-        mailComposeVC.setSubject(NSLocalizedString("[QR Creation] App Inquiry", comment: "")) // 메일 제목
+        mailComposeVC.setSubject(NSLocalizedString("[QR Controller] App Inquiry", comment: "")) // 메일 제목
         mailComposeVC.setMessageBody(NSLocalizedString("Please write your inquiry regarding the app.", comment: ""), isHTML: false) // 메일 본문
         
         // 메일 작성 창 표시

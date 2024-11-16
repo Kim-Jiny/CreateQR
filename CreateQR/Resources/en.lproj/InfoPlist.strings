@@ -1,0 +1,12 @@
+/* 
+  InfoPlist.strings
+  CreateQR
+
+  Created by 김미진 on 11/16/24.
+  
+*/
+
+"NSCameraUsageDescription" = "Camera access is required to scan QR images.";
+"NSPhotoLibraryUsageDescription" = "Permission is required to import QR images from the gallery.";
+"NSPhotoLibraryAddUsageDescription" = "Permission is required to save QR images to the gallery.";
+
