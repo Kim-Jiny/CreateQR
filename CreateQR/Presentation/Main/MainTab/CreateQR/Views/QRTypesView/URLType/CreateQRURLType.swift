@@ -93,7 +93,7 @@ class CreateQRURLType: CreateQRTypeView {
     
     func getUrl() -> String {
         // urlTextField.text가 nil이거나 빈 문자열이면 기본 URL 반환
-        let defaultUrl = "You made it blank"
+        let defaultUrl = "QRController://scene/page?data=jiny"
 
         if let urlText = urlTextField.text, !urlText.isEmpty {
             return urlText // 입력된 URL을 반환
