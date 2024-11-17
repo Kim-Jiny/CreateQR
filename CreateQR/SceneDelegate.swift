@@ -62,22 +62,41 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         guard let url = URLContexts.first?.url else { return }
         print("deep url: \(url)")
+        if url.host == "qr" {
+            print("host = pr / path = \(url.path)")
+            if url.path == "/detail" {
+                
+            }
+        }
+        
+        // 다른 딥링크가 왔을때.
+        if let components = URLComponents(url: url, resolvingAgainstBaseURL: false) {
+            let queryItems = components.queryItems
+            let userId = queryItems?.first(where: { $0.name == "data" })?.value
+//            let itemId = queryItems?.first(where: { $0.name == "itemId" })?.value
+            
+            print("data ID: \(userId ?? "N/A")")
+//            print("Item ID: \(itemId ?? "N/A")")
+            
+            // 필요한 로직 수행
+//            navigateToScreen(userId: userId, itemId: itemId)
+        }
     }
     
-    func handleDeepLink(_ url: URL) {
-          
-          // component로 변환하고 query의 Item중 controller인것을 찾음. 여기선 deeplink://scene/page?controller<< 얘를 찾고 얘의 value인 second가 controller가됨
-          let components = URLComponents(url: url, resolvingAgainstBaseURL: true)
-          
-          if let controller = components?.queryItems?.first(where: { $0.name == "controller" })?.value {
-              print("@@@@")
-//              switch controller {
-//              case "second":
-//                  navigationToSecondController()
-//              default:
-//                  fatalError("unknownController")
-//              }
-          }
+    func handleQRDeepLink(_ url: URL) {
+        
+        // 다른 딥링크가 왔을때.
+        if let components = URLComponents(url: url, resolvingAgainstBaseURL: false) {
+            let queryItems = components.queryItems
+            let userId = queryItems?.first(where: { $0.name == "data" })?.value
+//            let itemId = queryItems?.first(where: { $0.name == "itemId" })?.value
+            
+            print("data ID: \(userId ?? "N/A")")
+//            print("Item ID: \(itemId ?? "N/A")")
+            
+            // 필요한 로직 수행
+//            navigateToScreen(userId: userId, itemId: itemId)
+        }
       }
 }
 
