@@ -59,6 +59,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 
-
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        guard let url = URLContexts.first?.url else { return }
+        print("deep url: \(url)")
+    }
+    
+    func handleDeepLink(_ url: URL) {
+          
+          // component로 변환하고 query의 Item중 controller인것을 찾음. 여기선 deeplink://scene/page?controller<< 얘를 찾고 얘의 value인 second가 controller가됨
+          let components = URLComponents(url: url, resolvingAgainstBaseURL: true)
+          
+          if let controller = components?.queryItems?.first(where: { $0.name == "controller" })?.value {
+              print("@@@@")
+//              switch controller {
+//              case "second":
+//                  navigationToSecondController()
+//              default:
+//                  fatalError("unknownController")
+//              }
+          }
+      }
 }
 

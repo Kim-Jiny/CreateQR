@@ -219,8 +219,7 @@
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="65" id="bQ6-Ay-Cdv"/>
                                                         </constraints>
-                                                        <state key="normal" title="Button"/>
-                                                        <buttonConfiguration key="configuration" style="plain"/>
+                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                         <connections>
                                                             <action selector="sendDeveloper:" destination="De8-6U-oJF" eventType="touchUpInside" id="bQ1-5w-xRT"/>
                                                         </connections>
@@ -346,7 +345,7 @@
                                 <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="op0-O8-WwR">
-                                        <rect key="frame" x="100.00000000000001" y="414.66666666666669" width="193.33333333333337" height="36"/>
+                                        <rect key="frame" x="196.66666666666666" y="414.66666666666669" width="0.0" height="0.0"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                         <color key="textColor" name="SpeedMain4"/>
                                         <nil key="highlightedColor"/>
