@@ -1,0 +1,12 @@
+/* 
+  InfoPlist.strings
+  CreateQR
+
+  Created by 김미진 on 11/16/24.
+  
+*/
+
+"NSCameraUsageDescription" = "Kameraberechtigung wird benötigt, um QR-Bilder zu scannen.";
+"NSPhotoLibraryUsageDescription" = "Berechtigung wird benötigt, um QR-Bilder aus der Galerie abzurufen.";
+"NSPhotoLibraryAddUsageDescription" = "Berechtigung wird benötigt, um QR-Bilder zu speichern.";
+"NSUserTrackingUsageDescription" = "Diese App fordert das Tracking von Nutzern an, um personalisierte Werbung bereitzustellen. Wenn Sie das Tracking ablehnen, können allgemeinere Werbung angezeigt werden.";

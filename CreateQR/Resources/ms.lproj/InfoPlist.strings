@@ -1,0 +1,12 @@
+/* 
+  InfoPlist.strings
+  CreateQR
+
+  Created by 김미진 on 11/16/24.
+  
+*/
+
+"NSCameraUsageDescription" = "Kebenaran kamera diperlukan untuk mengimbas imej QR.";
+"NSPhotoLibraryUsageDescription" = "Kebenaran diperlukan untuk mengakses imej QR dari galeri.";
+"NSPhotoLibraryAddUsageDescription" = "Kebenaran diperlukan untuk menyimpan imej QR.";
+"NSUserTrackingUsageDescription" = "Aplikasi ini meminta penjejakan pengguna untuk menyediakan iklan yang diperibadikan. Jika anda menolak penjejakan, iklan yang lebih umum mungkin akan dipaparkan.";

@@ -123,6 +123,8 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
             return CreateQRURLType()
         case .card:
             return CreateQRCardType()
+        case .menu:
+            return CreateQRBetaType()
         case .other:
             return CreateQRCardType()
         }

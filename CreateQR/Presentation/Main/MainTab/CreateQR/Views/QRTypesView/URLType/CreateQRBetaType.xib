@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CreateQRBetaType" customModule="CreateQR" customModuleProvider="target">
+            <connections>
+                <outlet property="noticeLB" destination="dfl-S2-SxG" id="XfM-v5-cJd"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="f8p-77-oD6">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Je-Yd-8Qb">
+                    <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ozR-oO-4Vu">
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="379.66666666666669"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ovb-mh-HPS">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="379.66666666666669"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </view>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dfl-S2-SxG">
+                                    <rect key="frame" x="0.0" y="379.66666666666669" width="393" height="0.0"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                    <color key="textColor" name="SpeedMain0"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="ovb-mh-HPS" firstAttribute="height" secondItem="4Je-Yd-8Qb" secondAttribute="height" multiplier="0.5" id="0N1-no-6Ez"/>
+                        <constraint firstItem="ozR-oO-4Vu" firstAttribute="top" secondItem="4Je-Yd-8Qb" secondAttribute="top" id="CNF-lL-SNG"/>
+                        <constraint firstAttribute="trailing" secondItem="ozR-oO-4Vu" secondAttribute="trailing" id="Jck-7p-hce"/>
+                        <constraint firstItem="ozR-oO-4Vu" firstAttribute="leading" secondItem="4Je-Yd-8Qb" secondAttribute="leading" id="Mfv-6N-QEW"/>
+                        <constraint firstItem="ozR-oO-4Vu" firstAttribute="width" secondItem="4Je-Yd-8Qb" secondAttribute="width" id="fhD-cP-z8D"/>
+                        <constraint firstAttribute="bottom" secondItem="ozR-oO-4Vu" secondAttribute="bottom" id="k9n-Bf-Fgz"/>
+                        <constraint firstItem="ozR-oO-4Vu" firstAttribute="height" secondItem="4Je-Yd-8Qb" secondAttribute="height" priority="1" id="rZc-vC-ot0"/>
+                    </constraints>
+                </scrollView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="Adb-jW-6xy"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="Adb-jW-6xy" firstAttribute="trailing" secondItem="4Je-Yd-8Qb" secondAttribute="trailing" id="OeV-fC-RbO"/>
+                <constraint firstItem="Adb-jW-6xy" firstAttribute="bottom" secondItem="4Je-Yd-8Qb" secondAttribute="bottom" id="WU9-6u-My3"/>
+                <constraint firstItem="4Je-Yd-8Qb" firstAttribute="leading" secondItem="Adb-jW-6xy" secondAttribute="leading" id="lCV-Wm-ws4"/>
+                <constraint firstItem="4Je-Yd-8Qb" firstAttribute="top" secondItem="Adb-jW-6xy" secondAttribute="top" id="ngO-wh-tSV"/>
+            </constraints>
+            <point key="canvasLocation" x="94" y="21"/>
+        </view>
+    </objects>
+    <resources>
+        <namedColor name="SpeedMain0">
+            <color red="0.30980392156862746" green="0.46274509803921571" blue="0.4392156862745098" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+    </resources>
+</document>

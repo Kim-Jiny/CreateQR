@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 enum CreateType: Codable {
-    case url, card, other
+    case url, card, menu, other
 }
 
 struct QRTypeItem: Equatable, Identifiable {

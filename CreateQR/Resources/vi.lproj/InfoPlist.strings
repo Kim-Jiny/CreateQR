@@ -1,0 +1,12 @@
+/* 
+  InfoPlist.strings
+  CreateQR
+
+  Created by 김미진 on 11/16/24.
+  
+*/
+
+"NSCameraUsageDescription" = "Cần quyền truy cập camera để quét hình ảnh QR.";
+"NSPhotoLibraryUsageDescription" = "Cần quyền truy cập để lấy hình ảnh QR từ thư viện.";
+"NSPhotoLibraryAddUsageDescription" = "Cần quyền truy cập để lưu hình ảnh QR.";
+"NSUserTrackingUsageDescription" = "Ứng dụng này yêu cầu theo dõi người dùng để cung cấp quảng cáo cá nhân hóa. Nếu bạn từ chối theo dõi, quảng cáo chung sẽ được hiển thị.";

@@ -6,7 +6,7 @@
   
 */
 
-"NSCameraUsageDescription" = "Camera access is required to scan QR images.";
-"NSPhotoLibraryUsageDescription" = "Permission is required to import QR images from the gallery.";
-"NSPhotoLibraryAddUsageDescription" = "Permission is required to save QR images to the gallery.";
-
+"NSCameraUsageDescription" = "Camera permission is required to scan QR images.";
+"NSPhotoLibraryUsageDescription" = "Permission is required to access QR images from the gallery.";
+"NSPhotoLibraryAddUsageDescription" = "Permission is required to save QR images.";
+"NSUserTrackingUsageDescription" = "This app requests user tracking to provide personalized ads. If you decline tracking, more general ads may be shown.";

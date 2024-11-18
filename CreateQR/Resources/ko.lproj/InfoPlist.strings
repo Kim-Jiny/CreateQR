@@ -9,3 +9,4 @@
 "NSCameraUsageDescription" = "QR이미지를 스캔하기위해 카메라 권한이 필요합니다.";
 "NSPhotoLibraryUsageDescription" = "갤러리에서 QR이미지를 가지고 오기 위해 해당 권한이 필요합니다.";
 "NSPhotoLibraryAddUsageDescription" = "QR이미지를 저장하기 위해 해당 권한이 필요합니다.";
+"NSUserTrackingUsageDescription" = "이 앱은 개인화된 광고를 제공하기 위해 사용자의 추적을 요청합니다. 추적을 거부하시면, 더 일반적인 광고가 표시될 수 있습니다.";
