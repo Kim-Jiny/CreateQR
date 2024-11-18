@@ -66,13 +66,17 @@ class MypageTabViewController: UIViewController, StoryboardInstantiable {
         viewModel.photoLibraryOnlyAddPermission.observe(on: self) { [weak self] hasPermission in
             guard let hasPermission = hasPermission, let img = self?.getQRImageFromQRDetailView() else { return }
             guard hasPermission else {
-                self?.showPermissionAlert()
+                DispatchQueue.main.async {
+                    self?.showPermissionAlert()
+                }
                 return
             }
             
             // 권한이 있을 경우 이미지 다운로드 후 완료 알림 표시
             viewModel.downloadImage(image: img) { [weak self] _ in
-                self?.showSaveAlert()
+                DispatchQueue.main.async {
+                    self?.showSaveAlert()
+                }
             }
         }
     }

@@ -25,10 +25,10 @@ class MainViewController: UITabBarController, StoryboardInstantiable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupViews()
-        setupBehaviours()
-        bind(to: viewModel)
-        viewModel.viewDidLoad()
+        self.setupViews()
+        self.setupBehaviours()
+        self.bind(to: self.viewModel)
+        self.viewModel.viewDidLoad()
     }
     
     private func bind(to viewModel: MainViewModel) {
@@ -63,6 +63,8 @@ class MainViewController: UITabBarController, StoryboardInstantiable {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
+        
+        
     }
     
     // 키보드 내리기

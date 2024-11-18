@@ -17,6 +17,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            AdmobManager.shared.setATT { _ in }
+        }
         return true
     }
 
