@@ -6,10 +6,13 @@
 //
 
 import UIKit
+import GoogleMobileAds
 
 class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
     var viewModel: MainViewModel?
     
+    @IBOutlet weak var mainStackView: UIStackView!
+    @IBOutlet weak var adView: UIView!
     @IBOutlet weak var qrTypeCollectionView: UICollectionView!
     @IBOutlet weak var qrTypeView: UIView!
     
@@ -23,6 +26,7 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
         if let viewModel = viewModel {
             bind(to: viewModel)
         }
+        setupAdView()
     }
     
     override func viewDidLayoutSubviews() {
@@ -35,12 +39,17 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
     }
     
     private func setupCV() {
+        self.navigationController?.navigationBar.isHidden = true
         self.qrTypeCollectionView.delegate = self
         self.qrTypeCollectionView.dataSource = self
         
         qrTypeCollectionView.register(UINib(nibName: QRTypeCollectionViewCell.id, bundle: .main), forCellWithReuseIdentifier: QRTypeCollectionViewCell.id)
     }
     
+    private func setupAdView() {
+        AdmobManager.shared.setMainBanner(adView, self, .main)
+    }
+     
     private func selecteTypeView(_ qrType: QRTypeItemViewModel) {
         qrTypeView.subviews.forEach {
             $0.removeFromSuperview()

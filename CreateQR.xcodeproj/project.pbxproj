@@ -73,6 +73,8 @@
 		30BBAA882CB913E500A84090 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBAA872CB913E500A84090 /* NetworkService.swift */; };
 		30BBAA8A2CB9141800A84090 /* RepositoryTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBAA892CB9141800A84090 /* RepositoryTask.swift */; };
 		30BBAA8D2CB9166300A84090 /* GetQRListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBAA8C2CB9166300A84090 /* GetQRListUseCase.swift */; };
+		30E4AE4C2CEAD42800B6C503 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 30E4AE4B2CEAD42800B6C503 /* GoogleMobileAds */; };
+		30E4AE4F2CEAD53E00B6C503 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E4AE4E2CEAD53E00B6C503 /* Config.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -163,6 +165,7 @@
 		30BBAA872CB913E500A84090 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		30BBAA892CB9141800A84090 /* RepositoryTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryTask.swift; sourceTree = "<group>"; };
 		30BBAA8C2CB9166300A84090 /* GetQRListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetQRListUseCase.swift; sourceTree = "<group>"; };
+		30E4AE4E2CEAD53E00B6C503 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +173,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30E4AE4C2CEAD42800B6C503 /* GoogleMobileAds in Frameworks */,
 				30A2B1C22CE7B06600063D92 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -505,6 +509,7 @@
 		30BBAA792CB911B700A84090 /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				30E4AE4D2CEAD53100B6C503 /* Admob */,
 				30BBAA7A2CB911CE00A84090 /* Utils */,
 				30BBAA812CB9131700A84090 /* DefaultRQListRepository.swift */,
 			);
@@ -578,6 +583,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		30E4AE4D2CEAD53100B6C503 /* Admob */ = {
+			isa = PBXGroup;
+			children = (
+				30E4AE4E2CEAD53E00B6C503 /* Config.swift */,
+			);
+			path = Admob;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -596,6 +609,7 @@
 			name = CreateQR;
 			packageProductDependencies = (
 				30A2B1C12CE7B06600063D92 /* SnapKit */,
+				30E4AE4B2CEAD42800B6C503 /* GoogleMobileAds */,
 			);
 			productName = WithRunning;
 			productReference = 30BBA9EE2CB501E300A84090 /* CreateQR.app */;
@@ -672,6 +686,7 @@
 			mainGroup = 30BBA9E52CB501E300A84090;
 			packageReferences = (
 				30A2B1C02CE7AFDF00063D92 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				30E4AE4A2CEAD42800B6C503 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
 			);
 			productRefGroup = 30BBA9EF2CB501E300A84090 /* Products */;
 			projectDirPath = "";
@@ -763,6 +778,7 @@
 				303398D52CDDF98D00977E8A /* CreateQRURLType.swift in Sources */,
 				30BBAA772CB90A5C00A84090 /* AccessibilityIdentifier.swift in Sources */,
 				3033990B2CE472D400977E8A /* QRItemRepository.swift in Sources */,
+				30E4AE4F2CEAD53E00B6C503 /* Config.swift in Sources */,
 				30BBAA802CB9130500A84090 /* QRListRepository.swift in Sources */,
 				3033991A2CE5F63200977E8A /* FetchAppVersionUseCase.swift in Sources */,
 				30BBA9F22CB501E300A84090 /* AppDelegate.swift in Sources */,
@@ -1142,6 +1158,14 @@
 				minimumVersion = 5.7.1;
 			};
 		};
+		30E4AE4A2CEAD42800B6C503 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.12.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1149,6 +1173,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 30A2B1C02CE7AFDF00063D92 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		30E4AE4B2CEAD42800B6C503 /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 30E4AE4A2CEAD42800B6C503 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

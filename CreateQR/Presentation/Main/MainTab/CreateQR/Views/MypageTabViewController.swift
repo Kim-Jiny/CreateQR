@@ -14,15 +14,17 @@ class MypageTabViewController: UIViewController, StoryboardInstantiable {
     
     // QR 목록을 보여줄 테이블 뷰 아웃렛
     @IBOutlet weak var myQRTableView: UITableView!
+    @IBOutlet weak var adView: UIView!
     @IBOutlet weak var emptyView: UIView!
     @IBOutlet weak var emptyLB: UILabel!
     private var isKeyboardVisible = false
+    @IBOutlet weak var adViewHeightConstraints: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
         setupTableView()
-        
+        setupAdView()
         // 뷰모델이 설정되어 있으면 바인딩 설정
         if let viewModel = viewModel {
             bind(to: viewModel)
@@ -39,6 +41,10 @@ class MypageTabViewController: UIViewController, StoryboardInstantiable {
         // 배경 색상 설정
         view.backgroundColor = .speedMain3
         emptyLB.text = NSLocalizedString("There are no saved QR's.\nPlease generate or scan a QR.", comment: "")
+    }
+    
+    private func setupAdView() {
+        AdmobManager.shared.setMainBanner(adView, self, .list)
     }
     
     // 테이블 뷰 초기 설정 및 등록 메서드
@@ -92,7 +98,7 @@ class MypageTabViewController: UIViewController, StoryboardInstantiable {
         
         // QRDetailView 전체화면에 추가
         qrDetailView.snp.makeConstraints {
-            $0.top.bottom.leading.trailing.equalTo(myQRTableView)
+            $0.top.bottom.leading.trailing.equalToSuperview()
         }
     }
     
@@ -140,25 +146,38 @@ class MypageTabViewController: UIViewController, StoryboardInstantiable {
         if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
             let keyboardHeight = keyboardFrame.height
             
+            isKeyboardVisible = true // 키보드 상태 업데이트
             // 필요한 UI 업데이트 수행
-            self.myQRTableView.snp.updateConstraints {
-                $0.bottom.equalToSuperview().inset(keyboardHeight)
-            }
-            UIView.animate(withDuration: 5) { [weak self] in
-                self?.view.layoutIfNeeded()
+            
+            for subview in view.subviews {
+                if let qrDetailView = subview as? QRDetailView {
+                    qrDetailView.snp.updateConstraints {
+                        $0.bottom.equalToSuperview().inset(keyboardHeight)
+                    }
+                    UIView.animate(withDuration: 5) { [weak self] in
+                        self?.view.layoutIfNeeded()
+                    }
+                    
+                    return
+                }
             }
         }
-        isKeyboardVisible = true // 키보드 상태 업데이트
     }
 
     // 키보드가 사라질 때 호출
     @objc private func keyboardWillHide(_ notification: Notification) {
-        self.myQRTableView.snp.updateConstraints {
-            $0.bottom.equalToSuperview()
-        }
         isKeyboardVisible = false // 키보드 상태 업데이트
-        UIView.animate(withDuration: 5) { [weak self] in
-            self?.view.layoutIfNeeded()
+        for subview in view.subviews {
+            if let qrDetailView = subview as? QRDetailView {
+                qrDetailView.snp.updateConstraints {
+                    $0.bottom.equalToSuperview()
+                }
+                UIView.animate(withDuration: 5) { [weak self] in
+                    self?.view.layoutIfNeeded()
+                }
+                
+                return
+            }
         }
     }
 }
