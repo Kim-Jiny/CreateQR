@@ -78,7 +78,6 @@ class MainViewController: UITabBarController, StoryboardInstantiable {
     }
     
     private func updateItems() {
-        print("success get main\(viewModel.typeItems.value)")
         
     }
 }

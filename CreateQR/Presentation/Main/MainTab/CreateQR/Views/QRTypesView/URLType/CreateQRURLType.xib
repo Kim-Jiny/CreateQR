@@ -11,7 +11,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CreateQRURLType" customModule="CreateQR" customModuleProvider="target">
             <connections>
+                <outlet property="colorBtn" destination="jnV-Z7-yUh" id="4P8-bI-BXy"/>
                 <outlet property="generateBtn" destination="eg8-uS-a8E" id="DZy-A9-0iN"/>
+                <outlet property="logoBtn" destination="iRU-TU-vfx" id="78Q-p0-UCl"/>
                 <outlet property="mainScrollView" destination="Oc4-lz-voy" id="PBG-ju-T65"/>
                 <outlet property="qrImg" destination="k5T-6b-1qJ" id="m2w-Jn-ElM"/>
                 <outlet property="qrStackView" destination="MIE-1W-7Kb" id="ygb-bT-EXe"/>
@@ -69,7 +71,7 @@
                                     </constraints>
                                 </view>
                                 <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="MIE-1W-7Kb">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="383"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="438"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hrr-S6-QC9">
                                             <rect key="frame" x="0.0" y="0.0" width="393" height="333"/>
@@ -89,14 +91,56 @@
                                                 <constraint firstItem="k5T-6b-1qJ" firstAttribute="centerX" secondItem="hrr-S6-QC9" secondAttribute="centerX" id="ys9-JL-fGH"/>
                                             </constraints>
                                         </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HOn-CW-obX">
-                                            <rect key="frame" x="0.0" y="333" width="393" height="50"/>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T29-1d-kNZ">
+                                            <rect key="frame" x="0.0" y="333" width="393" height="55"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="aJ7-I9-1UK">
+                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Jov-jJ-UGV">
+                                                    <rect key="frame" x="30" y="0.0" width="333" height="50"/>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jnV-Z7-yUh">
+                                                            <rect key="frame" x="0.0" y="0.0" width="161.66666666666666" height="50"/>
+                                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                            <state key="normal">
+                                                                <color key="titleColor" name="SpeedMain0"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="colorBtn:" destination="-1" eventType="touchUpInside" id="Qg1-3x-tMm"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iRU-TU-vfx">
+                                                            <rect key="frame" x="171.66666666666663" y="0.0" width="161.33333333333337" height="50"/>
+                                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                            <state key="normal">
+                                                                <color key="titleColor" name="SpeedMain0"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="logoBtn:" destination="-1" eventType="touchUpInside" id="Fy7-Hw-R4R"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="50" id="k54-yz-0u3"/>
+                                                    </constraints>
+                                                </stackView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="Jov-jJ-UGV" secondAttribute="trailing" constant="30" id="9Vy-lO-PfN"/>
+                                                <constraint firstItem="Jov-jJ-UGV" firstAttribute="leading" secondItem="T29-1d-kNZ" secondAttribute="leading" constant="30" id="Dr4-IM-beh"/>
+                                                <constraint firstAttribute="bottom" secondItem="Jov-jJ-UGV" secondAttribute="bottom" constant="5" id="Lat-eN-WBf"/>
+                                                <constraint firstItem="Jov-jJ-UGV" firstAttribute="top" secondItem="T29-1d-kNZ" secondAttribute="top" id="sVl-BC-uqz"/>
+                                            </constraints>
+                                        </view>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HOn-CW-obX">
+                                            <rect key="frame" x="0.0" y="388" width="393" height="50"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="aJ7-I9-1UK">
                                                     <rect key="frame" x="30" y="0.0" width="333" height="50"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9fM-qV-FYR">
-                                                            <rect key="frame" x="0.0" y="0.0" width="156.66666666666666" height="50"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="161.66666666666666" height="50"/>
                                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                                             <color key="tintColor" name="SpeedMain0"/>
                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -105,7 +149,7 @@
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cKx-C2-jwn">
-                                                            <rect key="frame" x="176.66666666666663" y="0.0" width="156.33333333333337" height="50"/>
+                                                            <rect key="frame" x="171.66666666666663" y="0.0" width="161.33333333333337" height="50"/>
                                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                                             <color key="tintColor" name="SpeedMain0"/>
                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>

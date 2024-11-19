@@ -156,7 +156,7 @@ class ScanQRTabViewController: UIViewController, StoryboardInstantiable, UIImage
     }
     
     func qrDataAlert(_ qrCode: String) {
-        // 알림 또는 화면에 표시할 수도 있습니다.
+        //QR 스캔했을 때 저장, 사파리 오픈을 선택 할 수 있음.
         let alert = UIAlertController(title: NSLocalizedString("View QR Content", comment:"View QR Content"), message: qrCode, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment:"OK"), style: .default, handler: { _ in
             self.viewModel?.scannedResult.value = ""
@@ -170,8 +170,8 @@ class ScanQRTabViewController: UIViewController, StoryboardInstantiable, UIImage
         }
         
         alert.addAction(UIAlertAction(title: NSLocalizedString("Save", comment:"Save"), style: .default, handler: { _ in
-            let qrImg = self.viewModel?.generateQR(from: qrCode, color: .black, backgroundColor: .white, logo: nil)
-            let item = QRItem(title: NSLocalizedString("Untitled", comment:"Untitled"), qrImageData: qrImg?.pngData(), qrType: .other, qrData: qrCode)
+            let qrImg = self.viewModel?.generateQR(from: qrCode, color: .black, backgroundColor: .white, logo: nil, logoStyle: .square)
+            let item = QRItem(title: NSLocalizedString("Untitled", comment:"Untitled"), qrImageData: qrImg?.pngData(), qrType: .other, qrData: qrCode, qrColor: UIColor.black.toHex() ?? "000000FF", backColor: UIColor.white.toHex() ?? "FFFFFFFF", logo: nil, logoStyle: .square)
             self.viewModel?.addMyQR(item)
             self.viewModel?.scannedResult.value = ""
         }))

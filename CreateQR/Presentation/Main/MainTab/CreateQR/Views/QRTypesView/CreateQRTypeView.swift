@@ -9,9 +9,15 @@ import Foundation
 import UIKit
 
 protocol QRTypeDelegate: AnyObject {
-    func generateQR(url : String) -> UIImage?
+    func generateQR(url : String)
     func saveImage()
     func shareImage()
+    func colorPicker()
+    func addLogo()
+}
+
+enum ColorAreaType {
+    case contents, back
 }
 
 class CreateQRTypeView: UIView {

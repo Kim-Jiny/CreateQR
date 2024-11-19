@@ -33,7 +33,7 @@ protocol MainViewModelInput {
     func updateQRItem(_ item: QRItem)
     func fetchMyQRList()
     func loadLatestVersion(completion: @escaping (String?) -> Void)
-    func generateQR(from string: String, color: UIColor, backgroundColor: UIColor, logo: UIImage?) -> UIImage?
+    func generateQR(from string: String, color: UIColor, backgroundColor: UIColor, logo: UIImage?, logoStyle: LogoStyle) -> UIImage?
 }
 
 // Output 프로토콜: 뷰모델에서 뷰로 전달될 데이터들
@@ -46,6 +46,8 @@ protocol MainViewModelOutput {
     var photoLibraryPermission: Observable<Bool?> { get }
     var photoLibraryOnlyAddPermission: Observable<Bool?> { get }
     var createQRItem: Observable<QRItem?> { get }
+    var selectedQRColor: Observable<UIColor?> { get }
+    var selectedBackColor: Observable<UIColor?> { get }
 }
 
 // MainViewModel 타입: Input과 Output을 모두 결합한 타입
@@ -76,6 +78,8 @@ final class DefaultMainViewModel: MainViewModel {
     let photoLibraryPermission: Observable<Bool?> = Observable(nil) // 사진 라이브러리 권한 상태
     let photoLibraryOnlyAddPermission: Observable<Bool?> = Observable(nil) // 사진 라이브러리 추가 권한 상태
     var createQRItem: Observable<QRItem?> = Observable(nil) // QR 이미지
+    var selectedQRColor: Observable<UIColor?> = Observable(nil) // QR 컬러
+    var selectedBackColor: Observable<UIColor?> = Observable(nil) // QR 컬러
     
     // MARK: - Init (초기화)
     init(
@@ -227,7 +231,7 @@ final class DefaultMainViewModel: MainViewModel {
     // MARK: - Create QR
     
     // QR 코드 생성 함수 (색상 변경 및 커스텀 이미지 추가 포함)
-    func generateQR(from string: String, color: UIColor, backgroundColor: UIColor, logo: UIImage?) -> UIImage? {
+    func generateQR(from string: String, color: UIColor, backgroundColor: UIColor, logo: UIImage?, logoStyle: LogoStyle) -> UIImage? {
         // QR 코드 문자열을 CIImage로 변환
         let data = string.data(using: .utf8)
         
@@ -261,7 +265,12 @@ final class DefaultMainViewModel: MainViewModel {
         
         // 로고가 있는 경우 QR 코드 중앙에 추가
         if let qrUIImage = qrUIImage, let logo = logo {
-            return overlayLogo(on: qrUIImage, logo: logo)
+            switch logoStyle {
+            case .circle:
+                return overlayCircularLogo(on: qrUIImage, logo: logo)
+            case .square:
+                return overlayLogo(on: qrUIImage, logo: logo)
+            }
         }
         
         func convert(_ cmage:CIImage) -> UIImage? {
@@ -280,14 +289,45 @@ final class DefaultMainViewModel: MainViewModel {
         let logoSize = CGSize(width: qrSize.width / 4, height: qrSize.height / 4) // 로고 크기 조정
         let logoOrigin = CGPoint(x: (qrSize.width - logoSize.width) / 2, y: (qrSize.height - logoSize.height) / 2)
         
-        UIGraphicsBeginImageContext(qrSize)
-        qrImage.draw(in: CGRect(origin: .zero, size: qrSize))
+        // UIGraphicsImageRenderer로 고해상도 이미지 렌더링
+        let renderer = UIGraphicsImageRenderer(size: qrSize)
+        let combinedImage = renderer.image { context in
+            // QR 코드 그리기
+            qrImage.draw(in: CGRect(origin: .zero, size: qrSize))
+            
+            // 로고 그리기
+            logo.draw(in: CGRect(origin: logoOrigin, size: logoSize))
+        }
         
-        // 로고 그리기
-        logo.draw(in: CGRect(origin: logoOrigin, size: logoSize))
+        return combinedImage
+    }
+    
+    //QR 코드 위에 원형 로고를 추가 하는 함수
+    private func overlayCircularLogo(on qrImage: UIImage, logo: UIImage) -> UIImage? {
+        let qrSize = qrImage.size
+        let logoSize = CGSize(width: qrSize.width / 4, height: qrSize.height / 4) // 로고 크기 조정
+        let logoOrigin = CGPoint(x: (qrSize.width - logoSize.width) / 2, y: (qrSize.height - logoSize.height) / 2)
         
-        let combinedImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
+        // 원형 마스크 만들기
+        let renderer = UIGraphicsImageRenderer(size: logoSize)
+        let circularLogo = renderer.image { context in
+            // 원형 마스크를 그린다.
+            let path = UIBezierPath(ovalIn: CGRect(origin: .zero, size: logoSize))
+            path.addClip()
+            
+            // 원형 마스크로 로고 그리기
+            logo.draw(in: CGRect(origin: .zero, size: logoSize))
+        }
+        
+        // 고해상도 컨텍스트로 QR 코드와 원형 로고를 결합
+        let combinedRenderer = UIGraphicsImageRenderer(size: qrSize)
+        let combinedImage = combinedRenderer.image { context in
+            // QR 코드 그리기
+            qrImage.draw(in: CGRect(origin: .zero, size: qrSize))
+            
+            // 원형 로고 그리기
+            circularLogo.draw(in: CGRect(origin: logoOrigin, size: logoSize))
+        }
         
         return combinedImage
     }

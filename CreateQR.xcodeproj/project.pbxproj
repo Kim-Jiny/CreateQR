@@ -83,6 +83,8 @@
 		30E4AE622CEB2C4C00B6C503 /* CreateQRBetaType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E4AE602CEB2C4B00B6C503 /* CreateQRBetaType.swift */; };
 		30E4AE642CEB2D0800B6C503 /* CreateQRBetaType.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30E4AE632CEB2D0800B6C503 /* CreateQRBetaType.xib */; };
 		30E4AE662CEB2D6A00B6C503 /* AdmobManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E4AE652CEB2D6A00B6C503 /* AdmobManager.swift */; };
+		30E4AE6F2CEB3F2B00B6C503 /* ColorPickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E4AE6E2CEB3F2B00B6C503 /* ColorPickerManager.swift */; };
+		30E4AE732CEC32AE00B6C503 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E4AE722CEC32AE00B6C503 /* UIColor+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -183,6 +185,8 @@
 		30E4AE602CEB2C4B00B6C503 /* CreateQRBetaType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQRBetaType.swift; sourceTree = "<group>"; };
 		30E4AE632CEB2D0800B6C503 /* CreateQRBetaType.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateQRBetaType.xib; sourceTree = "<group>"; };
 		30E4AE652CEB2D6A00B6C503 /* AdmobManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdmobManager.swift; sourceTree = "<group>"; };
+		30E4AE6E2CEB3F2B00B6C503 /* ColorPickerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerManager.swift; sourceTree = "<group>"; };
+		30E4AE722CEC32AE00B6C503 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -408,6 +412,7 @@
 				30BBAA382CB5081800A84090 /* XibInstantiable.swift */,
 				30BBAA522CB517AA00A84090 /* StoryboardInstantiable.swift */,
 				30BBAA832CB9137800A84090 /* Cancellable.swift */,
+				30E4AE6E2CEB3F2B00B6C503 /* ColorPickerManager.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -417,6 +422,7 @@
 			children = (
 				30BBAA3B2CB5096F00A84090 /* UIViewController+AddBehaviors.swift */,
 				303398DC2CDDFD2A00977E8A /* UIView+Extensions.swift */,
+				30E4AE722CEC32AE00B6C503 /* UIColor+Extensions.swift */,
 			);
 			path = Extenstions;
 			sourceTree = "<group>";
@@ -791,6 +797,7 @@
 				30BBAA372CB5075C00A84090 /* DispatchQueueType.swift in Sources */,
 				30BBAA842CB9137800A84090 /* Cancellable.swift in Sources */,
 				303398D82CDDFA1E00977E8A /* CreateQRTypeView.swift in Sources */,
+				30E4AE732CEC32AE00B6C503 /* UIColor+Extensions.swift in Sources */,
 				303399092CE4728400977E8A /* QRItemUseCase.swift in Sources */,
 				303398ED2CE1A93A00977E8A /* CameraPermissionDataSource.swift in Sources */,
 				30BBAA342CB506C300A84090 /* QRTypeItemViewModel.swift in Sources */,
@@ -802,6 +809,7 @@
 				303399032CE4714100977E8A /* TimestampProvider.swift in Sources */,
 				303398F72CE1F6F800977E8A /* PermissionRepository.swift in Sources */,
 				30BBAA8D2CB9166300A84090 /* GetQRListUseCase.swift in Sources */,
+				30E4AE6F2CEB3F2B00B6C503 /* ColorPickerManager.swift in Sources */,
 				303398CF2CDDE76800977E8A /* QRTypeCollectionViewCell.swift in Sources */,
 				30BBAA262CB5030C00A84090 /* MainCoordinator.swift in Sources */,
 				303399182CE5F61400977E8A /* AppVersionRepository.swift in Sources */,

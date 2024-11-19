@@ -17,6 +17,8 @@ class CreateQRURLType: CreateQRTypeView {
     @IBOutlet weak var generateBtn: UIButton!
     @IBOutlet weak var saveBtn: UIButton!
     @IBOutlet weak var shareBtn: UIButton!
+    @IBOutlet weak var colorBtn: UIButton!
+    @IBOutlet weak var logoBtn: UIButton!
     @IBOutlet weak var qrStackView: UIStackView!
     private var saveBtnIndicator: UIActivityIndicatorView!
     
@@ -47,8 +49,17 @@ class CreateQRURLType: CreateQRTypeView {
         shareBtn.layer.cornerRadius = 10
         shareBtn.layer.borderWidth = 2.0
         shareBtn.layer.borderColor = UIColor.speedMain4.cgColor
-    
         
+        colorBtn.setTitle(NSLocalizedString("Color", comment: "Share"), for: .normal)
+        colorBtn.layer.cornerRadius = 10
+        colorBtn.layer.borderWidth = 2.0
+        colorBtn.layer.borderColor = UIColor.speedMain4.cgColor
+        
+        logoBtn.setTitle(NSLocalizedString("Add logo", comment: "Add logo"), for: .normal)
+        logoBtn.layer.cornerRadius = 10
+        logoBtn.layer.borderWidth = 2.0
+        logoBtn.layer.borderColor = UIColor.speedMain4.cgColor
+    
         saveBtnIndicator = UIActivityIndicatorView(style: .medium)
         saveBtnIndicator.color = .white
         saveBtnIndicator.translatesAutoresizingMaskIntoConstraints = false
@@ -56,14 +67,12 @@ class CreateQRURLType: CreateQRTypeView {
         saveBtnIndicator.snp.makeConstraints { 
             $0.center.equalTo(saveBtn.snp.center)
         }
+        
     }
     
     @IBAction func generateBtn(_ sender: Any) {
         let url = getUrl()
-        if let img = self.delegate?.generateQR(url: url) {
-            qrImg.image = img
-            qrStackView.isHidden = false
-        }
+        self.delegate?.generateQR(url: url)
     }
     
     @IBAction func saveBtn(_ sender: Any) {
@@ -79,6 +88,14 @@ class CreateQRURLType: CreateQRTypeView {
             return
         }
         self.delegate?.shareImage()
+    }
+    
+    @IBAction func colorBtn(_ sender: Any) {
+        self.delegate?.colorPicker()
+    }
+    
+    @IBAction func logoBtn(_ sender: Any) {
+        self.delegate?.addLogo()
     }
     
     func getAppIcon() -> UIImage? {

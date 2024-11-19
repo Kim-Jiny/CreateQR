@@ -18,6 +18,7 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
     
     var typeView: CreateQRTypeView? = nil
     private var isFirstSelectionDone = false
+    private var colorPickerManager = ColorPickerManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,7 +60,6 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
         guard let typeView = self.typeView else { return }
         typeView.delegate = self
         qrTypeView.addSubview(typeView)
-        print(qrTypeView.subviews)
         typeView.snp.makeConstraints {
             $0.top.bottom.leading.trailing.equalToSuperview()
         }
@@ -82,14 +82,28 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
                 return
             }
             
-            viewModel.downloadImage(image: img, completion: {
-                print("is download complete? \($0)")
+            viewModel.downloadImage(image: img, completion: { _ in 
                 DispatchQueue.main.async {
                     self?.showSaveAlert()
                 }
             })
         }
+        viewModel.createQRItem.observe(on: self) { qritem in
+            if let imgData = qritem?.qrImageData, let img = UIImage(data: imgData), let existingTypeView = self.qrTypeView.subviews.first(where: { $0 is CreateQRURLType }) as? CreateQRURLType {
+                existingTypeView.qrImg.image = img
+                existingTypeView.qrStackView.isHidden = false
+            } else {
+                print("typeView가 qrTypeView의 서브뷰에 없습니다.")
+            }
+        }
         
+//        viewModel.selectedQRColor.observe(on: self) { selectedColor in
+//            <#code#>
+//        }
+//        
+//        viewModel.selectedBackColor.observe(on: self) { selectedColor in
+//            <#code#>
+//        }
     }
     
     private func updateItems() {
@@ -214,11 +228,119 @@ extension CreateQRTabViewController: QRTypeDelegate {
         present(actionSheet, animated: true, completion: nil)
     }
     
-    func generateQR(url: String) -> UIImage? {
-        let qrImg = self.viewModel?.generateQR(from: url, color: .black, backgroundColor: .white, logo: nil)
-        let item = QRItem(title: NSLocalizedString("Untitled", comment:"Untitled"), qrImageData: qrImg?.pngData(), qrType: .url, qrData: url)
+    func generateQR(url: String) {
+        let qrImg = self.viewModel?.generateQR(from: url, color: .black, backgroundColor: .white, logo: nil, logoStyle: .square)
+        let item = QRItem(title: NSLocalizedString("Untitled", comment:"Untitled"), qrImageData: qrImg?.pngData(), qrType: .url, qrData: url, qrColor: UIColor.black.toHex() ?? "000000FF", backColor: UIColor.white.toHex() ?? "FFFFFFFF", logo: nil, logoStyle: .square)
         
         viewModel?.createQRItem.value = item
-        return qrImg
+    }
+    
+    func colorPicker() {
+        
+        let actionSheet = UIAlertController(title: nil, message: NSLocalizedString("Select the part where you want to change the color.", comment:"컬러를 변경할 부분을 선택하세요."), preferredStyle: .actionSheet)
+        
+        let option1 = UIAlertAction(title: NSLocalizedString("QR code", comment:"QR code"), style: .default) { action in
+            self.colorPickerManager.showColorPicker(self) { selectedColor in
+                if let color = selectedColor {
+                    if let createdItem = self.viewModel?.createQRItem.value {
+                        let qrImg = self.viewModel?.generateQR(from: createdItem.title, color: color, backgroundColor: UIColor(hex: createdItem.backColor) ?? .white , logo: UIImage(data: createdItem.logo ?? Data()), logoStyle: createdItem.logoStyle)
+                        let item = QRItem(title: NSLocalizedString("Untitled", comment:"Untitled"), qrImageData: qrImg?.pngData(), qrType: .url, qrData: createdItem.qrData, qrColor: color.toHex() ?? createdItem.qrColor, backColor: createdItem.backColor, logo: createdItem.logo, logoStyle: createdItem.logoStyle)
+                        
+                        self.viewModel?.createQRItem.value = item
+                    }
+                }else {
+                    print("유저 컬러 선택 취소")
+                }
+            }
+        }
+        let option2 = UIAlertAction(title: NSLocalizedString("Background", comment:"Background"), style: .default) { action in
+            self.colorPickerManager.showColorPicker(self) { selectedColor in
+                if let color = selectedColor {
+                    if let createdItem = self.viewModel?.createQRItem.value {
+                        let qrImg = self.viewModel?.generateQR(from: createdItem.title, color: UIColor(hex: createdItem.qrColor) ?? .black, backgroundColor: color, logo: UIImage(data: createdItem.logo ?? Data()), logoStyle: createdItem.logoStyle)
+                        let item = QRItem(title: NSLocalizedString("Untitled", comment:"Untitled"), qrImageData: qrImg?.pngData(), qrType: .url, qrData: createdItem.qrData, qrColor: createdItem.qrColor, backColor: color.toHex() ?? createdItem.backColor, logo: createdItem.logo, logoStyle: createdItem.logoStyle)
+                        
+                        self.viewModel?.createQRItem.value = item
+                    }
+                }else {
+                    print("유저 컬러 선택 취소")
+                }
+            }
+        }
+        let cancel = UIAlertAction(title: NSLocalizedString("Cancel", comment:"Cancel"), style: .cancel) { action in
+            print("컬러 선택 안함")
+        }
+        
+        actionSheet.addAction(option1)
+        actionSheet.addAction(option2)
+        actionSheet.addAction(cancel)
+        
+        // iPad에서 Action Sheet가 팝오버로 나타나도록 설정 (iPad에서는 필수)
+        if let popoverController = actionSheet.popoverPresentationController {
+            popoverController.sourceView = self.view // 액션시트가 나타날 뷰 설정
+            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 1, height: 1) // 팝오버의 위치를 화면 중앙으로 설정
+            popoverController.permittedArrowDirections = [] // 화살표 방향을 없애는 설정 (선택 사항)
+        }
+        
+        present(actionSheet, animated: true, completion: nil)
+    }
+    
+    func addLogo() {
+        
+        
+        let actionSheet = UIAlertController(title: nil, message: NSLocalizedString("Please choose the shape of the logo to add.", comment:"추가할 로고의 모양을 선택해주세요."), preferredStyle: .actionSheet)
+        
+        let option1 = UIAlertAction(title: NSLocalizedString("Circle", comment:"Circle"), style: .default) { action in
+            
+            self.viewModel?.createQRItem.value?.logoStyle = .circle
+            self.openImagePicker()
+        }
+        let option2 = UIAlertAction(title: NSLocalizedString("Square", comment:"Square"), style: .default) { action in
+            
+            self.viewModel?.createQRItem.value?.logoStyle = .square
+            self.openImagePicker()
+        }
+        let cancel = UIAlertAction(title: NSLocalizedString("Cancel", comment:"Cancel"), style: .cancel) { action in
+            print("로고 추가 취소")
+        }
+        
+        actionSheet.addAction(option1)
+        actionSheet.addAction(option2)
+        actionSheet.addAction(cancel)
+        
+        // iPad에서 Action Sheet가 팝오버로 나타나도록 설정 (iPad에서는 필수)
+        if let popoverController = actionSheet.popoverPresentationController {
+            popoverController.sourceView = self.view // 액션시트가 나타날 뷰 설정
+            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 1, height: 1) // 팝오버의 위치를 화면 중앙으로 설정
+            popoverController.permittedArrowDirections = [] // 화살표 방향을 없애는 설정 (선택 사항)
+        }
+        
+        present(actionSheet, animated: true, completion: nil)
+        
+    }
+    
+    private func openImagePicker() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        present(imagePicker, animated: true, completion: nil)
+    }
+}
+
+extension CreateQRTabViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+    // 이미지가 선택되었을 때 호출되는 델리게이트 메서드
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        picker.dismiss(animated: true, completion: nil)
+        
+        if let selectedImage = info[.originalImage] as? UIImage {
+            if let createdItem = self.viewModel?.createQRItem.value {
+                let qrImg = self.viewModel?.generateQR(from: createdItem.title, color: UIColor(hex: createdItem.qrColor) ?? .black, backgroundColor: UIColor(hex: createdItem.backColor) ?? .white, logo: selectedImage, logoStyle: createdItem.logoStyle)
+                let item = QRItem(title: NSLocalizedString("Untitled", comment:"Untitled"), qrImageData: qrImg?.pngData(), qrType: .url, qrData: createdItem.qrData, qrColor: createdItem.qrColor, backColor: createdItem.backColor, logo: selectedImage.pngData(), logoStyle: createdItem.logoStyle)
+                
+                self.viewModel?.createQRItem.value = item
+            }
+        }else {
+            print("유저가 이미지 선택을 취소함")
+        }
     }
 }

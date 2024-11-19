@@ -16,26 +16,24 @@ class AdmobManager: NSObject {
     
     func setATT(completion: @escaping (Bool) -> Void) {
         // ATT 권한 요청
-        if #available(iOS 14, *) {
-            ATTrackingManager.requestTrackingAuthorization { status in
-                switch status {
-                case .authorized:
-                    print("사용자가 광고 추적을 허용했습니다.")
-                    completion(true)
-                    return
-                case .denied:
-                    print("사용자가 광고 추적을 거부했습니다.")
-                case .notDetermined:
-                    print("사용자가 아직 광고 추적 권한을 결정하지 않았습니다.")
-                case .restricted:
-                    print("광고 추적 권한이 제한되었습니다.")
-                @unknown default:
-                    print("알 수 없는 상태")
-                }
-                
-                completion(false)
+        ATTrackingManager.requestTrackingAuthorization { status in
+            switch status {
+            case .authorized:
+                print("사용자가 광고 추적을 허용했습니다.")
+                completion(true)
                 return
+            case .denied:
+                print("사용자가 광고 추적을 거부했습니다.")
+            case .notDetermined:
+                print("사용자가 아직 광고 추적 권한을 결정하지 않았습니다.")
+            case .restricted:
+                print("광고 추적 권한이 제한되었습니다.")
+            @unknown default:
+                print("알 수 없는 상태")
             }
+            
+            completion(false)
+            return
         }
     }
     
@@ -69,9 +67,9 @@ class AdmobManager: NSObject {
         bannerView.delegate = self
         switch type {
         case .main:
-            bannerView.adUnitID = AdmobConfig.Banner.testKey
+            bannerView.adUnitID = AdmobConfig.Banner.mainKey
         case .list:
-            bannerView.adUnitID = AdmobConfig.Banner.testKey
+            bannerView.adUnitID = AdmobConfig.Banner.listKey
         }
         bannerView.rootViewController = sender
         bannerView.load(GADRequest())
