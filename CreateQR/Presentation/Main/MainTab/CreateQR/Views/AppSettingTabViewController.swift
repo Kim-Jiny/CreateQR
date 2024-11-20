@@ -37,9 +37,10 @@ class AppSettingTabViewController: UIViewController, StoryboardInstantiable, MFM
             nowAppVersion.isHidden = false
             self.nowAppVersion.text = String(format: NSLocalizedString("Current Version: %@", comment: ""), nowVersion)
             
-            viewModel?.loadLatestVersion(completion: {[weak self] version in
+            viewModel?.loadLatestVersion(completion: { [weak self] version in
                 DispatchQueue.main.async {
-                    if let version = version, nowVersion != version {
+                    if let version = version, nowVersion.compare(version, options: .numeric) == .orderedAscending {
+                        // 현재 버전이 앱스토어 버전보다 낮은 경우
                         self?.newAppVersion.isHidden = false
                         self?.newAppVersion.text = String(format: NSLocalizedString("Latest version on store: %@", comment: ""), version)
 
@@ -47,12 +48,12 @@ class AppSettingTabViewController: UIViewController, StoryboardInstantiable, MFM
                         self?.newAppVersion.textColor = .speedMain0
                         
                         self?.appUpdateView.isHidden = false
-                    }else {
+                    } else {
+                        // 최신 버전인 경우
                         self?.newAppVersion.isHidden = false
                         self?.newAppVersion.font = .systemFont(ofSize: 10)
                         self?.newAppVersion.textColor = .speedMain2
                         self?.newAppVersion.text = NSLocalizedString("This is the latest version.", comment: "")
-
                         
                         self?.appUpdateView.isHidden = true
                     }
