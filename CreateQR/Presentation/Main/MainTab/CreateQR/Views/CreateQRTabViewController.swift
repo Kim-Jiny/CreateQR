@@ -245,7 +245,8 @@ extension CreateQRTabViewController: QRTypeDelegate {
                     if let createdItem = self.viewModel?.createQRItem.value {
                         let qrImg = self.viewModel?.generateQR(from: createdItem.title, color: color, backgroundColor: UIColor(hex: createdItem.backColor) ?? .white , logo: UIImage(data: createdItem.logo ?? Data()), logoStyle: createdItem.logoStyle)
                         let item = QRItem(title: NSLocalizedString("Untitled", comment:"Untitled"), qrImageData: qrImg?.pngData(), qrType: .url, qrData: createdItem.qrData, qrColor: color.toHex() ?? createdItem.qrColor, backColor: createdItem.backColor, logo: createdItem.logo, logoStyle: createdItem.logoStyle)
-                        
+                        print("qr color : \(color.toHex())  //  back color : \(createdItem.backColor)")
+                        print("qr color : \(item.qrColor)  //  back color : \(item.backColor)")
                         self.viewModel?.createQRItem.value = item
                     }
                 }else {
@@ -259,7 +260,8 @@ extension CreateQRTabViewController: QRTypeDelegate {
                     if let createdItem = self.viewModel?.createQRItem.value {
                         let qrImg = self.viewModel?.generateQR(from: createdItem.title, color: UIColor(hex: createdItem.qrColor) ?? .black, backgroundColor: color, logo: UIImage(data: createdItem.logo ?? Data()), logoStyle: createdItem.logoStyle)
                         let item = QRItem(title: NSLocalizedString("Untitled", comment:"Untitled"), qrImageData: qrImg?.pngData(), qrType: .url, qrData: createdItem.qrData, qrColor: createdItem.qrColor, backColor: color.toHex() ?? createdItem.backColor, logo: createdItem.logo, logoStyle: createdItem.logoStyle)
-                        
+                        print("qr color : \(createdItem.qrColor)  //  back color : \(color.toHex())")
+                        print("qr color : \(item.qrColor)  //  back color : \(item.backColor)")
                         self.viewModel?.createQRItem.value = item
                     }
                 }else {

@@ -232,6 +232,7 @@ final class DefaultMainViewModel: MainViewModel {
     
     // QR 코드 생성 함수 (색상 변경 및 커스텀 이미지 추가 포함)
     func generateQR(from string: String, color: UIColor, backgroundColor: UIColor, logo: UIImage?, logoStyle: LogoStyle) -> UIImage? {
+        print("make color qr : \(color.toHex()) / back : \(backgroundColor.toHex())")
         // QR 코드 문자열을 CIImage로 변환
         let data = string.data(using: .utf8)
         
