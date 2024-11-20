@@ -175,6 +175,7 @@
 		30BBAA872CB913E500A84090 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		30BBAA892CB9141800A84090 /* RepositoryTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryTask.swift; sourceTree = "<group>"; };
 		30BBAA8C2CB9166300A84090 /* GetQRListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetQRListUseCase.swift; sourceTree = "<group>"; };
+		30C44DFC2CEE03FB004EEA79 /* CreateQR.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CreateQR.entitlements; sourceTree = "<group>"; };
 		30E4AE4E2CEAD53E00B6C503 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		30E4AE502CEB1E4900B6C503 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		30E4AE5B2CEB2B2400B6C503 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -311,6 +312,7 @@
 		30BBA9F02CB501E300A84090 /* CreateQR */ = {
 			isa = PBXGroup;
 			children = (
+				30C44DFC2CEE03FB004EEA79 /* CreateQR.entitlements */,
 				30BBAA852CB913C900A84090 /* Infrastructure */,
 				30BBAA562CB522B900A84090 /* Resources */,
 				30BBAA782CB910E100A84090 /* Data */,
@@ -1025,6 +1027,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = CreateQR/CreateQR.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HW9XJ9J5M2;
@@ -1058,6 +1061,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = CreateQR/CreateQR.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HW9XJ9J5M2;
