@@ -14,6 +14,8 @@ protocol QRTypeDelegate: AnyObject {
     func shareImage()
     func colorPicker()
     func addLogo()
+    
+    func wifiTitlePopup()
 }
 
 enum ColorAreaType {

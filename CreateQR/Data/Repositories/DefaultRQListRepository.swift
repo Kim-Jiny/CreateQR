@@ -22,10 +22,11 @@ extension DefaultRQListRepository: QRListRepository {
         
         //  MARK: - 추후 통신이 추가해야함.
         
-        let urlType = QRTypeItem(id: "type1", title: "Text", titleImage: UIImage(systemName: "safari"), detailImage: nil, type: .url)
+        let urlType = QRTypeItem(id: "defaultType", title: "Text", titleImage: UIImage(systemName: "safari"), detailImage: nil, type: .url)
+        let wifiType = QRTypeItem(id: "wifiType", title: "Wifi", titleImage: UIImage(systemName: "wifi.router"), detailImage: nil, type: .wifi)
         let cardType = QRTypeItem(id: "type2", title: "Beta", titleImage: UIImage(systemName: "person.crop.square.filled.and.at.rectangle"), detailImage: nil, type: .card)
 //        let menuType = QRTypeItem(id: "type3", title: "Menu", titleImage: UIImage(systemName: "doc.text.below.ecg"), detailImage: nil, type: .menu)
-        completion(.success([urlType, cardType]))
+        completion(.success([urlType, wifiType, cardType]))
         
         return task
     }

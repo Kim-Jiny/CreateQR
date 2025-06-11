@@ -92,6 +92,9 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
             if let imgData = qritem?.qrImageData, let img = UIImage(data: imgData), let existingTypeView = self.qrTypeView.subviews.first(where: { $0 is CreateQRURLType }) as? CreateQRURLType {
                 existingTypeView.qrImg.image = img
                 existingTypeView.qrStackView.isHidden = false
+            } else if let imgData = qritem?.qrImageData, let img = UIImage(data: imgData), let existingTypeView = self.qrTypeView.subviews.first(where: { $0 is CreateQRWifiType }) as? CreateQRWifiType {
+                existingTypeView.qrImg.image = img
+                existingTypeView.qrStackView.isHidden = false
             } else {
                 print("typeView가 qrTypeView의 서브뷰에 없습니다.")
             }
@@ -141,6 +144,8 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
             return CreateQRBetaType()
         case .other:
             return CreateQRCardType()
+        case .wifi:
+            return CreateQRWifiType()
         }
     }
 }
@@ -318,6 +323,24 @@ extension CreateQRTabViewController: QRTypeDelegate {
         
         present(actionSheet, animated: true, completion: nil)
         
+    }
+    
+    func wifiTitlePopup() {
+        let alert = UIAlertController(title: nil, message: NSLocalizedString("Enter Wi-Fi name.", comment:"Enter Wi-Fi name"), preferredStyle: .alert)
+        
+        let cancel = UIAlertAction(title: NSLocalizedString("OK", comment:"OK"), style: .cancel) { _ in
+        }
+        
+        alert.addAction(cancel)
+        
+        // iPad에서 Action Sheet가 팝오버로 나타나도록 설정 (iPad에서는 필수)
+        if let popoverController = alert.popoverPresentationController {
+            popoverController.sourceView = self.view // 액션시트가 나타날 뷰 설정
+            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 1, height: 1) // 팝오버의 위치를 화면 중앙으로 설정
+            popoverController.permittedArrowDirections = [] // 화살표 방향을 없애는 설정 (선택 사항)
+        }
+        
+        present(alert, animated: true, completion: nil)
     }
     
     private func openImagePicker() {
