@@ -169,9 +169,9 @@ class ScanQRTabViewController: UIViewController, StoryboardInstantiable, UIImage
             }))
         }
         
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Save", comment:"Save"), style: .default, handler: { _ in
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Save to app as QR code", comment:"Save to app as QR code"), style: .default, handler: { _ in
             let qrImg = self.viewModel?.generateQR(from: qrCode, color: .black, backgroundColor: .white, logo: nil, logoStyle: .square)
-            let item = QRItem(title: NSLocalizedString("Untitled", comment:"Untitled"), qrImageData: qrImg?.pngData(), qrType: .other, qrData: qrCode, qrColor: UIColor.black.toHex() ?? "000000FF", backColor: UIColor.white.toHex() ?? "FFFFFFFF", logo: nil, logoStyle: .square)
+            let item = QRItem(title: qrCode, qrImageData: qrImg?.pngData(), qrType: .other, qrData: qrCode, qrColor: UIColor.black.toHex() ?? "000000FF", backColor: UIColor.white.toHex() ?? "FFFFFFFF", logo: nil, logoStyle: .square)
             self.viewModel?.addMyQR(item)
             self.viewModel?.scannedResult.value = ""
         }))

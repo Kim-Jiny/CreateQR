@@ -65,12 +65,16 @@ class AdmobManager: NSObject {
             $0.top.bottom.leading.trailing.equalToSuperview()
         }
         bannerView.delegate = self
+#if DEBUG
+        bannerView.adUnitID = AdmobConfig.Banner.testKey
+#else
         switch type {
         case .main:
             bannerView.adUnitID = AdmobConfig.Banner.mainKey
         case .list:
             bannerView.adUnitID = AdmobConfig.Banner.listKey
         }
+#endif
         bannerView.rootViewController = sender
         bannerView.load(GADRequest())
     }

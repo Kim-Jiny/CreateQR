@@ -49,7 +49,19 @@ class QRScannerRepositoryImpl: NSObject, QRScannerRepository, AVCaptureMetadataO
         if (captureSession?.canAddOutput(metadataOutput) == true) {
             captureSession?.addOutput(metadataOutput)
             metadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
-            metadataOutput.metadataObjectTypes = [.qr]
+            metadataOutput.metadataObjectTypes = [
+                .qr,
+                .ean8,
+                .ean13,
+                .pdf417,
+                .code128,
+                .code39,
+                .code93,
+                .upce,
+                .aztec,
+                .dataMatrix,
+                .itf14
+            ]
         } else {
             return
         }

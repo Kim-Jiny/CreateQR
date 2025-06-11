@@ -208,7 +208,6 @@ extension CreateQRTabViewController: QRTypeDelegate {
         let option2 = UIAlertAction(title: NSLocalizedString("Save to My QR", comment:"Save to My QR"), style: .default) { action in
             self.viewModel?.addMyQR(nil)
             self.typeView?.imageSaveCompleted()
-            // TODO: - 저장완료된 이펙트 개발필요
         }
         let cancel = UIAlertAction(title: NSLocalizedString("Cancel", comment:"Cancel"), style: .cancel) { action in
             self.typeView?.imageSaveCompleted()

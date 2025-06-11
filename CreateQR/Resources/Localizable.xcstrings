@@ -1642,6 +1642,47 @@
         }
       }
     },
+    "Save to app as QR code" : {
+      "comment" : "Save to app as QR code",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In der App als QR-Code speichern"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enregistrer QR dans l’app"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アプリにQRコードとして保存"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "앱에 QR코드로 저장하기"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Simpan ke aplikasi sebagai kod QR"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lưu vào ứng dụng dưới dạng mã QR"
+          }
+        }
+      }
+    },
     "Save to My QR" : {
       "comment" : "Save to My QR",
       "localizations" : {
