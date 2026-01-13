@@ -13,12 +13,6 @@
 		300211312DFA01000013A023 /* CreateQRBankTransferType.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3002112B2DFA01000013A023 /* CreateQRBankTransferType.xib */; };
 		300211322DFA01000013A023 /* CreateQRContactType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3002112C2DFA01000013A023 /* CreateQRContactType.swift */; };
 		300211332DFA01000013A023 /* CreateQRContactType.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3002112D2DFA01000013A023 /* CreateQRContactType.xib */; };
-		300211A22DFA01000013A023 /* CreateQRInstagramType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300211A02DFA01000013A023 /* CreateQRInstagramType.swift */; };
-		300211A32DFA01000013A023 /* CreateQRInstagramType.xib in Resources */ = {isa = PBXBuildFile; fileRef = 300211A12DFA01000013A023 /* CreateQRInstagramType.xib */; };
-		300211A42DFA01000013A023 /* CreateQRYouTubeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300211A52DFA01000013A023 /* CreateQRYouTubeType.swift */; };
-		300211A62DFA01000013A023 /* CreateQRYouTubeType.xib in Resources */ = {isa = PBXBuildFile; fileRef = 300211A72DFA01000013A023 /* CreateQRYouTubeType.xib */; };
-		300211A82DFA03000013A023 /* CreateQRTikTokType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300211A92DFA03000013A023 /* CreateQRTikTokType.swift */; };
-		300211AA2DFA03000013A023 /* CreateQRTikTokType.xib in Resources */ = {isa = PBXBuildFile; fileRef = 300211AB2DFA03000013A023 /* CreateQRTikTokType.xib */; };
 		300211422DFA02000013A023 /* AppDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300211412DFA02000013A023 /* AppDIContainer.swift */; };
 		3002114A2DFA02000013A023 /* PermissionRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300211442DFA02000013A023 /* PermissionRepositoryProtocol.swift */; };
 		3002114B2DFA02000013A023 /* QRListRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300211452DFA02000013A023 /* QRListRepositoryProtocol.swift */; };
@@ -35,6 +29,12 @@
 		300211792DFA02000013A023 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300211722DFA02000013A023 /* BaseViewController.swift */; };
 		3002117A2DFA02000013A023 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300211732DFA02000013A023 /* BaseViewModel.swift */; };
 		3002117B2DFA02000013A023 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300211742DFA02000013A023 /* ViewModelType.swift */; };
+		300211A22DFA01000013A023 /* CreateQRInstagramType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300211A02DFA01000013A023 /* CreateQRInstagramType.swift */; };
+		300211A32DFA01000013A023 /* CreateQRInstagramType.xib in Resources */ = {isa = PBXBuildFile; fileRef = 300211A12DFA01000013A023 /* CreateQRInstagramType.xib */; };
+		300211A42DFA01000013A023 /* CreateQRYouTubeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300211A52DFA01000013A023 /* CreateQRYouTubeType.swift */; };
+		300211A62DFA01000013A023 /* CreateQRYouTubeType.xib in Resources */ = {isa = PBXBuildFile; fileRef = 300211A72DFA01000013A023 /* CreateQRYouTubeType.xib */; };
+		300211A82DFA03000013A023 /* CreateQRTikTokType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300211A92DFA03000013A023 /* CreateQRTikTokType.swift */; };
+		300211AA2DFA03000013A023 /* CreateQRTikTokType.xib in Resources */ = {isa = PBXBuildFile; fileRef = 300211AB2DFA03000013A023 /* CreateQRTikTokType.xib */; };
 		303398CF2CDDE76800977E8A /* QRTypeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303398CD2CDDE76800977E8A /* QRTypeCollectionViewCell.swift */; };
 		303398D02CDDE76800977E8A /* QRTypeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 303398CE2CDDE76800977E8A /* QRTypeCollectionViewCell.xib */; };
 		303398D52CDDF98D00977E8A /* CreateQRURLType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303398D42CDDF98D00977E8A /* CreateQRURLType.swift */; };
@@ -139,12 +139,6 @@
 		3002112B2DFA01000013A023 /* CreateQRBankTransferType.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateQRBankTransferType.xib; sourceTree = "<group>"; };
 		3002112C2DFA01000013A023 /* CreateQRContactType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQRContactType.swift; sourceTree = "<group>"; };
 		3002112D2DFA01000013A023 /* CreateQRContactType.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateQRContactType.xib; sourceTree = "<group>"; };
-		300211A02DFA01000013A023 /* CreateQRInstagramType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQRInstagramType.swift; sourceTree = "<group>"; };
-		300211A12DFA01000013A023 /* CreateQRInstagramType.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateQRInstagramType.xib; sourceTree = "<group>"; };
-		300211A52DFA01000013A023 /* CreateQRYouTubeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQRYouTubeType.swift; sourceTree = "<group>"; };
-		300211A72DFA01000013A023 /* CreateQRYouTubeType.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateQRYouTubeType.xib; sourceTree = "<group>"; };
-		300211A92DFA03000013A023 /* CreateQRTikTokType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQRTikTokType.swift; sourceTree = "<group>"; };
-		300211AB2DFA03000013A023 /* CreateQRTikTokType.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateQRTikTokType.xib; sourceTree = "<group>"; };
 		300211412DFA02000013A023 /* AppDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDIContainer.swift; sourceTree = "<group>"; };
 		300211442DFA02000013A023 /* PermissionRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionRepositoryProtocol.swift; sourceTree = "<group>"; };
 		300211452DFA02000013A023 /* QRListRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRListRepositoryProtocol.swift; sourceTree = "<group>"; };
@@ -161,6 +155,12 @@
 		300211722DFA02000013A023 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		300211732DFA02000013A023 /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		300211742DFA02000013A023 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
+		300211A02DFA01000013A023 /* CreateQRInstagramType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQRInstagramType.swift; sourceTree = "<group>"; };
+		300211A12DFA01000013A023 /* CreateQRInstagramType.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateQRInstagramType.xib; sourceTree = "<group>"; };
+		300211A52DFA01000013A023 /* CreateQRYouTubeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQRYouTubeType.swift; sourceTree = "<group>"; };
+		300211A72DFA01000013A023 /* CreateQRYouTubeType.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateQRYouTubeType.xib; sourceTree = "<group>"; };
+		300211A92DFA03000013A023 /* CreateQRTikTokType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQRTikTokType.swift; sourceTree = "<group>"; };
+		300211AB2DFA03000013A023 /* CreateQRTikTokType.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateQRTikTokType.xib; sourceTree = "<group>"; };
 		303398CD2CDDE76800977E8A /* QRTypeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRTypeCollectionViewCell.swift; sourceTree = "<group>"; };
 		303398CE2CDDE76800977E8A /* QRTypeCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QRTypeCollectionViewCell.xib; sourceTree = "<group>"; };
 		303398D42CDDF98D00977E8A /* CreateQRURLType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQRURLType.swift; sourceTree = "<group>"; };
@@ -1207,7 +1207,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 1.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jiny.swift.GenerateQR;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1241,7 +1241,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 1.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jiny.swift.GenerateQR;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
