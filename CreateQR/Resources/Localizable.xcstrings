@@ -1290,6 +1290,12 @@
         }
       }
     },
+    "Open in TikTok" : {
+
+    },
+    "Open in YouTube" : {
+
+    },
     "Phone" : {
       "comment" : "Phone"
     },
@@ -2401,6 +2407,9 @@
         }
       }
     },
+    "TikTok Username" : {
+      "comment" : "TikTok Username"
+    },
     "Unable to send email." : {
       "localizations" : {
         "de" : {
@@ -2656,6 +2665,9 @@
           }
         }
       }
+    },
+    "YouTube Channel" : {
+      "comment" : "YouTube Channel"
     }
   },
   "version" : "1.0"

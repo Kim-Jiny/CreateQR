@@ -170,6 +170,18 @@ class ScanQRTabViewController: UIViewController, StoryboardInstantiable, UIImage
             return
         }
 
+        // YouTube URL 감지
+        if let youtubeChannel = extractYouTubeChannel(from: qrCode) {
+            showYouTubeAlert(channel: youtubeChannel, originalURL: qrCode)
+            return
+        }
+
+        // TikTok URL 감지
+        if let tiktokUsername = extractTikTokUsername(from: qrCode) {
+            showTikTokAlert(username: tiktokUsername, originalURL: qrCode)
+            return
+        }
+
         //QR 스캔했을 때 저장, 사파리 오픈을 선택 할 수 있음.
         let alert = UIAlertController(title: NSLocalizedString("View QR Content", comment:"View QR Content"), message: qrCode, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment:"OK"), style: .default, handler: { _ in
@@ -253,6 +265,165 @@ class ScanQRTabViewController: UIViewController, StoryboardInstantiable, UIImage
         ) { _ in
             let qrImg = self.viewModel?.generateQR(from: originalURL, color: .black, backgroundColor: .white, logo: nil, logoStyle: .square)
             let item = QRItem(title: "@\(username)", qrImageData: qrImg?.pngData(), qrType: .instagram, qrData: originalURL, qrColor: UIColor.black.toHex() ?? "000000FF", backColor: UIColor.white.toHex() ?? "FFFFFFFF", logo: nil, logoStyle: .square)
+            self.viewModel?.addMyQR(item)
+            self.viewModel?.scannedResult.value = ""
+        })
+
+        // 취소
+        alert.addAction(UIAlertAction(
+            title: NSLocalizedString("Cancel", comment: ""),
+            style: .cancel
+        ) { _ in
+            self.viewModel?.scannedResult.value = ""
+        })
+
+        present(alert, animated: true)
+    }
+
+    // MARK: - YouTube 처리
+    private func extractYouTubeChannel(from urlString: String) -> String? {
+        // youtube.com/@channel 또는 youtube.com/channel/xxx 패턴 감지
+        guard let url = URL(string: urlString),
+              let host = url.host?.lowercased(),
+              (host == "youtube.com" || host == "www.youtube.com" || host == "m.youtube.com" || host == "youtu.be") else {
+            return nil
+        }
+
+        let pathComponents = url.pathComponents.filter { $0 != "/" }
+
+        // @핸들 형식
+        if let first = pathComponents.first, first.hasPrefix("@") {
+            return first
+        }
+
+        // /channel/XXXXX 형식
+        if pathComponents.count >= 2 && pathComponents[0] == "channel" {
+            return pathComponents[1]
+        }
+
+        // /c/채널명 형식
+        if pathComponents.count >= 2 && pathComponents[0] == "c" {
+            return "@\(pathComponents[1])"
+        }
+
+        // youtu.be/비디오ID (비디오 링크는 채널이 아님)
+        if host == "youtu.be" {
+            return nil
+        }
+
+        return nil
+    }
+
+    private func showYouTubeAlert(channel: String, originalURL: String) {
+        let displayChannel = channel.hasPrefix("@") ? channel : "@\(channel)"
+
+        let alert = UIAlertController(
+            title: "YouTube",
+            message: displayChannel,
+            preferredStyle: .alert
+        )
+
+        // YouTube 앱으로 열기
+        let youtubeAppURL = URL(string: "youtube://\(originalURL.replacingOccurrences(of: "https://", with: "").replacingOccurrences(of: "http://", with: ""))")
+        if let appURL = youtubeAppURL, UIApplication.shared.canOpenURL(appURL) {
+            alert.addAction(UIAlertAction(
+                title: NSLocalizedString("Open in YouTube", comment: ""),
+                style: .default
+            ) { _ in
+                self.viewModel?.scannedResult.value = ""
+                UIApplication.shared.open(appURL)
+            })
+        }
+
+        // 웹으로 열기
+        if let webURL = URL(string: originalURL) {
+            alert.addAction(UIAlertAction(
+                title: NSLocalizedString("Open in Safari", comment: ""),
+                style: .default
+            ) { _ in
+                self.viewModel?.scannedResult.value = ""
+                UIApplication.shared.open(webURL)
+            })
+        }
+
+        // QR로 저장
+        alert.addAction(UIAlertAction(
+            title: NSLocalizedString("Save to app as QR code", comment: ""),
+            style: .default
+        ) { _ in
+            let qrImg = self.viewModel?.generateQR(from: originalURL, color: .black, backgroundColor: .white, logo: nil, logoStyle: .square)
+            let item = QRItem(title: displayChannel, qrImageData: qrImg?.pngData(), qrType: .youtube, qrData: originalURL, qrColor: UIColor.black.toHex() ?? "000000FF", backColor: UIColor.white.toHex() ?? "FFFFFFFF", logo: nil, logoStyle: .square)
+            self.viewModel?.addMyQR(item)
+            self.viewModel?.scannedResult.value = ""
+        })
+
+        // 취소
+        alert.addAction(UIAlertAction(
+            title: NSLocalizedString("Cancel", comment: ""),
+            style: .cancel
+        ) { _ in
+            self.viewModel?.scannedResult.value = ""
+        })
+
+        present(alert, animated: true)
+    }
+
+    // MARK: - TikTok 처리
+    private func extractTikTokUsername(from urlString: String) -> String? {
+        // tiktok.com/@username 패턴 감지
+        guard let url = URL(string: urlString),
+              let host = url.host?.lowercased(),
+              (host == "tiktok.com" || host == "www.tiktok.com" || host == "m.tiktok.com" || host == "vm.tiktok.com") else {
+            return nil
+        }
+
+        let pathComponents = url.pathComponents.filter { $0 != "/" }
+
+        // @유저네임 형식
+        if let first = pathComponents.first, first.hasPrefix("@") {
+            return String(first.dropFirst())
+        }
+
+        return nil
+    }
+
+    private func showTikTokAlert(username: String, originalURL: String) {
+        let alert = UIAlertController(
+            title: "TikTok",
+            message: "@\(username)",
+            preferredStyle: .alert
+        )
+
+        // TikTok 앱으로 열기
+        let tiktokAppURL = URL(string: "snssdk1233://user/profile/\(username)")
+        if let appURL = tiktokAppURL, UIApplication.shared.canOpenURL(appURL) {
+            alert.addAction(UIAlertAction(
+                title: NSLocalizedString("Open in TikTok", comment: ""),
+                style: .default
+            ) { _ in
+                self.viewModel?.scannedResult.value = ""
+                UIApplication.shared.open(appURL)
+            })
+        }
+
+        // 웹으로 열기
+        if let webURL = URL(string: originalURL) {
+            alert.addAction(UIAlertAction(
+                title: NSLocalizedString("Open in Safari", comment: ""),
+                style: .default
+            ) { _ in
+                self.viewModel?.scannedResult.value = ""
+                UIApplication.shared.open(webURL)
+            })
+        }
+
+        // QR로 저장
+        alert.addAction(UIAlertAction(
+            title: NSLocalizedString("Save to app as QR code", comment: ""),
+            style: .default
+        ) { _ in
+            let qrImg = self.viewModel?.generateQR(from: originalURL, color: .black, backgroundColor: .white, logo: nil, logoStyle: .square)
+            let item = QRItem(title: "@\(username)", qrImageData: qrImg?.pngData(), qrType: .tiktok, qrData: originalURL, qrColor: UIColor.black.toHex() ?? "000000FF", backColor: UIColor.white.toHex() ?? "FFFFFFFF", logo: nil, logoStyle: .square)
             self.viewModel?.addMyQR(item)
             self.viewModel?.scannedResult.value = ""
         })

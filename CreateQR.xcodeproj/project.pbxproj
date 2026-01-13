@@ -15,6 +15,10 @@
 		300211332DFA01000013A023 /* CreateQRContactType.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3002112D2DFA01000013A023 /* CreateQRContactType.xib */; };
 		300211A22DFA01000013A023 /* CreateQRInstagramType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300211A02DFA01000013A023 /* CreateQRInstagramType.swift */; };
 		300211A32DFA01000013A023 /* CreateQRInstagramType.xib in Resources */ = {isa = PBXBuildFile; fileRef = 300211A12DFA01000013A023 /* CreateQRInstagramType.xib */; };
+		300211A42DFA01000013A023 /* CreateQRYouTubeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300211A52DFA01000013A023 /* CreateQRYouTubeType.swift */; };
+		300211A62DFA01000013A023 /* CreateQRYouTubeType.xib in Resources */ = {isa = PBXBuildFile; fileRef = 300211A72DFA01000013A023 /* CreateQRYouTubeType.xib */; };
+		300211A82DFA03000013A023 /* CreateQRTikTokType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300211A92DFA03000013A023 /* CreateQRTikTokType.swift */; };
+		300211AA2DFA03000013A023 /* CreateQRTikTokType.xib in Resources */ = {isa = PBXBuildFile; fileRef = 300211AB2DFA03000013A023 /* CreateQRTikTokType.xib */; };
 		300211422DFA02000013A023 /* AppDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300211412DFA02000013A023 /* AppDIContainer.swift */; };
 		3002114A2DFA02000013A023 /* PermissionRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300211442DFA02000013A023 /* PermissionRepositoryProtocol.swift */; };
 		3002114B2DFA02000013A023 /* QRListRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300211452DFA02000013A023 /* QRListRepositoryProtocol.swift */; };
@@ -137,6 +141,10 @@
 		3002112D2DFA01000013A023 /* CreateQRContactType.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateQRContactType.xib; sourceTree = "<group>"; };
 		300211A02DFA01000013A023 /* CreateQRInstagramType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQRInstagramType.swift; sourceTree = "<group>"; };
 		300211A12DFA01000013A023 /* CreateQRInstagramType.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateQRInstagramType.xib; sourceTree = "<group>"; };
+		300211A52DFA01000013A023 /* CreateQRYouTubeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQRYouTubeType.swift; sourceTree = "<group>"; };
+		300211A72DFA01000013A023 /* CreateQRYouTubeType.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateQRYouTubeType.xib; sourceTree = "<group>"; };
+		300211A92DFA03000013A023 /* CreateQRTikTokType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQRTikTokType.swift; sourceTree = "<group>"; };
+		300211AB2DFA03000013A023 /* CreateQRTikTokType.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateQRTikTokType.xib; sourceTree = "<group>"; };
 		300211412DFA02000013A023 /* AppDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDIContainer.swift; sourceTree = "<group>"; };
 		300211442DFA02000013A023 /* PermissionRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionRepositoryProtocol.swift; sourceTree = "<group>"; };
 		300211452DFA02000013A023 /* QRListRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRListRepositoryProtocol.swift; sourceTree = "<group>"; };
@@ -364,6 +372,10 @@
 				3002112D2DFA01000013A023 /* CreateQRContactType.xib */,
 				300211A02DFA01000013A023 /* CreateQRInstagramType.swift */,
 				300211A12DFA01000013A023 /* CreateQRInstagramType.xib */,
+				300211A52DFA01000013A023 /* CreateQRYouTubeType.swift */,
+				300211A72DFA01000013A023 /* CreateQRYouTubeType.xib */,
+				300211A92DFA03000013A023 /* CreateQRTikTokType.swift */,
+				300211AB2DFA03000013A023 /* CreateQRTikTokType.xib */,
 			);
 			path = URLType;
 			sourceTree = "<group>";
@@ -873,6 +885,8 @@
 				300211312DFA01000013A023 /* CreateQRBankTransferType.xib in Resources */,
 				300211332DFA01000013A023 /* CreateQRContactType.xib in Resources */,
 				300211A32DFA01000013A023 /* CreateQRInstagramType.xib in Resources */,
+				300211A62DFA01000013A023 /* CreateQRYouTubeType.xib in Resources */,
+				300211AA2DFA03000013A023 /* CreateQRTikTokType.xib in Resources */,
 				30BBA9FB2CB501E400A84090 /* Assets.xcassets in Resources */,
 				303399112CE482D000977E8A /* MyQRTableViewCell.xib in Resources */,
 				303398DB2CDDFA8000977E8A /* CreateQRURLType.xib in Resources */,
@@ -939,6 +953,8 @@
 				300211302DFA01000013A023 /* CreateQRBankTransferType.swift in Sources */,
 				300211322DFA01000013A023 /* CreateQRContactType.swift in Sources */,
 				300211A22DFA01000013A023 /* CreateQRInstagramType.swift in Sources */,
+				300211A42DFA01000013A023 /* CreateQRYouTubeType.swift in Sources */,
+				300211A82DFA03000013A023 /* CreateQRTikTokType.swift in Sources */,
 				300211422DFA02000013A023 /* AppDIContainer.swift in Sources */,
 				3002114A2DFA02000013A023 /* PermissionRepositoryProtocol.swift in Sources */,
 				3002114B2DFA02000013A023 /* QRListRepositoryProtocol.swift in Sources */,
