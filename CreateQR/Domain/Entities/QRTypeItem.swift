@@ -11,6 +11,8 @@ import UIKit
 enum CreateType: Codable {
     case url, card, menu, other
     case wifi
+    case bankTransfer
+    case contact
 }
 
 struct QRTypeItem: Equatable, Identifiable {

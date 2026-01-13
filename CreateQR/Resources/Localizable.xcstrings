@@ -41,6 +41,15 @@
         }
       }
     },
+    "Account Holder" : {
+      "comment" : "Account Holder"
+    },
+    "Account Holder Name" : {
+
+    },
+    "Account Number" : {
+      "comment" : "Account Number"
+    },
     "Add logo" : {
       "comment" : "Add logo",
       "localizations" : {
@@ -81,6 +90,9 @@
           }
         }
       }
+    },
+    "Amount (Optional)" : {
+      "comment" : "Amount"
     },
     "An unknown error occurred." : {
       "comment" : "알 수 없는 오류가 발생했습니다.",
@@ -257,6 +269,12 @@
           }
         }
       }
+    },
+    "Bank" : {
+      "comment" : "Bank"
+    },
+    "Bank Transfer" : {
+      "comment" : "Bank Transfer QR"
     },
     "Camera Permission Required" : {
       "comment" : "Camera Permission Required",
@@ -463,6 +481,15 @@
         }
       }
     },
+    "Company" : {
+      "comment" : "Company"
+    },
+    "Company Name (Optional)" : {
+
+    },
+    "Contact" : {
+      "comment" : "Contact QR"
+    },
     "Contact Us" : {
       "localizations" : {
         "de" : {
@@ -625,6 +652,9 @@
         }
       }
     },
+    "Done" : {
+
+    },
     "Download Complete" : {
       "comment" : "Download Complete",
       "localizations" : {
@@ -665,6 +695,9 @@
           }
         }
       }
+    },
+    "Email" : {
+      "comment" : "Email"
     },
     "Enter Wi-Fi name." : {
       "comment" : "Enter Wi-Fi name",
@@ -787,6 +820,9 @@
           }
         }
       }
+    },
+    "Full Name" : {
+
     },
     "Generate" : {
       "localizations" : {
@@ -1110,6 +1146,9 @@
         }
       }
     },
+    "Name" : {
+      "comment" : "Name"
+    },
     "No QR code found" : {
       "comment" : "No QR code found",
       "localizations" : {
@@ -1232,6 +1271,9 @@
           }
         }
       }
+    },
+    "Phone" : {
+      "comment" : "Phone"
     },
     "Photo access permission is required to save the photo. Please change the permission in Settings." : {
       "comment" : "Photo access permission is required to save the photo. Please change the permission in Settings.",
@@ -1887,6 +1929,9 @@
         }
       }
     },
+    "Select Bank" : {
+
+    },
     "Select the part where you want to change the color." : {
       "comment" : "컬러를 변경할 부분을 선택하세요.",
       "localizations" : {
@@ -2009,6 +2054,9 @@
           }
         }
       }
+    },
+    "SNS / Website" : {
+      "comment" : "SNS"
     },
     "Square" : {
       "comment" : "Square",

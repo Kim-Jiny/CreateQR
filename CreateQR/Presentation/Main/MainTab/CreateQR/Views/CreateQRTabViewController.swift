@@ -89,10 +89,21 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
             })
         }
         viewModel.createQRItem.observe(on: self) { qritem in
-            if let imgData = qritem?.qrImageData, let img = UIImage(data: imgData), let existingTypeView = self.qrTypeView.subviews.first(where: { $0 is CreateQRURLType }) as? CreateQRURLType {
+            guard let imgData = qritem?.qrImageData, let img = UIImage(data: imgData) else {
+                print("QR 이미지 데이터가 없습니다.")
+                return
+            }
+
+            if let existingTypeView = self.qrTypeView.subviews.first(where: { $0 is CreateQRURLType }) as? CreateQRURLType {
                 existingTypeView.qrImg.image = img
                 existingTypeView.qrStackView.isHidden = false
-            } else if let imgData = qritem?.qrImageData, let img = UIImage(data: imgData), let existingTypeView = self.qrTypeView.subviews.first(where: { $0 is CreateQRWifiType }) as? CreateQRWifiType {
+            } else if let existingTypeView = self.qrTypeView.subviews.first(where: { $0 is CreateQRWifiType }) as? CreateQRWifiType {
+                existingTypeView.qrImg.image = img
+                existingTypeView.qrStackView.isHidden = false
+            } else if let existingTypeView = self.qrTypeView.subviews.first(where: { $0 is CreateQRBankTransferType }) as? CreateQRBankTransferType {
+                existingTypeView.qrImg.image = img
+                existingTypeView.qrStackView.isHidden = false
+            } else if let existingTypeView = self.qrTypeView.subviews.first(where: { $0 is CreateQRContactType }) as? CreateQRContactType {
                 existingTypeView.qrImg.image = img
                 existingTypeView.qrStackView.isHidden = false
             } else {
@@ -146,6 +157,10 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
             return CreateQRCardType()
         case .wifi:
             return CreateQRWifiType()
+        case .bankTransfer:
+            return CreateQRBankTransferType()
+        case .contact:
+            return CreateQRContactType()
         }
     }
 }

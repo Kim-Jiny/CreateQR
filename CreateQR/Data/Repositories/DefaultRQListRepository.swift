@@ -24,9 +24,9 @@ extension DefaultRQListRepository: QRListRepository {
         
         let urlType = QRTypeItem(id: "defaultType", title: "Text", titleImage: UIImage(systemName: "safari"), detailImage: nil, type: .url)
         let wifiType = QRTypeItem(id: "wifiType", title: "Wifi", titleImage: UIImage(systemName: "wifi.router"), detailImage: nil, type: .wifi)
-        let cardType = QRTypeItem(id: "type2", title: "Beta", titleImage: UIImage(systemName: "person.crop.square.filled.and.at.rectangle"), detailImage: nil, type: .card)
-//        let menuType = QRTypeItem(id: "type3", title: "Menu", titleImage: UIImage(systemName: "doc.text.below.ecg"), detailImage: nil, type: .menu)
-        completion(.success([urlType, wifiType, cardType]))
+        let bankTransferType = QRTypeItem(id: "bankTransferType", title: NSLocalizedString("Bank Transfer", comment: "Bank Transfer QR"), titleImage: UIImage(systemName: "wonsign.circle"), detailImage: nil, type: .bankTransfer)
+        let contactType = QRTypeItem(id: "contactType", title: NSLocalizedString("Contact", comment: "Contact QR"), titleImage: UIImage(systemName: "person.crop.circle"), detailImage: nil, type: .contact)
+        completion(.success([urlType, wifiType, bankTransferType, contactType]))
         
         return task
     }
