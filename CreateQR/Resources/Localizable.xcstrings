@@ -91,6 +91,9 @@
         }
       }
     },
+    "Add to Contacts" : {
+
+    },
     "Amount (Optional)" : {
       "comment" : "Amount"
     },
@@ -490,6 +493,12 @@
     "Contact" : {
       "comment" : "Contact QR"
     },
+    "Contact Found" : {
+
+    },
+    "Contact QR" : {
+
+    },
     "Contact Us" : {
       "localizations" : {
         "de" : {
@@ -780,6 +789,9 @@
         }
       }
     },
+    "example@email.com (Optional)" : {
+
+    },
     "Failed to send the email." : {
       "comment" : "메일 전송에 실패하였습니다.",
       "localizations" : {
@@ -904,6 +916,9 @@
           }
         }
       }
+    },
+    "Instagram Username" : {
+      "comment" : "Instagram Username"
     },
     "Latest version on store: %@" : {
       "localizations" : {
@@ -1230,6 +1245,9 @@
           }
         }
       }
+    },
+    "Open in Instagram" : {
+
     },
     "Open in Safari" : {
       "comment" : "Open in Safari",

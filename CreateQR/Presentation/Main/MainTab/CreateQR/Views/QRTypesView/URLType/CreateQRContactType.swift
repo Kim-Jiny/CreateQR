@@ -45,7 +45,7 @@ class CreateQRContactType: CreateQRTypeView {
     private func setupLabels() {
         nameLabel.text = NSLocalizedString("Name", comment: "Name") + " *"
         phoneLabel.text = NSLocalizedString("Phone", comment: "Phone") + " *"
-        emailLabel.text = NSLocalizedString("Email", comment: "Email") + " *"
+        emailLabel.text = NSLocalizedString("Email", comment: "Email")
         companyLabel.text = NSLocalizedString("Company", comment: "Company")
         snsLabel.text = NSLocalizedString("SNS / Website", comment: "SNS")
     }
@@ -65,7 +65,7 @@ class CreateQRContactType: CreateQRTypeView {
         phoneTextField.keyboardType = .phonePad
 
         emailTextField.attributedPlaceholder = NSAttributedString(
-            string: "example@email.com",
+            string: NSLocalizedString("example@email.com (Optional)", comment: ""),
             attributes: [.foregroundColor: placeholderColor]
         )
         emailTextField.keyboardType = .emailAddress
@@ -122,11 +122,7 @@ class CreateQRContactType: CreateQRTypeView {
             return
         }
 
-        guard let email = emailTextField.text, !email.isEmpty else {
-            // TODO: Show alert for empty email
-            return
-        }
-
+        let email = emailTextField.text ?? ""
         let company = companyTextField.text ?? ""
         let sns = snsTextField.text ?? ""
 
@@ -148,8 +144,11 @@ class CreateQRContactType: CreateQRTypeView {
         VERSION:3.0
         FN:\(name)
         TEL:\(formatPhoneNumber(phone))
-        EMAIL:\(email)
         """
+
+        if !email.isEmpty {
+            vCard += "\nEMAIL:\(email)"
+        }
 
         if !company.isEmpty {
             vCard += "\nORG:\(company)"

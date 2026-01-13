@@ -106,6 +106,9 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
             } else if let existingTypeView = self.qrTypeView.subviews.first(where: { $0 is CreateQRContactType }) as? CreateQRContactType {
                 existingTypeView.qrImg.image = img
                 existingTypeView.qrStackView.isHidden = false
+            } else if let existingTypeView = self.qrTypeView.subviews.first(where: { $0 is CreateQRInstagramType }) as? CreateQRInstagramType {
+                existingTypeView.qrImg.image = img
+                existingTypeView.qrStackView.isHidden = false
             } else {
                 print("typeView가 qrTypeView의 서브뷰에 없습니다.")
             }
@@ -161,6 +164,8 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
             return CreateQRBankTransferType()
         case .contact:
             return CreateQRContactType()
+        case .instagram:
+            return CreateQRInstagramType()
         }
     }
 }

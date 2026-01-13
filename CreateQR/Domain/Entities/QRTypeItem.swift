@@ -13,6 +13,7 @@ enum CreateType: Codable {
     case wifi
     case bankTransfer
     case contact
+    case instagram
 }
 
 struct QRTypeItem: Equatable, Identifiable {
