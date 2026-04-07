@@ -8,6 +8,19 @@ import UIKit
 
 // MypageTabViewController는 마이 페이지에서 QR 목록을 보여주는 역할을 함
 class MypageTabViewController: UIViewController, StoryboardInstantiable {
+    private enum QRSection: Int, CaseIterable {
+        case pinned
+        case regular
+
+        var title: String {
+            switch self {
+            case .pinned:
+                return NSLocalizedString("Pinned", comment: "Pinned")
+            case .regular:
+                return NSLocalizedString("Others", comment: "Others")
+            }
+        }
+    }
     
     // MainViewModel과 연동하기 위한 뷰모델 속성
     var viewModel: MainViewModel?
@@ -34,6 +47,7 @@ class MypageTabViewController: UIViewController, StoryboardInstantiable {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         viewModel?.fetchMyQRList()
     }
     
@@ -73,9 +87,16 @@ class MypageTabViewController: UIViewController, StoryboardInstantiable {
             }
             
             // 권한이 있을 경우 이미지 다운로드 후 완료 알림 표시
-            viewModel.downloadImage(image: img) { [weak self] _ in
+            viewModel.downloadImage(image: img) { [weak self] result in
                 DispatchQueue.main.async {
-                    self?.showSaveAlert()
+                    switch result {
+                    case .success(true):
+                        self?.showSaveAlert()
+                    case .success(false):
+                        self?.showSaveFailureAlert()
+                    case .failure:
+                        self?.showSaveFailureAlert()
+                    }
                 }
             }
         }
@@ -85,6 +106,54 @@ class MypageTabViewController: UIViewController, StoryboardInstantiable {
     private func updateItems() {
         emptyView.isHidden = viewModel?.myQRItems.value.count != 0
         myQRTableView.reloadData()
+    }
+
+    private func items(in section: QRSection) -> [QRItem] {
+        let items = viewModel?.myQRItems.value ?? []
+        switch section {
+        case .pinned:
+            return items.filter(\.isPinned)
+        case .regular:
+            return items.filter { !$0.isPinned }
+        }
+    }
+
+    private func qrSection(at index: Int) -> QRSection? {
+        QRSection(rawValue: index)
+    }
+
+    private func section(for item: QRItem) -> QRSection {
+        item.isPinned ? .pinned : .regular
+    }
+
+    private func item(at indexPath: IndexPath) -> QRItem? {
+        guard let section = qrSection(at: indexPath.section) else { return nil }
+        let sectionItems = items(in: section)
+        guard sectionItems.indices.contains(indexPath.row) else { return nil }
+        return sectionItems[indexPath.row]
+    }
+
+    private func flatIndex(for indexPath: IndexPath) -> Int? {
+        guard let item = item(at: indexPath) else { return nil }
+        return viewModel?.myQRItems.value.firstIndex(where: { $0.id == item.id })
+    }
+
+    private func insertionFlatIndex(for indexPath: IndexPath) -> Int? {
+        guard let section = qrSection(at: indexPath.section), let viewModel else { return nil }
+        let allItems = viewModel.myQRItems.value
+        let sectionItems = items(in: section)
+        let safeRow = min(indexPath.row, sectionItems.count)
+
+        if safeRow < sectionItems.count, let targetItem = item(at: IndexPath(row: safeRow, section: indexPath.section)) {
+            return allItems.firstIndex(where: { $0.id == targetItem.id })
+        }
+
+        switch section {
+        case .pinned:
+            return allItems.firstIndex(where: { !$0.isPinned }) ?? allItems.count
+        case .regular:
+            return allItems.count
+        }
     }
     
     // QR 상세 뷰를 추가하고 이미 있는 경우 추가하지 않음
@@ -124,6 +193,16 @@ class MypageTabViewController: UIViewController, StoryboardInstantiable {
         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment:"OK"), style: .default))
         present(alert, animated: true)
     }
+
+    private func showSaveFailureAlert() {
+        let alert = UIAlertController(
+            title: NSLocalizedString("Save Failed", comment: "Save Failed"),
+            message: NSLocalizedString("The QR image could not be saved. Please try again.", comment: "The QR image could not be saved. Please try again."),
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "OK"), style: .default))
+        present(alert, animated: true)
+    }
     
     // 사진 접근 권한 요청 알림 표시 메서드
     private func showPermissionAlert() {
@@ -143,12 +222,17 @@ class MypageTabViewController: UIViewController, StoryboardInstantiable {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 
     // 키보드가 나타날 때 호출
     @objc private func keyboardWillShow(_ notification: Notification) {
         // 키보드 높이 가져오기
         if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
             let keyboardHeight = keyboardFrame.height
+            let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval ?? 0.25
             
             isKeyboardVisible = true // 키보드 상태 업데이트
             // 필요한 UI 업데이트 수행
@@ -158,7 +242,7 @@ class MypageTabViewController: UIViewController, StoryboardInstantiable {
                     qrDetailView.snp.updateConstraints {
                         $0.bottom.equalToSuperview().inset(keyboardHeight)
                     }
-                    UIView.animate(withDuration: 5) { [weak self] in
+                    UIView.animate(withDuration: duration) { [weak self] in
                         self?.view.layoutIfNeeded()
                     }
                     
@@ -171,12 +255,13 @@ class MypageTabViewController: UIViewController, StoryboardInstantiable {
     // 키보드가 사라질 때 호출
     @objc private func keyboardWillHide(_ notification: Notification) {
         isKeyboardVisible = false // 키보드 상태 업데이트
+        let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval ?? 0.25
         for subview in view.subviews {
             if let qrDetailView = subview as? QRDetailView {
                 qrDetailView.snp.updateConstraints {
                     $0.bottom.equalToSuperview()
                 }
-                UIView.animate(withDuration: 5) { [weak self] in
+                UIView.animate(withDuration: duration) { [weak self] in
                     self?.view.layoutIfNeeded()
                 }
                 
@@ -188,23 +273,52 @@ class MypageTabViewController: UIViewController, StoryboardInstantiable {
 
 // 테이블 뷰 데이터 소스 및 델리게이트 구현
 extension MypageTabViewController: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        QRSection.allCases.count
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel?.myQRItems.value.count ?? 0
+        guard let currentSection = qrSection(at: section) else { return 0 }
+        return items(in: currentSection).count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: MyQRTableViewCell.id, for: indexPath) as? MyQRTableViewCell, let viewModel = viewModel else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MyQRTableViewCell.id, for: indexPath) as? MyQRTableViewCell,
+              let item = item(at: indexPath) else {
             return UITableViewCell()
         }
-        cell.fill(with: viewModel.myQRItems.value[indexPath.row])
+        cell.fill(with: item)
         return cell
+    }
+
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        guard let currentSection = qrSection(at: section), !items(in: currentSection).isEmpty else { return nil }
+        return currentSection.title
     }
     
     // 테이블 셀 클릭 시 QR 상세 뷰를 표시
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let data = viewModel?.myQRItems.value[indexPath.row] {
+        if let data = item(at: indexPath) {
             showQRDetailView(data)
         }
+    }
+
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        guard let item = item(at: indexPath) else { return nil }
+
+        let pinTitle = item.isPinned
+            ? NSLocalizedString("Unpin", comment: "Unpin")
+            : NSLocalizedString("Pin", comment: "Pin")
+
+        let pinAction = UIContextualAction(style: .normal, title: pinTitle) { [weak self] _, _, completion in
+            self?.viewModel?.togglePinned(item)
+            completion(true)
+        }
+        pinAction.backgroundColor = item.isPinned ? .systemGray : .systemOrange
+
+        let configuration = UISwipeActionsConfiguration(actions: [pinAction])
+        configuration.performsFirstActionWithFullSwipe = false
+        return configuration
     }
 }
 
@@ -212,8 +326,7 @@ extension MypageTabViewController: UITableViewDelegate, UITableViewDataSource {
 extension MypageTabViewController: UITableViewDragDelegate, UITableViewDropDelegate {
 
     func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        guard let viewModel = viewModel else { return [] }
-        let item = viewModel.myQRItems.value[indexPath.row]
+        guard let item = item(at: indexPath) else { return [] }
         let itemProvider = NSItemProvider(object: item.id as NSString)
         let dragItem = UIDragItem(itemProvider: itemProvider)
         dragItem.localObject = item
@@ -226,13 +339,17 @@ extension MypageTabViewController: UITableViewDragDelegate, UITableViewDropDeleg
 
         for item in coordinator.items {
             if let sourceIndexPath = item.sourceIndexPath,
-               let qrItem = item.dragItem.localObject as? QRItem {
+               sourceIndexPath.section == destinationIndexPath.section,
+               let sourceFlatIndex = flatIndex(for: sourceIndexPath),
+               let destinationFlatIndex = insertionFlatIndex(for: destinationIndexPath) {
 
-                // 데이터 소스 배열에서 항목의 위치 변경
-                let sourceItem = viewModel.myQRItems.value.remove(at: sourceIndexPath.row)
-                viewModel.myQRItems.value.insert(sourceItem, at: destinationIndexPath.row)
+                let sourceItem = viewModel.myQRItems.value.remove(at: sourceFlatIndex)
+                let adjustedDestinationIndex = sourceFlatIndex < destinationFlatIndex
+                    ? max(destinationFlatIndex - 1, 0)
+                    : destinationFlatIndex
+                let safeDestinationIndex = min(adjustedDestinationIndex, viewModel.myQRItems.value.count)
+                viewModel.myQRItems.value.insert(sourceItem, at: safeDestinationIndex)
 
-                // 테이블 뷰 업데이트
                 updateItems()
             }
         }
@@ -245,6 +362,12 @@ extension MypageTabViewController: UITableViewDragDelegate, UITableViewDropDeleg
     }
 
     func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
+        if let destinationIndexPath,
+           let draggedItem = session.localDragSession?.items.first?.localObject as? QRItem,
+           let destinationSection = qrSection(at: destinationIndexPath.section),
+           section(for: draggedItem) != destinationSection {
+            return UITableViewDropProposal(operation: .cancel)
+        }
         return tableView.hasActiveDrag ? UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath) : UITableViewDropProposal(operation: .forbidden)
     }
 }

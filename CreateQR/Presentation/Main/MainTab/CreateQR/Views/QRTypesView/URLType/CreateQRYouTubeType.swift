@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CreateQRYouTubeType: CreateQRTypeView {
+class CreateQRYouTubeType: CreateQRTypeView, QRActionHandling {
 
     // MARK: - IBOutlets
     @IBOutlet weak var channelLabel: UILabel!
@@ -21,14 +21,19 @@ class CreateQRYouTubeType: CreateQRTypeView {
     @IBOutlet weak var logoBtn: UIButton!
     @IBOutlet weak var qrStackView: UIStackView!
 
-    private var saveBtnIndicator: UIActivityIndicatorView!
+    var saveActivityIndicator: UIActivityIndicatorView!
+    var primaryActionButton: UIButton? { createBtn }
+    var saveActionButton: UIButton! { saveBtn }
+    var shareActionButton: UIButton! { shareBtn }
+    var colorActionButton: UIButton! { colorBtn }
+    var logoActionButton: UIButton! { logoBtn }
 
     // MARK: - Setup
     override func setupUI() {
         setupLabels()
         setupTextFields()
-        setupButtons()
-        setupIndicator()
+        configureQRActionButtons()
+        configureSaveIndicator()
     }
 
     private func setupLabels() {
@@ -39,7 +44,7 @@ class CreateQRYouTubeType: CreateQRTypeView {
         let placeholderColor = UIColor.speedMain3
 
         channelTextField.attributedPlaceholder = NSAttributedString(
-            string: "@channel",
+            string: NSLocalizedString("@channel", comment: "YouTube channel placeholder"),
             attributes: [.foregroundColor: placeholderColor]
         )
         channelTextField.keyboardType = .asciiCapable
@@ -47,38 +52,10 @@ class CreateQRYouTubeType: CreateQRTypeView {
         channelTextField.autocorrectionType = .no
     }
 
-    private func setupButtons() {
-        let buttons = [createBtn, saveBtn, shareBtn, colorBtn, logoBtn]
-        let titles = [
-            NSLocalizedString("Generate", comment: ""),
-            NSLocalizedString("Save", comment: ""),
-            NSLocalizedString("Share", comment: ""),
-            NSLocalizedString("Color", comment: ""),
-            NSLocalizedString("Add logo", comment: "")
-        ]
-
-        for (index, button) in buttons.enumerated() {
-            button?.setTitle(titles[index], for: .normal)
-            button?.layer.cornerRadius = 10
-            button?.layer.borderWidth = 2.0
-            button?.layer.borderColor = UIColor.speedMain4.cgColor
-        }
-    }
-
-    private func setupIndicator() {
-        saveBtnIndicator = UIActivityIndicatorView(style: .medium)
-        saveBtnIndicator.color = .white
-        saveBtnIndicator.translatesAutoresizingMaskIntoConstraints = false
-        saveBtn.addSubview(saveBtnIndicator)
-        saveBtnIndicator.snp.makeConstraints {
-            $0.center.equalTo(saveBtn.snp.center)
-        }
-    }
-
     // MARK: - Actions
     @IBAction func generateBtn(_ sender: Any) {
-        guard let channel = channelTextField.text, !channel.isEmpty else {
-            // TODO: Show alert for empty channel
+        guard let channel = trimmedText(from: channelTextField) else {
+            showInputAlert(message: NSLocalizedString("Please enter a YouTube channel handle.", comment: ""))
             return
         }
 
@@ -92,28 +69,22 @@ class CreateQRYouTubeType: CreateQRTypeView {
     }
 
     @IBAction func saveBtn(_ sender: Any) {
-        if let _ = qrImg.image {
-            saveBtn.isEnabled = false
-            saveBtnIndicator.startAnimating()
-            delegate?.saveImage()
-        }
+        handleSaveTap()
     }
 
     @IBAction func shareBtn(_ sender: Any) {
-        guard let _ = qrImg.image else { return }
-        delegate?.shareImage()
+        handleShareTap()
     }
 
     @IBAction func colorBtn(_ sender: Any) {
-        delegate?.colorPicker()
+        handleColorTap()
     }
 
     @IBAction func logoBtn(_ sender: Any) {
-        delegate?.addLogo()
+        handleLogoTap()
     }
 
     override func imageSaveCompleted() {
-        saveBtnIndicator.stopAnimating()
-        saveBtn.isEnabled = true
+        finishSaveAction()
     }
 }

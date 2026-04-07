@@ -25,6 +25,7 @@ struct QRItem: Equatable, Codable {
     let backColor: String
     let logo: Data?
     var logoStyle: LogoStyle
+    var isPinned: Bool
     
     // 직접 디코딩 구현
     init(from decoder: Decoder) throws {
@@ -40,21 +41,50 @@ struct QRItem: Equatable, Codable {
         backColor = (try? container.decode(String.self, forKey: .backColor)) ?? ""
         logo = try? container.decode(Data.self, forKey: .logo)
         logoStyle = (try? container.decode(LogoStyle.self, forKey: .logoStyle)) ?? .square
+        isPinned = (try? container.decode(Bool.self, forKey: .isPinned)) ?? false
     }
 }
 
 extension QRItem {
-    
-    init(title: String, qrImageData: Data?, qrType: CreateType, qrData: String, qrColor: String, backColor: String, logo: Data?, logoStyle: LogoStyle) {
-        self.id = UUID().uuidString
+    init(
+        id: Identifier,
+        title: String,
+        qrImageData: Data?,
+        createdAt: TimeInterval,
+        qrType: CreateType,
+        qrData: String,
+        qrColor: String,
+        backColor: String,
+        logo: Data?,
+        logoStyle: LogoStyle,
+        isPinned: Bool = false
+    ) {
+        self.id = id
         self.title = title
         self.qrImageData = qrImageData
-        self.createdAt = TimestampProvider().getCurrentTimestamp()
+        self.createdAt = createdAt
         self.qrType = qrType
         self.qrData = qrData
         self.qrColor = qrColor
         self.backColor = backColor
         self.logo = logo
         self.logoStyle = logoStyle
+        self.isPinned = isPinned
+    }
+    
+    init(title: String, qrImageData: Data?, qrType: CreateType, qrData: String, qrColor: String, backColor: String, logo: Data?, logoStyle: LogoStyle) {
+        self.init(
+            id: UUID().uuidString,
+            title: title,
+            qrImageData: qrImageData,
+            createdAt: TimestampProvider().getCurrentTimestamp(),
+            qrType: qrType,
+            qrData: qrData,
+            qrColor: qrColor,
+            backColor: backColor,
+            logo: logo,
+            logoStyle: logoStyle,
+            isPinned: false
+        )
     }
 }

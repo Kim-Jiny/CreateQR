@@ -14,12 +14,7 @@ protocol AppVersionRepository {
 
 final class DefaultAppVersionRepository: AppVersionRepository {
     func fetchLatestAppStoreVersion(completion: @escaping (String?) -> Void) {
-        guard let bundleId = Bundle.main.bundleIdentifier else {
-            completion(nil)
-            return
-        }
         let appID = NSLocalizedString("appid", comment: "Appid")
-//        let urlString = "https://itunes.apple.com/lookup?bundleId=\(bundleId)"
         let appStoreUrl = "https://itunes.apple.com/lookup?id=\(appID)" // 앱의 ID를 정확히 입력하세요.
             
         guard let url = URL(string: appStoreUrl) else {

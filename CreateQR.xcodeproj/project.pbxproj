@@ -9,8 +9,7 @@
 /* Begin PBXBuildFile section */
 		300211282DF947E60013A023 /* CreateQRWifiType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300211262DF947E60013A023 /* CreateQRWifiType.swift */; };
 		300211292DF947E60013A023 /* CreateQRWifiType.xib in Resources */ = {isa = PBXBuildFile; fileRef = 300211272DF947E60013A023 /* CreateQRWifiType.xib */; };
-		300211302DFA01000013A023 /* CreateQRBankTransferType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3002112A2DFA01000013A023 /* CreateQRBankTransferType.swift */; };
-		300211312DFA01000013A023 /* CreateQRBankTransferType.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3002112B2DFA01000013A023 /* CreateQRBankTransferType.xib */; };
+
 		300211322DFA01000013A023 /* CreateQRContactType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3002112C2DFA01000013A023 /* CreateQRContactType.swift */; };
 		300211332DFA01000013A023 /* CreateQRContactType.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3002112D2DFA01000013A023 /* CreateQRContactType.xib */; };
 		300211422DFA02000013A023 /* AppDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300211412DFA02000013A023 /* AppDIContainer.swift */; };
@@ -135,8 +134,7 @@
 /* Begin PBXFileReference section */
 		300211262DF947E60013A023 /* CreateQRWifiType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQRWifiType.swift; sourceTree = "<group>"; };
 		300211272DF947E60013A023 /* CreateQRWifiType.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateQRWifiType.xib; sourceTree = "<group>"; };
-		3002112A2DFA01000013A023 /* CreateQRBankTransferType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQRBankTransferType.swift; sourceTree = "<group>"; };
-		3002112B2DFA01000013A023 /* CreateQRBankTransferType.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateQRBankTransferType.xib; sourceTree = "<group>"; };
+
 		3002112C2DFA01000013A023 /* CreateQRContactType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQRContactType.swift; sourceTree = "<group>"; };
 		3002112D2DFA01000013A023 /* CreateQRContactType.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateQRContactType.xib; sourceTree = "<group>"; };
 		300211412DFA02000013A023 /* AppDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDIContainer.swift; sourceTree = "<group>"; };
@@ -366,8 +364,7 @@
 				30E4AE632CEB2D0800B6C503 /* CreateQRBetaType.xib */,
 				300211262DF947E60013A023 /* CreateQRWifiType.swift */,
 				300211272DF947E60013A023 /* CreateQRWifiType.xib */,
-				3002112A2DFA01000013A023 /* CreateQRBankTransferType.swift */,
-				3002112B2DFA01000013A023 /* CreateQRBankTransferType.xib */,
+
 				3002112C2DFA01000013A023 /* CreateQRContactType.swift */,
 				3002112D2DFA01000013A023 /* CreateQRContactType.xib */,
 				300211A02DFA01000013A023 /* CreateQRInstagramType.swift */,
@@ -882,7 +879,7 @@
 				30A2B1C92CE8C13B00063D92 /* InfoPlist.strings in Resources */,
 				303398FB2CE328AE00977E8A /* CreateQRCardType.xib in Resources */,
 				300211292DF947E60013A023 /* CreateQRWifiType.xib in Resources */,
-				300211312DFA01000013A023 /* CreateQRBankTransferType.xib in Resources */,
+
 				300211332DFA01000013A023 /* CreateQRContactType.xib in Resources */,
 				300211A32DFA01000013A023 /* CreateQRInstagramType.xib in Resources */,
 				300211A62DFA01000013A023 /* CreateQRYouTubeType.xib in Resources */,
@@ -950,7 +947,7 @@
 				303398F72CE1F6F800977E8A /* PermissionRepository.swift in Sources */,
 				30BBAA8D2CB9166300A84090 /* GetQRListUseCase.swift in Sources */,
 				300211282DF947E60013A023 /* CreateQRWifiType.swift in Sources */,
-				300211302DFA01000013A023 /* CreateQRBankTransferType.swift in Sources */,
+
 				300211322DFA01000013A023 /* CreateQRContactType.swift in Sources */,
 				300211A22DFA01000013A023 /* CreateQRInstagramType.swift in Sources */,
 				300211A42DFA01000013A023 /* CreateQRYouTubeType.swift in Sources */,
@@ -1196,7 +1193,7 @@
 				INFOPLIST_KEY_NSAppleMusicUsageDescription = "Permission is required to access QR images from the gallery.";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera permission is required to scan QR images.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Permission is required to save QR images.";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Permission is required to access QR images from the gallery.";
 				INFOPLIST_KEY_NSUserTrackingUsageDescription = "This app requests user tracking to provide personalized ads. If you decline tracking, more general ads may be shown.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -1230,7 +1227,7 @@
 				INFOPLIST_KEY_NSAppleMusicUsageDescription = "Permission is required to access QR images from the gallery.";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera permission is required to scan QR images.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Permission is required to save QR images.";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Permission is required to access QR images from the gallery.";
 				INFOPLIST_KEY_NSUserTrackingUsageDescription = "This app requests user tracking to provide personalized ads. If you decline tracking, more general ads may be shown.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;

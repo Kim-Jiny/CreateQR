@@ -27,12 +27,7 @@ class MainViewController: UITabBarController, StoryboardInstantiable {
         super.viewDidLoad()
         self.setupViews()
         self.setupBehaviours()
-        self.bind(to: self.viewModel)
         self.viewModel.viewDidLoad()
-    }
-    
-    private func bind(to viewModel: MainViewModel) {
-        viewModel.typeItems.observe(on: self) { [weak self] _ in self?.updateItems() }
     }
     
     // MARK: - Private
@@ -75,9 +70,5 @@ class MainViewController: UITabBarController, StoryboardInstantiable {
     private func setupBehaviours() {
         addBehaviors([BackButtonEmptyTitleNavigationBarBehavior(),
                       BlackStyleNavigationBarBehavior()])
-    }
-    
-    private func updateItems() {
-        
     }
 }

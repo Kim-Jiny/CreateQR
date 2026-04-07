@@ -35,9 +35,10 @@ class MyQRTableViewCell: UITableViewCell {
     ) {
         self.backView.roundLeftCorners(cornerRadius: 30)
         self.backView.backgroundColor = .speedMain4
-        self.titleLB.text = item.title
+        self.titleLB.text = item.isPinned ? "★ \(item.title)" : item.title
         self.timeLB.text = TimestampProvider().getFormattedDate(item.createdAt)
-        self.subtitleLB.text = item.qrType == .other ? NSLocalizedString("Saved by Scan", comment: "Saved by Scan") : NSLocalizedString("App Created", comment: "App Created")
+        let originText = item.qrType == .other ? NSLocalizedString("Saved by Scan", comment: "Saved by Scan") : NSLocalizedString("App Created", comment: "App Created")
+        self.subtitleLB.text = item.isPinned ? "\(NSLocalizedString("Pinned", comment: "Pinned")) • \(originText)" : originText
         if let imgdata = item.qrImageData, let img = UIImage(data: imgdata) {
             self.qrImg.image = img
         }else {

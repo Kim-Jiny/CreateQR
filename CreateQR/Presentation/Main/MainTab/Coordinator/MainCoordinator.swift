@@ -9,8 +9,7 @@ import Foundation
 import UIKit
 
 protocol MainCoordinatorDependencies {
-    func makeMainViewController(actions: MainViewModelActions) -> MainViewController
-    func makeQRDetailsViewController(qr: QRItem) -> QRDetailViewController
+    func makeMainViewController() -> MainViewController
 }
 
 
@@ -19,8 +18,6 @@ final class MainCoordinator {
     private weak var navigationController: UINavigationController?
     private let dependencies: MainCoordinatorDependencies
     
-    private weak var mainVC: MainViewController?
-    
     init(navigationController: UINavigationController,
          dependencies: MainCoordinatorDependencies) {
         self.navigationController = navigationController
@@ -28,17 +25,8 @@ final class MainCoordinator {
     }
     
     func start() {
-        // Note: here we keep strong reference with actions, this way this flow do not need to be strong referenced
-        let actions = MainViewModelActions(showDetail: showQRDetails)
-        let vc = dependencies.makeMainViewController(actions: actions)
+        let vc = dependencies.makeMainViewController()
         
         navigationController?.pushViewController(vc, animated: false)
-        mainVC = vc
     }
-    
-    private func showQRDetails(qr: QRItem) {
-        let vc = dependencies.makeQRDetailsViewController(qr: qr)
-        navigationController?.pushViewController(vc, animated: true)
-    }
-    
 }

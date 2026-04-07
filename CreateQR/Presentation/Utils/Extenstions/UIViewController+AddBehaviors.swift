@@ -30,6 +30,12 @@ extension ViewControllerLifecycleBehavior {
 
 extension UIViewController {
     func addBehaviors(_ behaviors: [ViewControllerLifecycleBehavior]) {
+        objc_setAssociatedObject(
+            self,
+            &AssociatedKeys.behaviors,
+            behaviors,
+            .OBJC_ASSOCIATION_RETAIN_NONATOMIC
+        )
         let behaviorHandler = LifecycleBehaviorHandler(behaviors: behaviors)
         behaviorHandler.apply(to: self)
     }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CreateQRInstagramType: CreateQRTypeView {
+class CreateQRInstagramType: CreateQRTypeView, QRActionHandling {
 
     // MARK: - IBOutlets
     @IBOutlet weak var usernameLabel: UILabel!
@@ -21,14 +21,19 @@ class CreateQRInstagramType: CreateQRTypeView {
     @IBOutlet weak var logoBtn: UIButton!
     @IBOutlet weak var qrStackView: UIStackView!
 
-    private var saveBtnIndicator: UIActivityIndicatorView!
+    var saveActivityIndicator: UIActivityIndicatorView!
+    var primaryActionButton: UIButton? { createBtn }
+    var saveActionButton: UIButton! { saveBtn }
+    var shareActionButton: UIButton! { shareBtn }
+    var colorActionButton: UIButton! { colorBtn }
+    var logoActionButton: UIButton! { logoBtn }
 
     // MARK: - Setup
     override func setupUI() {
         setupLabels()
         setupTextFields()
-        setupButtons()
-        setupIndicator()
+        configureQRActionButtons()
+        configureSaveIndicator()
     }
 
     private func setupLabels() {
@@ -39,7 +44,7 @@ class CreateQRInstagramType: CreateQRTypeView {
         let placeholderColor = UIColor.speedMain3
 
         usernameTextField.attributedPlaceholder = NSAttributedString(
-            string: "@username",
+            string: NSLocalizedString("@username", comment: "Instagram username placeholder"),
             attributes: [.foregroundColor: placeholderColor]
         )
         usernameTextField.keyboardType = .asciiCapable
@@ -47,38 +52,10 @@ class CreateQRInstagramType: CreateQRTypeView {
         usernameTextField.autocorrectionType = .no
     }
 
-    private func setupButtons() {
-        let buttons = [createBtn, saveBtn, shareBtn, colorBtn, logoBtn]
-        let titles = [
-            NSLocalizedString("Generate", comment: ""),
-            NSLocalizedString("Save", comment: ""),
-            NSLocalizedString("Share", comment: ""),
-            NSLocalizedString("Color", comment: ""),
-            NSLocalizedString("Add logo", comment: "")
-        ]
-
-        for (index, button) in buttons.enumerated() {
-            button?.setTitle(titles[index], for: .normal)
-            button?.layer.cornerRadius = 10
-            button?.layer.borderWidth = 2.0
-            button?.layer.borderColor = UIColor.speedMain4.cgColor
-        }
-    }
-
-    private func setupIndicator() {
-        saveBtnIndicator = UIActivityIndicatorView(style: .medium)
-        saveBtnIndicator.color = .white
-        saveBtnIndicator.translatesAutoresizingMaskIntoConstraints = false
-        saveBtn.addSubview(saveBtnIndicator)
-        saveBtnIndicator.snp.makeConstraints {
-            $0.center.equalTo(saveBtn.snp.center)
-        }
-    }
-
     // MARK: - Actions
     @IBAction func generateBtn(_ sender: Any) {
-        guard let username = usernameTextField.text, !username.isEmpty else {
-            // TODO: Show alert for empty username
+        guard let username = trimmedText(from: usernameTextField) else {
+            showInputAlert(message: NSLocalizedString("Please enter an Instagram username.", comment: ""))
             return
         }
 
@@ -93,28 +70,22 @@ class CreateQRInstagramType: CreateQRTypeView {
     }
 
     @IBAction func saveBtn(_ sender: Any) {
-        if let _ = qrImg.image {
-            saveBtn.isEnabled = false
-            saveBtnIndicator.startAnimating()
-            delegate?.saveImage()
-        }
+        handleSaveTap()
     }
 
     @IBAction func shareBtn(_ sender: Any) {
-        guard let _ = qrImg.image else { return }
-        delegate?.shareImage()
+        handleShareTap()
     }
 
     @IBAction func colorBtn(_ sender: Any) {
-        delegate?.colorPicker()
+        handleColorTap()
     }
 
     @IBAction func logoBtn(_ sender: Any) {
-        delegate?.addLogo()
+        handleLogoTap()
     }
 
     override func imageSaveCompleted() {
-        saveBtnIndicator.stopAnimating()
-        saveBtn.isEnabled = true
+        finishSaveAction()
     }
 }

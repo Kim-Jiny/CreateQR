@@ -19,7 +19,7 @@ final class PhotoLibraryPermissionDataSource {
 
         case .notDetermined:
             PHPhotoLibrary.requestAuthorization(for: .addOnly) { newStatus in
-                completion(newStatus == .authorized)
+                completion(newStatus == .authorized || newStatus == .limited)
             }
 
         case .denied, .restricted:
@@ -34,15 +34,15 @@ final class PhotoLibraryPermissionDataSource {
         let authorizationStatus = PHPhotoLibrary.authorizationStatus()
 
         switch authorizationStatus {
-        case .authorized:
+        case .authorized, .limited:
             completion(true)
 
         case .notDetermined:
             PHPhotoLibrary.requestAuthorization { newStatus in
-                completion(newStatus == .authorized)
+                completion(newStatus == .authorized || newStatus == .limited)
             }
 
-        case .denied, .restricted, .limited:
+        case .denied, .restricted:
             completion(false)
 
         @unknown default:

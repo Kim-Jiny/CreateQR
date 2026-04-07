@@ -9,18 +9,104 @@ import Foundation
 import AVFoundation
 import UIKit
 
-// MARK: - Actions (ViewModel에서 호출될 액션 정의)
-struct MainViewModelActions {
-    let showDetail: (QRItem) -> Void // QR 항목 세부 사항을 보여주는 액션
+protocol QRCodeImageGenerating {
+    func generate(
+        from string: String,
+        color: UIColor,
+        backgroundColor: UIColor,
+        logo: UIImage?,
+        logoStyle: LogoStyle
+    ) -> UIImage?
 }
 
-// MARK: - MainViewModel의 Input, Output 정의
+struct QRCodeImageGenerator: QRCodeImageGenerating {
+    func generate(
+        from string: String,
+        color: UIColor,
+        backgroundColor: UIColor,
+        logo: UIImage?,
+        logoStyle: LogoStyle
+    ) -> UIImage? {
+        let data = string.data(using: .utf8)
+        
+        guard let filter = CIFilter(name: "CIQRCodeGenerator") else {
+            return nil
+        }
+        
+        filter.setValue(data, forKey: "inputMessage")
+        filter.setValue("Q", forKey: "inputCorrectionLevel")
+        
+        guard let qrImage = filter.outputImage else {
+            return nil
+        }
+        
+        let colorFilter = CIFilter(name: "CIFalseColor")
+        colorFilter?.setValue(qrImage, forKey: kCIInputImageKey)
+        colorFilter?.setValue(CIColor(color: color), forKey: "inputColor0")
+        colorFilter?.setValue(CIColor(color: backgroundColor), forKey: "inputColor1")
+        
+        guard let coloredQRImage = colorFilter?.outputImage else {
+            return nil
+        }
+        
+        let scaledQRImage = coloredQRImage.transformed(by: CGAffineTransform(scaleX: 10, y: 10))
+        guard let qrUIImage = convertToUIImage(from: scaledQRImage) else {
+            return nil
+        }
+        
+        guard let logo else {
+            return qrUIImage
+        }
+
+        switch logoStyle {
+        case .circle:
+            return overlayCircularLogo(on: qrUIImage, logo: logo)
+        case .square:
+            return overlayLogo(on: qrUIImage, logo: logo)
+        }
+    }
+
+    private func convertToUIImage(from image: CIImage) -> UIImage? {
+        let context = CIContext(options: nil)
+        guard let cgImage = context.createCGImage(image, from: image.extent) else { return nil }
+        return UIImage(cgImage: cgImage)
+    }
+
+    private func overlayLogo(on qrImage: UIImage, logo: UIImage) -> UIImage? {
+        let qrSize = qrImage.size
+        let logoSize = CGSize(width: qrSize.width / 4, height: qrSize.height / 4)
+        let logoOrigin = CGPoint(x: (qrSize.width - logoSize.width) / 2, y: (qrSize.height - logoSize.height) / 2)
+        
+        let renderer = UIGraphicsImageRenderer(size: qrSize)
+        return renderer.image { _ in
+            qrImage.draw(in: CGRect(origin: .zero, size: qrSize))
+            logo.draw(in: CGRect(origin: logoOrigin, size: logoSize))
+        }
+    }
+
+    private func overlayCircularLogo(on qrImage: UIImage, logo: UIImage) -> UIImage? {
+        let qrSize = qrImage.size
+        let logoSize = CGSize(width: qrSize.width / 4, height: qrSize.height / 4)
+        let logoOrigin = CGPoint(x: (qrSize.width - logoSize.width) / 2, y: (qrSize.height - logoSize.height) / 2)
+        
+        let circularRenderer = UIGraphicsImageRenderer(size: logoSize)
+        let circularLogo = circularRenderer.image { _ in
+            UIBezierPath(ovalIn: CGRect(origin: .zero, size: logoSize)).addClip()
+            logo.draw(in: CGRect(origin: .zero, size: logoSize))
+        }
+        
+        let combinedRenderer = UIGraphicsImageRenderer(size: qrSize)
+        return combinedRenderer.image { _ in
+            qrImage.draw(in: CGRect(origin: .zero, size: qrSize))
+            circularLogo.draw(in: CGRect(origin: logoOrigin, size: logoSize))
+        }
+    }
+}
 
 // Input 프로토콜: 뷰에서 호출되는 메서드들
 protocol MainViewModelInput {
     func viewDidLoad()
-    func didSelectItem(at index: Int)
-    func downloadImage(image: UIImage, completion: @escaping (Bool) -> Void)
+    func downloadImage(image: UIImage, completion: @escaping (Result<Bool, Error>) -> Void)
     func openAppSettings()
     func checkCameraPermission()
     func checkPhotoLibraryOnlyAddPermission()
@@ -32,6 +118,7 @@ protocol MainViewModelInput {
     func saveMyQRList()
     func updateQRItem(_ item: QRItem)
     func fetchMyQRList()
+    func togglePinned(_ item: QRItem)
     func loadLatestVersion(completion: @escaping (String?) -> Void)
     func generateQR(from string: String, color: UIColor, backgroundColor: UIColor, logo: UIImage?, logoStyle: LogoStyle) -> UIImage?
 }
@@ -40,14 +127,11 @@ protocol MainViewModelInput {
 protocol MainViewModelOutput {
     var typeItems: Observable<[QRTypeItemViewModel]> { get }
     var myQRItems: Observable<[QRItem]> { get }
-    var error: Observable<String> { get }
     var scannedResult: Observable<String> { get }
     var cameraPermission: Observable<Bool?> { get }
     var photoLibraryPermission: Observable<Bool?> { get }
     var photoLibraryOnlyAddPermission: Observable<Bool?> { get }
     var createQRItem: Observable<QRItem?> { get }
-    var selectedQRColor: Observable<UIColor?> { get }
-    var selectedBackColor: Observable<UIColor?> { get }
 }
 
 // MainViewModel 타입: Input과 Output을 모두 결합한 타입
@@ -64,22 +148,19 @@ final class DefaultMainViewModel: MainViewModel {
     private let downloadImageUseCase: DownloadImageUseCase
     private let qrItemUseCase: QRItemUseCase
     private let fetchAppVersionUseCase: FetchAppVersionUseCase
-    private let actions: MainViewModelActions?
+    private let qrCodeImageGenerator: QRCodeImageGenerating
     private let mainQueue: DispatchQueueType
     
-    private var ListLoadTask: Cancellable? { willSet { ListLoadTask?.cancel() } } // QR 항목 로딩을 위한 Cancellable 객체
+    private var listLoadTask: Cancellable? { willSet { listLoadTask?.cancel() } } // QR 항목 로딩을 위한 Cancellable 객체
     
     // MARK: - Output (출력 프로퍼티)
     let typeItems: Observable<[QRTypeItemViewModel]> = Observable([]) // QR 항목 뷰모델 리스트
     let myQRItems: Observable<[QRItem]> = Observable([]) // QR 항목 데이터
-    let error: Observable<String> = Observable("") // 오류 메시지
     let scannedResult: Observable<String> = Observable("") // 스캔된 결과
     let cameraPermission: Observable<Bool?> = Observable(nil) // 카메라 권한 상태
     let photoLibraryPermission: Observable<Bool?> = Observable(nil) // 사진 라이브러리 권한 상태
     let photoLibraryOnlyAddPermission: Observable<Bool?> = Observable(nil) // 사진 라이브러리 추가 권한 상태
     var createQRItem: Observable<QRItem?> = Observable(nil) // QR 이미지
-    var selectedQRColor: Observable<UIColor?> = Observable(nil) // QR 컬러
-    var selectedBackColor: Observable<UIColor?> = Observable(nil) // QR 컬러
     
     // MARK: - Init (초기화)
     init(
@@ -89,7 +170,7 @@ final class DefaultMainViewModel: MainViewModel {
         downloadImageUseCase: DownloadImageUseCase,
         qrItemUseCase: QRItemUseCase,
         fetchAppVersionUseCase: FetchAppVersionUseCase,
-        actions: MainViewModelActions? = nil,
+        qrCodeImageGenerator: QRCodeImageGenerating = QRCodeImageGenerator(),
         mainQueue: DispatchQueueType = DispatchQueue.main
     ) {
         self.permissionUseCase = permissionUseCase
@@ -98,7 +179,7 @@ final class DefaultMainViewModel: MainViewModel {
         self.downloadImageUseCase = downloadImageUseCase
         self.qrItemUseCase = qrItemUseCase
         self.fetchAppVersionUseCase = fetchAppVersionUseCase
-        self.actions = actions
+        self.qrCodeImageGenerator = qrCodeImageGenerator
         self.mainQueue = mainQueue
     }
 
@@ -106,14 +187,14 @@ final class DefaultMainViewModel: MainViewModel {
 
     // QR 항목 로딩
     private func load() {
-        ListLoadTask = getQRListUseCase.execute(
+        listLoadTask = getQRListUseCase.execute(
             completion: { [weak self] result in
                 self?.mainQueue.async {
                     switch result {
                     case .success(let qrTypes):
                         self?.fetchList(qrTypes) // 항목을 성공적으로 가져온 경우
-                    case .failure(let error):
-                        self?.handle(error: error) // 실패 시 오류 처리
+                    case .failure:
+                        self?.typeItems.value = []
                     }
                 }
             }
@@ -147,19 +228,23 @@ final class DefaultMainViewModel: MainViewModel {
     
     // 저장된 내 QRList Fetch
     func fetchMyQRList() {
-        myQRItems.value = qrItemUseCase.getQRItems() ?? []
+        myQRItems.value = orderedForDisplay(qrItemUseCase.getQRItems() ?? [])
     }
     
     func updateQRItem(_ item: QRItem) {
         if let index = myQRItems.value.firstIndex(where: { $0.id == item.id }) {
             myQRItems.value[index] = item // 기존 항목을 새로운 항목으로 업데이트
             qrItemUseCase.updateQRItem(item) // 저장소에서도 업데이트
+            myQRItems.value = orderedForDisplay(myQRItems.value)
         }
     }
-    
-    // 오류 처리
-    private func handle(error: Error) {
-        
+
+    func togglePinned(_ item: QRItem) {
+        guard let index = myQRItems.value.firstIndex(where: { $0.id == item.id }) else { return }
+        myQRItems.value[index].isPinned.toggle()
+        let updatedItem = myQRItems.value[index]
+        qrItemUseCase.updateQRItem(updatedItem)
+        myQRItems.value = orderedForDisplay(myQRItems.value)
     }
     
     // MARK: - Permissions Check (권한 확인)
@@ -193,14 +278,9 @@ final class DefaultMainViewModel: MainViewModel {
     // MARK: - Image Download (이미지 다운로드)
     
     // 이미지 다운로드 실행
-    func downloadImage(image: UIImage, completion: @escaping (Bool) -> Void) {
+    func downloadImage(image: UIImage, completion: @escaping (Result<Bool, Error>) -> Void) {
         downloadImageUseCase.execute(image: image) { result in
-            switch result {
-            case .success(let success):
-                completion(success) // 성공 시 완료 핸들러 호출
-            case .failure:
-                completion(false) // 실패 시 완료 핸들러 호출
-            }
+            completion(result)
         }
     }
    
@@ -230,107 +310,25 @@ final class DefaultMainViewModel: MainViewModel {
     
     // MARK: - Create QR
     
-    // QR 코드 생성 함수 (색상 변경 및 커스텀 이미지 추가 포함)
     func generateQR(from string: String, color: UIColor, backgroundColor: UIColor, logo: UIImage?, logoStyle: LogoStyle) -> UIImage? {
-        print("make color qr : \(color.toHex()) / back : \(backgroundColor.toHex())")
-        // QR 코드 문자열을 CIImage로 변환
-        let data = string.data(using: .utf8)
-        
-        guard let filter = CIFilter(name: "CIQRCodeGenerator") else {
-            return nil
-        }
-        
-        filter.setValue(data, forKey: "inputMessage")
-        filter.setValue("Q", forKey: "inputCorrectionLevel")
-        
-        guard let qrImage = filter.outputImage else {
-            return nil
-        }
-        
-        // 색상 변경을 위한 필터 적용
-        let colorFilter = CIFilter(name: "CIFalseColor")
-        colorFilter?.setValue(qrImage, forKey: kCIInputImageKey)
-        colorFilter?.setValue(CIColor(color: color), forKey: "inputColor0")
-        colorFilter?.setValue(CIColor(color: backgroundColor), forKey: "inputColor1")
-        
-        guard let coloredQRImage = colorFilter?.outputImage else {
-            return nil
-        }
-        
-        // 이미지를 표시할 크기로 스케일 조정
-        let transform = CGAffineTransform(scaleX: 10, y: 10)
-        let scaledQRImage = coloredQRImage.transformed(by: transform)
-        
-        // UIImage로 변환
-        let qrUIImage = convert(scaledQRImage)
-        
-        // 로고가 있는 경우 QR 코드 중앙에 추가
-        if let qrUIImage = qrUIImage, let logo = logo {
-            switch logoStyle {
-            case .circle:
-                return overlayCircularLogo(on: qrUIImage, logo: logo)
-            case .square:
-                return overlayLogo(on: qrUIImage, logo: logo)
-            }
-        }
-        
-        func convert(_ cmage:CIImage) -> UIImage? {
-            let context:CIContext = CIContext(options: nil)
-            guard let cgImage:CGImage = context.createCGImage(cmage, from: cmage.extent) else { return nil }
-            let image:UIImage = UIImage(cgImage: cgImage)
-            return image
-        }
-        
-        return qrUIImage
+        qrCodeImageGenerator.generate(
+            from: string,
+            color: color,
+            backgroundColor: backgroundColor,
+            logo: logo,
+            logoStyle: logoStyle
+        )
     }
 
-    // QR 코드 위에 로고를 추가하는 함수
-    private func overlayLogo(on qrImage: UIImage, logo: UIImage) -> UIImage? {
-        let qrSize = qrImage.size
-        let logoSize = CGSize(width: qrSize.width / 4, height: qrSize.height / 4) // 로고 크기 조정
-        let logoOrigin = CGPoint(x: (qrSize.width - logoSize.width) / 2, y: (qrSize.height - logoSize.height) / 2)
-        
-        // UIGraphicsImageRenderer로 고해상도 이미지 렌더링
-        let renderer = UIGraphicsImageRenderer(size: qrSize)
-        let combinedImage = renderer.image { context in
-            // QR 코드 그리기
-            qrImage.draw(in: CGRect(origin: .zero, size: qrSize))
-            
-            // 로고 그리기
-            logo.draw(in: CGRect(origin: logoOrigin, size: logoSize))
-        }
-        
-        return combinedImage
-    }
-    
-    //QR 코드 위에 원형 로고를 추가 하는 함수
-    private func overlayCircularLogo(on qrImage: UIImage, logo: UIImage) -> UIImage? {
-        let qrSize = qrImage.size
-        let logoSize = CGSize(width: qrSize.width / 4, height: qrSize.height / 4) // 로고 크기 조정
-        let logoOrigin = CGPoint(x: (qrSize.width - logoSize.width) / 2, y: (qrSize.height - logoSize.height) / 2)
-        
-        // 원형 마스크 만들기
-        let renderer = UIGraphicsImageRenderer(size: logoSize)
-        let circularLogo = renderer.image { context in
-            // 원형 마스크를 그린다.
-            let path = UIBezierPath(ovalIn: CGRect(origin: .zero, size: logoSize))
-            path.addClip()
-            
-            // 원형 마스크로 로고 그리기
-            logo.draw(in: CGRect(origin: .zero, size: logoSize))
-        }
-        
-        // 고해상도 컨텍스트로 QR 코드와 원형 로고를 결합
-        let combinedRenderer = UIGraphicsImageRenderer(size: qrSize)
-        let combinedImage = combinedRenderer.image { context in
-            // QR 코드 그리기
-            qrImage.draw(in: CGRect(origin: .zero, size: qrSize))
-            
-            // 원형 로고 그리기
-            circularLogo.draw(in: CGRect(origin: logoOrigin, size: logoSize))
-        }
-        
-        return combinedImage
+    private func orderedForDisplay(_ items: [QRItem]) -> [QRItem] {
+        items.enumerated()
+            .sorted { lhs, rhs in
+                if lhs.element.isPinned != rhs.element.isPinned {
+                    return lhs.element.isPinned && !rhs.element.isPinned
+                }
+                return lhs.offset < rhs.offset
+            }
+            .map(\.element)
     }
 }
 
@@ -341,10 +339,5 @@ extension DefaultMainViewModel {
     // 뷰 로드 시 호출
     func viewDidLoad() {
         load()
-    }
-    
-    // 항목 선택 시 호출
-    func didSelectItem(at index: Int) {
-        actions?.showDetail(myQRItems.value[index]) // 선택된 항목에 대한 세부 정보 표시
     }
 }

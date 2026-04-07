@@ -29,8 +29,17 @@ class QRItemRepository {
             let items = try JSONDecoder().decode([QRItem].self, from: data)
             return items
         } catch {
+            do {
+                let lossyItems = try JSONDecoder().decode([LossyQRItem].self, from: data).compactMap(\.item)
+                if !lossyItems.isEmpty {
+                    saveQRItems(qrItems: lossyItems)
+                    return lossyItems
+                }
+            } catch {
+                print("Failed lossy decode QRItems: \(error)")
+            }
             print("Failed to load QRItems: \(error)")
-            return nil
+            return []
         }
     }
 
@@ -73,5 +82,13 @@ class QRItemRepository {
         } else {
             print("Item with ID \(item.id) not found.")
         }
+    }
+}
+
+private struct LossyQRItem: Decodable {
+    let item: QRItem?
+
+    init(from decoder: Decoder) throws {
+        item = try? QRItem(from: decoder)
     }
 }

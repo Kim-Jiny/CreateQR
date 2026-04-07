@@ -19,6 +19,8 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
     var typeView: CreateQRTypeView? = nil
     private var isFirstSelectionDone = false
     private var colorPickerManager = ColorPickerManager()
+    private var selectedCreateType: CreateType = .url
+    private let typeViewFactory = CreateQRTypeViewFactory()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,12 +53,13 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
         AdmobManager.shared.setMainBanner(adView, self, .main)
     }
      
-    private func selecteTypeView(_ qrType: QRTypeItemViewModel) {
+    private func selectTypeView(_ qrType: QRTypeItemViewModel) {
+        selectedCreateType = qrType.qrType
         qrTypeView.subviews.forEach {
             $0.removeFromSuperview()
         }
         
-        typeView = getTypeClass(qrType.qrType)
+        typeView = typeViewFactory.makeView(for: qrType.qrType)
         guard let typeView = self.typeView else { return }
         typeView.delegate = self
         qrTypeView.addSubview(typeView)
@@ -71,8 +74,7 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
     
     private func bind(to viewModel: MainViewModel) {
         viewModel.typeItems.observe(on: self) { [weak self] _ in self?.updateItems() }
-        
-        
+
         viewModel.photoLibraryOnlyAddPermission.observe(on: self) { [weak self] hasPermission in
             guard let hasPermission = hasPermission, let imgData = self?.viewModel?.createQRItem.value?.qrImageData, let img = UIImage(data: imgData) else { return }
             guard hasPermission else {
@@ -82,9 +84,16 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
                 return
             }
             
-            viewModel.downloadImage(image: img, completion: { _ in 
+            viewModel.downloadImage(image: img, completion: { result in
                 DispatchQueue.main.async {
-                    self?.showSaveAlert()
+                    switch result {
+                    case .success(true):
+                        self?.showSaveAlert()
+                    case .success(false):
+                        self?.showSaveFailureAlert()
+                    case .failure:
+                        self?.showSaveFailureAlert()
+                    }
                 }
             })
         }
@@ -94,39 +103,12 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
                 return
             }
 
-            if let existingTypeView = self.qrTypeView.subviews.first(where: { $0 is CreateQRURLType }) as? CreateQRURLType {
-                existingTypeView.qrImg.image = img
-                existingTypeView.qrStackView.isHidden = false
-            } else if let existingTypeView = self.qrTypeView.subviews.first(where: { $0 is CreateQRWifiType }) as? CreateQRWifiType {
-                existingTypeView.qrImg.image = img
-                existingTypeView.qrStackView.isHidden = false
-            } else if let existingTypeView = self.qrTypeView.subviews.first(where: { $0 is CreateQRBankTransferType }) as? CreateQRBankTransferType {
-                existingTypeView.qrImg.image = img
-                existingTypeView.qrStackView.isHidden = false
-            } else if let existingTypeView = self.qrTypeView.subviews.first(where: { $0 is CreateQRContactType }) as? CreateQRContactType {
-                existingTypeView.qrImg.image = img
-                existingTypeView.qrStackView.isHidden = false
-            } else if let existingTypeView = self.qrTypeView.subviews.first(where: { $0 is CreateQRInstagramType }) as? CreateQRInstagramType {
-                existingTypeView.qrImg.image = img
-                existingTypeView.qrStackView.isHidden = false
-            } else if let existingTypeView = self.qrTypeView.subviews.first(where: { $0 is CreateQRYouTubeType }) as? CreateQRYouTubeType {
-                existingTypeView.qrImg.image = img
-                existingTypeView.qrStackView.isHidden = false
-            } else if let existingTypeView = self.qrTypeView.subviews.first(where: { $0 is CreateQRTikTokType }) as? CreateQRTikTokType {
-                existingTypeView.qrImg.image = img
-                existingTypeView.qrStackView.isHidden = false
+            if let previewView = self.typeView as? QRPreviewDisplayable {
+                previewView.displayGeneratedQR(img)
             } else {
                 print("typeView가 qrTypeView의 서브뷰에 없습니다.")
             }
         }
-        
-//        viewModel.selectedQRColor.observe(on: self) { selectedColor in
-//            <#code#>
-//        }
-//        
-//        viewModel.selectedBackColor.observe(on: self) { selectedColor in
-//            <#code#>
-//        }
     }
     
     private func updateItems() {
@@ -138,6 +120,18 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
                                       message: NSLocalizedString("The QR image has been saved to the gallery.", comment: "The QR image has been saved to the gallery."),
                                       preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment:"OK"), style: .default) {_ in
+            self.typeView?.imageSaveCompleted()
+        })
+        present(alert, animated: true)
+    }
+
+    private func showSaveFailureAlert() {
+        let alert = UIAlertController(
+            title: NSLocalizedString("Save Failed", comment: "Save Failed"),
+            message: NSLocalizedString("The QR image could not be saved. Please try again.", comment: "The QR image could not be saved. Please try again."),
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "OK"), style: .default) { _ in
             self.typeView?.imageSaveCompleted()
         })
         present(alert, animated: true)
@@ -154,30 +148,6 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
         present(alert, animated: true)
     }
     
-    func getTypeClass(_ type: CreateType) -> CreateQRTypeView {
-        switch type {
-        case .url:
-            return CreateQRURLType()
-        case .card:
-            return CreateQRCardType()
-        case .menu:
-            return CreateQRBetaType()
-        case .other:
-            return CreateQRCardType()
-        case .wifi:
-            return CreateQRWifiType()
-        case .bankTransfer:
-            return CreateQRBankTransferType()
-        case .contact:
-            return CreateQRContactType()
-        case .instagram:
-            return CreateQRInstagramType()
-        case .youtube:
-            return CreateQRYouTubeType()
-        case .tiktok:
-            return CreateQRTikTokType()
-        }
-    }
 }
 
 
@@ -203,7 +173,7 @@ extension CreateQRTabViewController: UICollectionViewDelegate, UICollectionViewD
         let cell = collectionView.cellForItem(at: indexPath) as? QRTypeCollectionViewCell
         cell?.setSelectedAppearance(true) // 선택된 상태 테두리 설정
         if let viewModel = viewModel {
-            selecteTypeView(viewModel.typeItems.value[indexPath.row])
+            selectTypeView(viewModel.typeItems.value[indexPath.row])
         }
     }
 
@@ -234,7 +204,6 @@ extension CreateQRTabViewController: QRTypeDelegate {
     }
     
     func saveImage() {
-        // TODO: - 권한을 체크하기전에 앱에 저장할지 디바이스 이미지로 저장할지를 선택하는 액션시트 구현
         let actionSheet = UIAlertController(title: nil, message: NSLocalizedString("Choose how to save the QR.", comment:"Choose how to save the QR."), preferredStyle: .actionSheet)
         
         let option1 = UIAlertAction(title: NSLocalizedString("Save QR Image to Gallery", comment:"Save QR Image to Gallery"), style: .default) { action in
@@ -264,7 +233,16 @@ extension CreateQRTabViewController: QRTypeDelegate {
     
     func generateQR(url: String) {
         let qrImg = self.viewModel?.generateQR(from: url, color: .black, backgroundColor: .white, logo: nil, logoStyle: .square)
-        let item = QRItem(title: NSLocalizedString("Untitled", comment:"Untitled"), qrImageData: qrImg?.pngData(), qrType: .url, qrData: url, qrColor: UIColor.black.toHex() ?? "000000FF", backColor: UIColor.white.toHex() ?? "FFFFFFFF", logo: nil, logoStyle: .square)
+        let item = QRItem(
+            title: NSLocalizedString("Untitled", comment:"Untitled"),
+            qrImageData: qrImg?.pngData(),
+            qrType: selectedCreateType,
+            qrData: url,
+            qrColor: UIColor.black.toHex() ?? "000000FF",
+            backColor: UIColor.white.toHex() ?? "FFFFFFFF",
+            logo: nil,
+            logoStyle: .square
+        )
         
         viewModel?.createQRItem.value = item
     }
@@ -277,11 +255,14 @@ extension CreateQRTabViewController: QRTypeDelegate {
             self.colorPickerManager.showColorPicker(self) { selectedColor in
                 if let color = selectedColor {
                     if let createdItem = self.viewModel?.createQRItem.value {
-                        let qrImg = self.viewModel?.generateQR(from: createdItem.title, color: color, backgroundColor: UIColor(hex: createdItem.backColor) ?? .white , logo: UIImage(data: createdItem.logo ?? Data()), logoStyle: createdItem.logoStyle)
-                        let item = QRItem(title: NSLocalizedString("Untitled", comment:"Untitled"), qrImageData: qrImg?.pngData(), qrType: .url, qrData: createdItem.qrData, qrColor: color.toHex() ?? createdItem.qrColor, backColor: createdItem.backColor, logo: createdItem.logo, logoStyle: createdItem.logoStyle)
-                        print("qr color : \(color.toHex())  //  back color : \(createdItem.backColor)")
-                        print("qr color : \(item.qrColor)  //  back color : \(item.backColor)")
-                        self.viewModel?.createQRItem.value = item
+                        self.updateCurrentQRItem(
+                            qrData: createdItem.qrData,
+                            qrColor: color,
+                            backgroundColor: UIColor(hex: createdItem.backColor) ?? .white,
+                            logo: createdItem.logo.flatMap(UIImage.init(data:)),
+                            logoData: createdItem.logo,
+                            logoStyle: createdItem.logoStyle
+                        )
                     }
                 }else {
                     print("유저 컬러 선택 취소")
@@ -292,11 +273,14 @@ extension CreateQRTabViewController: QRTypeDelegate {
             self.colorPickerManager.showColorPicker(self) { selectedColor in
                 if let color = selectedColor {
                     if let createdItem = self.viewModel?.createQRItem.value {
-                        let qrImg = self.viewModel?.generateQR(from: createdItem.title, color: UIColor(hex: createdItem.qrColor) ?? .black, backgroundColor: color, logo: UIImage(data: createdItem.logo ?? Data()), logoStyle: createdItem.logoStyle)
-                        let item = QRItem(title: NSLocalizedString("Untitled", comment:"Untitled"), qrImageData: qrImg?.pngData(), qrType: .url, qrData: createdItem.qrData, qrColor: createdItem.qrColor, backColor: color.toHex() ?? createdItem.backColor, logo: createdItem.logo, logoStyle: createdItem.logoStyle)
-                        print("qr color : \(createdItem.qrColor)  //  back color : \(color.toHex())")
-                        print("qr color : \(item.qrColor)  //  back color : \(item.backColor)")
-                        self.viewModel?.createQRItem.value = item
+                        self.updateCurrentQRItem(
+                            qrData: createdItem.qrData,
+                            qrColor: UIColor(hex: createdItem.qrColor) ?? .black,
+                            backgroundColor: color,
+                            logo: createdItem.logo.flatMap(UIImage.init(data:)),
+                            logoData: createdItem.logo,
+                            logoStyle: createdItem.logoStyle
+                        )
                     }
                 }else {
                     print("유저 컬러 선택 취소")
@@ -388,13 +372,84 @@ extension CreateQRTabViewController: UIImagePickerControllerDelegate & UINavigat
         
         if let selectedImage = info[.originalImage] as? UIImage {
             if let createdItem = self.viewModel?.createQRItem.value {
-                let qrImg = self.viewModel?.generateQR(from: createdItem.title, color: UIColor(hex: createdItem.qrColor) ?? .black, backgroundColor: UIColor(hex: createdItem.backColor) ?? .white, logo: selectedImage, logoStyle: createdItem.logoStyle)
-                let item = QRItem(title: NSLocalizedString("Untitled", comment:"Untitled"), qrImageData: qrImg?.pngData(), qrType: .url, qrData: createdItem.qrData, qrColor: createdItem.qrColor, backColor: createdItem.backColor, logo: selectedImage.pngData(), logoStyle: createdItem.logoStyle)
-                
-                self.viewModel?.createQRItem.value = item
+                self.updateCurrentQRItem(
+                    qrData: createdItem.qrData,
+                    qrColor: UIColor(hex: createdItem.qrColor) ?? .black,
+                    backgroundColor: UIColor(hex: createdItem.backColor) ?? .white,
+                    logo: selectedImage,
+                    logoData: selectedImage.pngData(),
+                    logoStyle: createdItem.logoStyle
+                )
             }
         }else {
             print("유저가 이미지 선택을 취소함")
         }
     }
+}
+
+private extension CreateQRTabViewController {
+    func updateCurrentQRItem(
+        qrData: String,
+        qrColor: UIColor,
+        backgroundColor: UIColor,
+        logo: UIImage?,
+        logoData: Data?,
+        logoStyle: LogoStyle
+    ) {
+        guard let currentItem = viewModel?.createQRItem.value else { return }
+
+        let qrImage = viewModel?.generateQR(
+            from: qrData,
+            color: qrColor,
+            backgroundColor: backgroundColor,
+            logo: logo,
+            logoStyle: logoStyle
+        )
+
+        let updatedItem = QRItem(
+            id: currentItem.id,
+            title: currentItem.title,
+            qrImageData: qrImage?.pngData(),
+            createdAt: currentItem.createdAt,
+            qrType: currentItem.qrType,
+            qrData: qrData,
+            qrColor: qrColor.toHex() ?? currentItem.qrColor,
+            backColor: backgroundColor.toHex() ?? currentItem.backColor,
+            logo: logoData,
+            logoStyle: logoStyle,
+            isPinned: currentItem.isPinned
+        )
+
+        viewModel?.createQRItem.value = updatedItem
+    }
+}
+
+extension CreateQRURLType: QRPreviewDisplayable {
+    var qrPreviewImageView: UIImageView { qrImg }
+    var qrPreviewStackView: UIStackView { qrStackView }
+}
+
+extension CreateQRWifiType: QRPreviewDisplayable {
+    var qrPreviewImageView: UIImageView { qrImg }
+    var qrPreviewStackView: UIStackView { qrStackView }
+}
+
+extension CreateQRContactType: QRPreviewDisplayable {
+    var qrPreviewImageView: UIImageView { qrImg }
+    var qrPreviewStackView: UIStackView { qrStackView }
+}
+
+extension CreateQRInstagramType: QRPreviewDisplayable {
+    var qrPreviewImageView: UIImageView { qrImg }
+    var qrPreviewStackView: UIStackView { qrStackView }
+}
+
+extension CreateQRYouTubeType: QRPreviewDisplayable {
+    var qrPreviewImageView: UIImageView { qrImg }
+    var qrPreviewStackView: UIStackView { qrStackView }
+}
+
+extension CreateQRTikTokType: QRPreviewDisplayable {
+    var qrPreviewImageView: UIImageView { qrImg }
+    var qrPreviewStackView: UIStackView { qrStackView }
 }

@@ -13,21 +13,43 @@ protocol ImageDownloadRepository {
 }
 
 class ImageDownloadRepositoryImpl: NSObject, ImageDownloadRepository {
+    private let completionLock = NSLock()
+    private var saveCompletions: [UUID: (Result<Bool, Error>) -> Void] = [:]
+
     func saveImage(_ image: UIImage, completion: @escaping (Result<Bool, Error>) -> Void) {
-        print("이미지 저장 시도")
-        
-        // 이미지를 저장하려면 UIImageWriteToSavedPhotosAlbum에 메서드가 필요함
-        UIImageWriteToSavedPhotosAlbum(image, self, #selector(imageSaveCompleted(_:didFinishSavingWithError:contextInfo:)), nil)
-        
-        // 완료 콜백 호출
-        completion(.success(true))
+        let token = UUID()
+        completionLock.lock()
+        saveCompletions[token] = completion
+        completionLock.unlock()
+
+        let context = Unmanaged.passRetained(SaveContext(token: token)).toOpaque()
+        UIImageWriteToSavedPhotosAlbum(
+            image,
+            self,
+            #selector(imageSaveCompleted(_:didFinishSavingWithError:contextInfo:)),
+            context
+        )
     }
     
-    @objc private func imageSaveCompleted(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+    @objc private func imageSaveCompleted(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeMutableRawPointer?) {
+        guard let contextInfo else { return }
+        let context = Unmanaged<SaveContext>.fromOpaque(contextInfo).takeRetainedValue()
+        completionLock.lock()
+        let completion = saveCompletions.removeValue(forKey: context.token)
+        completionLock.unlock()
+
         if let error = error {
-            print("이미지 저장 실패: \(error.localizedDescription)")
+            completion?(.failure(error))
         } else {
-            print("이미지가 성공적으로 저장되었습니다.")
+            completion?(.success(true))
         }
+    }
+}
+
+private final class SaveContext {
+    let token: UUID
+
+    init(token: UUID) {
+        self.token = token
     }
 }

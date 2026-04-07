@@ -41,14 +41,68 @@
         }
       }
     },
-    "Account Holder" : {
-      "comment" : "Account Holder"
+    "@channel" : {
+      "comment" : "YouTube channel placeholder",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "@채널"
+          }
+        }
+      }
     },
-    "Account Holder Name" : {
-
+    "@username" : {
+      "comment" : "Instagram username placeholder\nTikTok username placeholder",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "@사용자이름"
+          }
+        }
+      }
     },
-    "Account Number" : {
-      "comment" : "Account Number"
+    "010-1234-5678" : {
+      "comment" : "Phone number placeholder",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "0123-456789"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "01 23 45 67 89"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "090-1234-5678"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "010-1234-5678"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "012-345 6789"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "0912-345-678"
+          }
+        }
+      }
     },
     "Add logo" : {
       "comment" : "Add logo",
@@ -93,9 +147,6 @@
     },
     "Add to Contacts" : {
 
-    },
-    "Amount (Optional)" : {
-      "comment" : "Amount"
     },
     "An unknown error occurred." : {
       "comment" : "알 수 없는 오류가 발생했습니다.",
@@ -273,12 +324,6 @@
         }
       }
     },
-    "Bank" : {
-      "comment" : "Bank"
-    },
-    "Bank Transfer" : {
-      "comment" : "Bank Transfer QR"
-    },
     "Camera Permission Required" : {
       "comment" : "Camera Permission Required",
       "localizations" : {
@@ -444,7 +489,7 @@
       }
     },
     "Color" : {
-      "comment" : "Share",
+      "comment" : "Color",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -660,9 +705,6 @@
           }
         }
       }
-    },
-    "Done" : {
-
     },
     "Download Complete" : {
       "comment" : "Download Complete",
@@ -917,8 +959,36 @@
         }
       }
     },
+    "https://yourURL.com" : {
+      "comment" : "URL placeholder",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://URL을입력하세요.com"
+          }
+        }
+      }
+    },
+    "Input Required" : {
+      "comment" : "Input Required"
+    },
+    "Instagram" : {
+      "comment" : "Instagram"
+    },
     "Instagram Username" : {
       "comment" : "Instagram Username"
+    },
+    "instagram.com/username" : {
+      "comment" : "SNS URL placeholder",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "instagram.com/사용자이름"
+          }
+        }
+      }
     },
     "Latest version on store: %@" : {
       "localizations" : {
@@ -1161,6 +1231,88 @@
         }
       }
     },
+    "My wifi name" : {
+      "comment" : "Wifi name placeholder",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mein WLAN-Name"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mon nom Wi-Fi"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wi-Fi名"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "와이파이 이름"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nama Wi-Fi saya"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tên Wi-Fi của tôi"
+          }
+        }
+      }
+    },
+    "My wifi password" : {
+      "comment" : "Wifi password placeholder",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mein WLAN-Passwort"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mon mot de passe Wi-Fi"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wi-Fiパスワード"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "와이파이 비밀번호"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kata laluan Wi-Fi saya"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mật khẩu Wi-Fi của tôi"
+          }
+        }
+      }
+    },
     "Name" : {
       "comment" : "Name"
     },
@@ -1296,6 +1448,9 @@
     "Open in YouTube" : {
 
     },
+    "Others" : {
+      "comment" : "Others"
+    },
     "Phone" : {
       "comment" : "Phone"
     },
@@ -1381,6 +1536,12 @@
         }
       }
     },
+    "Pin" : {
+      "comment" : "Pin"
+    },
+    "Pinned" : {
+      "comment" : "Pinned"
+    },
     "Please allow camera access to scan the QR code." : {
       "comment" : "Please allow camera access to scan the QR code.",
       "localizations" : {
@@ -1462,6 +1623,30 @@
           }
         }
       }
+    },
+    "Please enter a name." : {
+      "comment" : "Alert message shown when the user tries to generate a QR code without entering a name.",
+      "isCommentAutoGenerated" : true
+    },
+    "Please enter a phone number." : {
+      "comment" : "Alert message shown when the user tries to generate a QR code without entering a phone number.",
+      "isCommentAutoGenerated" : true
+    },
+    "Please enter a TikTok username." : {
+      "comment" : "Alert message displayed when the user tries to generate a QR code without providing a TikTok username.",
+      "isCommentAutoGenerated" : true
+    },
+    "Please enter a YouTube channel handle." : {
+      "comment" : "Error message shown when the user does not enter a YouTube channel handle when generating a QR code.",
+      "isCommentAutoGenerated" : true
+    },
+    "Please enter an Instagram username." : {
+      "comment" : "Alert message shown when the user tries to generate a QR code without entering an Instagram username.",
+      "isCommentAutoGenerated" : true
+    },
+    "Please enter text or a URL to generate a QR code." : {
+      "comment" : "Alert message shown when the user tries to generate a QR code without providing any text or URL.",
+      "isCommentAutoGenerated" : true
     },
     "Please write your inquiry regarding the app." : {
       "localizations" : {
@@ -1708,6 +1893,9 @@
         }
       }
     },
+    "Save Failed" : {
+      "comment" : "Save Failed"
+    },
     "Save QR Image to Gallery" : {
       "comment" : "Save QR Image to Gallery",
       "localizations" : {
@@ -1952,9 +2140,6 @@
           }
         }
       }
-    },
-    "Select Bank" : {
-
     },
     "Select the part where you want to change the color." : {
       "comment" : "컬러를 변경할 부분을 선택하세요.",
@@ -2286,6 +2471,9 @@
         }
       }
     },
+    "The QR image could not be saved. Please try again." : {
+      "comment" : "The QR image could not be saved. Please try again."
+    },
     "The QR image has been saved to the gallery." : {
       "comment" : "The QR image has been saved to the gallery.",
       "localizations" : {
@@ -2407,6 +2595,9 @@
         }
       }
     },
+    "TikTok" : {
+      "comment" : "TikTok"
+    },
     "TikTok Username" : {
       "comment" : "TikTok Username"
     },
@@ -2449,6 +2640,9 @@
           }
         }
       }
+    },
+    "Unpin" : {
+      "comment" : "Unpin"
     },
     "Untitled" : {
       "comment" : "Untitled",
@@ -2666,9 +2860,12 @@
         }
       }
     },
+    "YouTube" : {
+      "comment" : "YouTube"
+    },
     "YouTube Channel" : {
       "comment" : "YouTube Channel"
     }
   },
-  "version" : "1.0"
+  "version" : "1.1"
 }

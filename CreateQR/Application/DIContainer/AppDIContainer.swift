@@ -99,15 +99,14 @@ final class MainSceneDIContainer {
 
     // MARK: - View Models
 
-    func makeMainViewModel(actions: MainViewModelActions) -> MainViewModel {
+    func makeMainViewModel() -> MainViewModel {
         DefaultMainViewModel(
             permissionUseCase: appDIContainer.makePermissionUseCase(),
             getQRListUseCase: appDIContainer.makeGetQRListUseCase(),
             qrScannerUseCase: appDIContainer.makeQRScannerUseCase(),
             downloadImageUseCase: appDIContainer.makeDownloadImageUseCase(),
             qrItemUseCase: appDIContainer.makeQRItemUseCase(),
-            fetchAppVersionUseCase: appDIContainer.makeFetchAppVersionUseCase(),
-            actions: actions
+            fetchAppVersionUseCase: appDIContainer.makeFetchAppVersionUseCase()
         )
     }
 
@@ -117,11 +116,13 @@ final class MainSceneDIContainer {
 
     // MARK: - View Controllers
 
-    func makeMainViewController(actions: MainViewModelActions) -> MainViewController {
-        MainViewController.create(with: makeMainViewModel(actions: actions))
+    func makeMainViewController() -> MainViewController {
+        MainViewController.create(with: makeMainViewModel())
     }
 
     func makeQRDetailViewController(qr: QRItem) -> QRDetailViewController {
         QRDetailViewController.create(with: makeQRDetailViewModel(qrData: qr))
     }
 }
+
+extension MainSceneDIContainer: MainCoordinatorDependencies {}

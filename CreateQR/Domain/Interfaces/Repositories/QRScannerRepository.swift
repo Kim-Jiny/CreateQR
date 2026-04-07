@@ -17,11 +17,13 @@ class QRScannerRepositoryImpl: NSObject, QRScannerRepository, AVCaptureMetadataO
     private var previewLayer: AVCaptureVideoPreviewLayer?
     private var captureSession: AVCaptureSession?
     private var completion: ((String) -> Void)?
+    private var hasDeliveredScanResult = false
 
     func startScanning(previewLayer: AVCaptureVideoPreviewLayer, completion: @escaping (String) -> Void) {
         stopScanning()
         self.completion = completion
         self.previewLayer = previewLayer
+        hasDeliveredScanResult = false
         setupCaptureSession()
     }
     
@@ -74,6 +76,10 @@ class QRScannerRepositoryImpl: NSObject, QRScannerRepository, AVCaptureMetadataO
     func stopScanning() {
         captureSession?.stopRunning()  // 스캔 세션 중단
         captureSession = nil           // 메모리에서 해제
+        completion = nil
+        previewLayer?.session = nil
+        previewLayer = nil
+        hasDeliveredScanResult = false
     }
     
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
@@ -81,7 +87,9 @@ class QRScannerRepositoryImpl: NSObject, QRScannerRepository, AVCaptureMetadataO
               let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject,
               let scannedValue = readableObject.stringValue else { return }
 
+        guard !hasDeliveredScanResult else { return }
+        hasDeliveredScanResult = true
         completion?(scannedValue)  // 스캔 결과 전달
-//        stopScanning()
+        stopScanning()
     }
 }

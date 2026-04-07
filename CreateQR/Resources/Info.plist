@@ -15,6 +15,12 @@
 	</array>
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-2707874353926722~9542260829</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>instagram</string>
+		<string>youtube</string>
+		<string>snssdk1233</string>
+	</array>
 	<key>SKAdNetworkItems</key>
 	<array>
 		<dict>

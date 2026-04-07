@@ -90,7 +90,7 @@ class QRDetailView: UIView {
         with item: QRItem
     ) {
         self.data = item
-        self.titleTextView.text = item.title
+        self.titleTextView.text = item.isPinned ? "★ \(item.title)" : item.title
         let qrCreateType = item.qrType == .other ? NSLocalizedString("Scanned", comment: "Scanned") :  NSLocalizedString("Created", comment: "Created")
         self.timeLB.text = "\(TimestampProvider().getFormattedDate(item.createdAt)) \(qrCreateType)"
         if let imgdata = item.qrImageData, let img = UIImage(data: imgdata) {
@@ -109,14 +109,14 @@ class QRDetailView: UIView {
     }
     
     @IBAction func readBtn(_ sender: Any) {
-        if self.data != nil {
-            self.delegate?.readData(self.data!)
+        if let data = self.data {
+            self.delegate?.readData(data)
         }
     }
     
     @IBAction func removeBtn(_ sender: Any) {
-        if self.data != nil {
-            self.delegate?.removeData(self.data!)
+        if let data = self.data {
+            self.delegate?.removeData(data)
         }
     }
     
@@ -128,14 +128,23 @@ class QRDetailView: UIView {
 
 extension QRDetailView: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if self.data != nil {
-            data?.title = textField.text ??  NSLocalizedString("Untitled", comment: "Untitled")
-            self.delegate?.changeQRData(self.data!)
+        if var data = self.data {
+            let trimmedTitle = (textField.text ?? "")
+                .replacingOccurrences(of: "★ ", with: "")
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+            let finalizedTitle = trimmedTitle.isEmpty
+                ? NSLocalizedString("Untitled", comment: "Untitled")
+                : trimmedTitle
+            data.title = finalizedTitle
+            self.data = data
+            textField.text = data.isPinned ? "★ \(finalizedTitle)" : finalizedTitle
+            self.delegate?.changeQRData(data)
         }
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        if textField.text ==  NSLocalizedString("Untitled", comment: "Untitled") {
+        textField.text = textField.text?.replacingOccurrences(of: "★ ", with: "")
+        if textField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == NSLocalizedString("Untitled", comment: "Untitled") {
             textField.text = ""
         }
     }
