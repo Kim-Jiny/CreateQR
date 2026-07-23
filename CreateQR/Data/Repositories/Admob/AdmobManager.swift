@@ -13,7 +13,12 @@ import AppTrackingTransparency
 class AdmobManager: NSObject {
     private let isFreeApp = true
     static let shared : AdmobManager = AdmobManager()
-    
+
+    /// Starts the Google Mobile Ads SDK. Required once at launch on SDK v12+.
+    func start() {
+        MobileAds.shared.start(completionHandler: nil)
+    }
+
     func setATT(completion: @escaping (Bool) -> Void) {
         // ATT 권한 요청
         ATTrackingManager.requestTrackingAuthorization { status in
@@ -48,10 +53,10 @@ class AdmobManager: NSObject {
             }
             return
         }
-        var bannerView: GADBannerView
+        var bannerView: BannerView
         let viewWidth = adView.frame.inset(by: adView.safeAreaInsets).width
-        let adaptiveSize = GADCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth(viewWidth)
-        bannerView = GADBannerView(adSize: adaptiveSize)
+        let adaptiveSize = currentOrientationAnchoredAdaptiveBanner(width: viewWidth)
+        bannerView = BannerView(adSize: adaptiveSize)
         adView.addSubview(bannerView)
         if let st = adView.superview as? UIStackView {
             adView.isHidden = false
@@ -76,7 +81,7 @@ class AdmobManager: NSObject {
         }
 #endif
         bannerView.rootViewController = sender
-        bannerView.load(GADRequest())
+        bannerView.load(Request())
     }
     
     deinit {
@@ -84,29 +89,29 @@ class AdmobManager: NSObject {
     }
 }
 
-extension AdmobManager : GADBannerViewDelegate {
-    func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
+extension AdmobManager : BannerViewDelegate {
+    func bannerViewDidReceiveAd(_ bannerView: BannerView) {
         print("bannerViewDidReceiveAd")
     }
-    
-    func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
+
+    func bannerView(_ bannerView: BannerView, didFailToReceiveAdWithError error: Error) {
         print("bannerView:didFailToReceiveAdWithError: \(error.localizedDescription)")
     }
-    
-    func bannerViewDidRecordImpression(_ bannerView: GADBannerView) {
+
+    func bannerViewDidRecordImpression(_ bannerView: BannerView) {
         print("bannerViewDidRecordImpression")
     }
-    
-    func bannerViewWillPresentScreen(_ bannerView: GADBannerView) {
+
+    func bannerViewWillPresentScreen(_ bannerView: BannerView) {
         print("bannerViewWillPresentScreen")
     }
-    
-    func bannerViewWillDismissScreen(_ bannerView: GADBannerView) {
+
+    func bannerViewWillDismissScreen(_ bannerView: BannerView) {
         print("bannerViewWillDIsmissScreen")
     }
-    
-    func bannerViewDidDismissScreen(_ bannerView: GADBannerView) {
+
+    func bannerViewDidDismissScreen(_ bannerView: BannerView) {
         print("bannerViewDidDismissScreen")
     }
-    
+
 }
