@@ -64,6 +64,9 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
      
     private func selectTypeView(_ qrType: QRTypeItemViewModel) {
         selectedCreateType = qrType.qrType
+        // 새 타입으로 전환하면 스타일을 기본값으로 초기화(이전 타입 설정 누수 방지).
+        selectedCorrectionLevel = .quartile
+        gradientEndColor = nil
         qrTypeView.subviews.forEach {
             $0.removeFromSuperview()
         }
@@ -261,8 +264,10 @@ extension CreateQRTabViewController: QRTypeDelegate {
         
         let actionSheet = UIAlertController(title: nil, message: NSLocalizedString("Select the part where you want to change the color.", comment:"컬러를 변경할 부분을 선택하세요."), preferredStyle: .actionSheet)
         
-        let option1 = UIAlertAction(title: NSLocalizedString("QR code", comment:"QR code"), style: .default) { action in
-            self.colorPickerManager.showColorPicker(self) { selectedColor in
+        let option1 = UIAlertAction(title: NSLocalizedString("QR code", comment:"QR code"), style: .default) { [weak self] _ in
+            guard let self else { return }
+            self.colorPickerManager.showColorPicker(self) { [weak self] selectedColor in
+                guard let self else { return }
                 if let color = selectedColor {
                     if let createdItem = self.viewModel?.createQRItem.value {
                         self.updateCurrentQRItem(
@@ -279,8 +284,10 @@ extension CreateQRTabViewController: QRTypeDelegate {
                 }
             }
         }
-        let option2 = UIAlertAction(title: NSLocalizedString("Background", comment:"Background"), style: .default) { action in
-            self.colorPickerManager.showColorPicker(self) { selectedColor in
+        let option2 = UIAlertAction(title: NSLocalizedString("Background", comment:"Background"), style: .default) { [weak self] _ in
+            guard let self else { return }
+            self.colorPickerManager.showColorPicker(self) { [weak self] selectedColor in
+                guard let self else { return }
                 if let color = selectedColor {
                     if let createdItem = self.viewModel?.createQRItem.value {
                         self.updateCurrentQRItem(

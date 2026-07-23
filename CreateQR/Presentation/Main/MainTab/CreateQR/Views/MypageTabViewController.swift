@@ -92,7 +92,7 @@ class MypageTabViewController: UIViewController, StoryboardInstantiable {
             }
             
             // 권한이 있을 경우 이미지 다운로드 후 완료 알림 표시
-            viewModel.downloadImage(image: img) { [weak self] result in
+            self?.viewModel?.downloadImage(image: img) { [weak self] result in
                 DispatchQueue.main.async {
                     switch result {
                     case .success(true):
@@ -349,31 +349,28 @@ extension MypageTabViewController: UITableViewDragDelegate, UITableViewDropDeleg
     
     func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
         guard let viewModel = viewModel,
-              let destinationIndexPath = coordinator.destinationIndexPath else { return }
+              let destinationIndexPath = coordinator.destinationIndexPath,
+              let dropItem = coordinator.items.first,
+              let sourceIndexPath = dropItem.sourceIndexPath else { return }
 
-        let items = filteredItems
-        for dropItem in coordinator.items {
-            guard let sourceIndexPath = dropItem.sourceIndexPath,
-                  let sourceItem = self.item(at: sourceIndexPath),
-                  let sourceGlobal = globalIndex(of: sourceItem) else { continue }
+        // Reorder only WITHIN the current filter's subset, preserving the global positions
+        // of items in other folders. Rows are filtered-list indices.
+        var all = viewModel.myQRItems.value
+        let filteredPositions = all.indices.filter { folderFilter.matches(all[$0]) }
+        var filtered = filteredPositions.map { all[$0] }
 
-            // Map the destination row (within the filtered list) to a global insertion index.
-            let destinationGlobal: Int
-            if destinationIndexPath.row < items.count,
-               let targetGlobal = globalIndex(of: items[destinationIndexPath.row]) {
-                destinationGlobal = targetGlobal
-            } else {
-                destinationGlobal = viewModel.myQRItems.value.count
-            }
+        guard filtered.indices.contains(sourceIndexPath.row) else { return }
+        let moved = filtered.remove(at: sourceIndexPath.row)
+        let insertAt = min(destinationIndexPath.row, filtered.count)
+        filtered.insert(moved, at: insertAt)
 
-            var all = viewModel.myQRItems.value
-            let moved = all.remove(at: sourceGlobal)
-            let adjusted = sourceGlobal < destinationGlobal ? max(destinationGlobal - 1, 0) : destinationGlobal
-            all.insert(moved, at: min(adjusted, all.count))
-            viewModel.myQRItems.value = all
-            updateItems()
+        // Write the reordered subset back into the same global slots.
+        for (offset, position) in filteredPositions.enumerated() {
+            all[position] = filtered[offset]
         }
 
+        viewModel.myQRItems.value = all
+        updateItems()
         viewModel.saveMyQRList() // 변경된 순서를 저장
     }
 

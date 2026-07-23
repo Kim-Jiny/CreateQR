@@ -48,5 +48,6 @@ class ColorPickerManager: NSObject, UIColorPickerViewControllerDelegate {
         if let completion = completion {
             completion(nil)
         }
+        completion = nil // 취소 시에도 클로저 참조 해제(순환참조 방지)
     }
 }
