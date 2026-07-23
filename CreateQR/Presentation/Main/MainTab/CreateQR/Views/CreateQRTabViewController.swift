@@ -21,6 +21,15 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
     private var colorPickerManager = ColorPickerManager()
     private var selectedCreateType: CreateType = .url
     private let typeViewFactory = CreateQRTypeViewFactory()
+
+    // QR 스타일 상태(생성 시 적용)
+    private var selectedCorrectionLevel: QRCorrectionLevel = .quartile
+    private var gradientEndColor: UIColor? = nil
+
+    /// 로고가 있으면 오류정정을 High로 올려 스캔 안정성 확보.
+    private func effectiveCorrectionLevel(hasLogo: Bool) -> QRCorrectionLevel {
+        hasLogo ? .high : selectedCorrectionLevel
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -233,7 +242,7 @@ extension CreateQRTabViewController: QRTypeDelegate {
     }
     
     func generateQR(url: String) {
-        let qrImg = self.viewModel?.generateQR(from: url, color: .black, backgroundColor: .white, logo: nil, logoStyle: .square)
+        let qrImg = self.viewModel?.generateStyledQR(from: url, color: .black, backgroundColor: .white, logo: nil, logoStyle: .square, correctionLevel: effectiveCorrectionLevel(hasLogo: false), gradientEndColor: gradientEndColor)
         let item = QRItem(
             title: NSLocalizedString("Untitled", comment:"Untitled"),
             qrImageData: qrImg?.pngData(),
@@ -288,12 +297,33 @@ extension CreateQRTabViewController: QRTypeDelegate {
                 }
             }
         }
+        let ecOption = UIAlertAction(title: NSLocalizedString("Error Correction", comment: "Error correction level"), style: .default) { [weak self] _ in
+            self?.showCorrectionLevelPicker()
+        }
+        let gradientTitle = gradientEndColor == nil
+            ? NSLocalizedString("Gradient", comment: "Gradient")
+            : NSLocalizedString("Gradient Off", comment: "Turn gradient off")
+        let gradientOption = UIAlertAction(title: gradientTitle, style: .default) { [weak self] _ in
+            guard let self else { return }
+            if self.gradientEndColor == nil {
+                self.colorPickerManager.showColorPicker(self) { selectedColor in
+                    guard let color = selectedColor else { return }
+                    self.gradientEndColor = color
+                    self.regenerateCurrentQR()
+                }
+            } else {
+                self.gradientEndColor = nil
+                self.regenerateCurrentQR()
+            }
+        }
         let cancel = UIAlertAction(title: NSLocalizedString("Cancel", comment:"Cancel"), style: .cancel) { action in
             print("컬러 선택 안함")
         }
-        
+
         actionSheet.addAction(option1)
         actionSheet.addAction(option2)
+        actionSheet.addAction(ecOption)
+        actionSheet.addAction(gradientOption)
         actionSheet.addAction(cancel)
         
         // iPad에서 Action Sheet가 팝오버로 나타나도록 설정 (iPad에서는 필수)
@@ -305,7 +335,42 @@ extension CreateQRTabViewController: QRTypeDelegate {
         
         present(actionSheet, animated: true, completion: nil)
     }
-    
+
+    private func showCorrectionLevelPicker() {
+        let sheet = UIAlertController(title: NSLocalizedString("Error Correction", comment: "Error correction level"), message: nil, preferredStyle: .actionSheet)
+        let levels: [(String, QRCorrectionLevel)] = [
+            ("L (7%)", .low), ("M (15%)", .medium), ("Q (25%)", .quartile), ("H (30%)", .high)
+        ]
+        for (levelTitle, level) in levels {
+            let checked = level == selectedCorrectionLevel ? "  ✓" : ""
+            sheet.addAction(UIAlertAction(title: levelTitle + checked, style: .default) { [weak self] _ in
+                self?.selectedCorrectionLevel = level
+                self?.regenerateCurrentQR()
+            })
+        }
+        sheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel"), style: .cancel))
+        if let pop = sheet.popoverPresentationController {
+            pop.sourceView = view
+            pop.sourceRect = CGRect(x: view.bounds.midX, y: view.bounds.midY, width: 1, height: 1)
+            pop.permittedArrowDirections = []
+        }
+        present(sheet, animated: true)
+    }
+
+    /// Re-renders the current in-progress QR with its existing color/logo, applying the
+    /// latest error-correction and gradient settings.
+    private func regenerateCurrentQR() {
+        guard let item = viewModel?.createQRItem.value else { return }
+        updateCurrentQRItem(
+            qrData: item.qrData,
+            qrColor: UIColor(hex: item.qrColor) ?? .black,
+            backgroundColor: UIColor(hex: item.backColor) ?? .white,
+            logo: item.logo.flatMap(UIImage.init(data:)),
+            logoData: item.logo,
+            logoStyle: item.logoStyle
+        )
+    }
+
     func addLogo() {
         
         
@@ -399,12 +464,14 @@ private extension CreateQRTabViewController {
     ) {
         guard let currentItem = viewModel?.createQRItem.value else { return }
 
-        let qrImage = viewModel?.generateQR(
+        let qrImage = viewModel?.generateStyledQR(
             from: qrData,
             color: qrColor,
             backgroundColor: backgroundColor,
             logo: logo,
-            logoStyle: logoStyle
+            logoStyle: logoStyle,
+            correctionLevel: effectiveCorrectionLevel(hasLogo: logo != nil),
+            gradientEndColor: gradientEndColor
         )
 
         let updatedItem = QRItem(

@@ -27,6 +27,16 @@ protocol QRCodeImageGenerating {
         logo: UIImage?,
         logoStyle: LogoStyle
     ) -> UIImage?
+
+    func generate(
+        from string: String,
+        color: UIColor,
+        backgroundColor: UIColor,
+        logo: UIImage?,
+        logoStyle: LogoStyle,
+        correctionLevel: QRCorrectionLevel,
+        gradientEndColor: UIColor?
+    ) -> UIImage?
 }
 
 struct QRCodeImageGenerator: QRCodeImageGenerating {
@@ -57,7 +67,8 @@ struct QRCodeImageGenerator: QRCodeImageGenerating {
         backgroundColor: UIColor,
         logo: UIImage?,
         logoStyle: LogoStyle,
-        correctionLevel: QRCorrectionLevel
+        correctionLevel: QRCorrectionLevel,
+        gradientEndColor: UIColor? = nil
     ) -> UIImage? {
         let qrFilter = CIFilter.qrCodeGenerator()
         qrFilter.message = Data(string.utf8)
@@ -67,13 +78,39 @@ struct QRCodeImageGenerator: QRCodeImageGenerating {
             return nil
         }
 
-        let colorFilter = CIFilter.falseColor()
-        colorFilter.inputImage = qrImage
-        colorFilter.color0 = CIColor(color: color)
-        colorFilter.color1 = CIColor(color: backgroundColor)
+        let coloredQRImage: CIImage
+        if let gradientEndColor {
+            // Gradient foreground: build a module mask, then blend a diagonal gradient
+            // over the background color using the mask.
+            let maskFilter = CIFilter.falseColor()
+            maskFilter.inputImage = qrImage
+            maskFilter.color0 = CIColor(color: .white) // modules -> white (mask selects)
+            maskFilter.color1 = CIColor(color: .black) // background -> black
+            guard let maskImage = maskFilter.outputImage else { return nil }
+            let extent = maskImage.extent
 
-        guard let coloredQRImage = colorFilter.outputImage else {
-            return nil
+            let gradientFilter = CIFilter.linearGradient()
+            gradientFilter.point0 = CGPoint(x: extent.minX, y: extent.maxY)
+            gradientFilter.point1 = CGPoint(x: extent.maxX, y: extent.minY)
+            gradientFilter.color0 = CIColor(color: color)
+            gradientFilter.color1 = CIColor(color: gradientEndColor)
+            guard let gradientImage = gradientFilter.outputImage?.cropped(to: extent) else { return nil }
+
+            let bgImage = CIImage(color: CIColor(color: backgroundColor)).cropped(to: extent)
+
+            let blendFilter = CIFilter.blendWithMask()
+            blendFilter.inputImage = gradientImage
+            blendFilter.backgroundImage = bgImage
+            blendFilter.maskImage = maskImage
+            guard let out = blendFilter.outputImage else { return nil }
+            coloredQRImage = out
+        } else {
+            let colorFilter = CIFilter.falseColor()
+            colorFilter.inputImage = qrImage
+            colorFilter.color0 = CIColor(color: color)
+            colorFilter.color1 = CIColor(color: backgroundColor)
+            guard let out = colorFilter.outputImage else { return nil }
+            coloredQRImage = out
         }
 
         let scaledQRImage = coloredQRImage.transformed(by: CGAffineTransform(scaleX: 10, y: 10))
@@ -147,6 +184,7 @@ protocol MainViewModelInput {
     func togglePinned(_ item: QRItem)
     func loadLatestVersion(completion: @escaping (String?) -> Void)
     func generateQR(from string: String, color: UIColor, backgroundColor: UIColor, logo: UIImage?, logoStyle: LogoStyle) -> UIImage?
+    func generateStyledQR(from string: String, color: UIColor, backgroundColor: UIColor, logo: UIImage?, logoStyle: LogoStyle, correctionLevel: QRCorrectionLevel, gradientEndColor: UIColor?) -> UIImage?
     // 폴더 정리
     func loadFolders()
     func addFolder(_ name: String)
@@ -427,6 +465,18 @@ final class DefaultMainViewModel: MainViewModel {
             backgroundColor: backgroundColor,
             logo: logo,
             logoStyle: logoStyle
+        )
+    }
+
+    func generateStyledQR(from string: String, color: UIColor, backgroundColor: UIColor, logo: UIImage?, logoStyle: LogoStyle, correctionLevel: QRCorrectionLevel, gradientEndColor: UIColor?) -> UIImage? {
+        qrCodeImageGenerator.generate(
+            from: string,
+            color: color,
+            backgroundColor: backgroundColor,
+            logo: logo,
+            logoStyle: logoStyle,
+            correctionLevel: correctionLevel,
+            gradientEndColor: gradientEndColor
         )
     }
 
