@@ -8,6 +8,16 @@
 import Foundation
 import AVFoundation
 import UIKit
+import CoreImage.CIFilterBuiltins
+
+/// QR error-correction level. Higher levels tolerate more damage/occlusion
+/// (needed when a logo is overlaid) at the cost of denser codes.
+enum QRCorrectionLevel: String {
+    case low = "L"       // ~7%
+    case medium = "M"    // ~15%
+    case quartile = "Q"  // ~25%
+    case high = "H"      // ~30%
+}
 
 protocol QRCodeImageGenerating {
     func generate(
@@ -20,6 +30,8 @@ protocol QRCodeImageGenerating {
 }
 
 struct QRCodeImageGenerator: QRCodeImageGenerating {
+    private let context = CIContext()
+
     func generate(
         from string: String,
         color: UIColor,
@@ -27,33 +39,48 @@ struct QRCodeImageGenerator: QRCodeImageGenerating {
         logo: UIImage?,
         logoStyle: LogoStyle
     ) -> UIImage? {
-        let data = string.data(using: .utf8)
-        
-        guard let filter = CIFilter(name: "CIQRCodeGenerator") else {
+        // A logo occludes the center, so bump correction to High when one is present.
+        let correctionLevel: QRCorrectionLevel = logo == nil ? .quartile : .high
+        return generate(
+            from: string,
+            color: color,
+            backgroundColor: backgroundColor,
+            logo: logo,
+            logoStyle: logoStyle,
+            correctionLevel: correctionLevel
+        )
+    }
+
+    func generate(
+        from string: String,
+        color: UIColor,
+        backgroundColor: UIColor,
+        logo: UIImage?,
+        logoStyle: LogoStyle,
+        correctionLevel: QRCorrectionLevel
+    ) -> UIImage? {
+        let qrFilter = CIFilter.qrCodeGenerator()
+        qrFilter.message = Data(string.utf8)
+        qrFilter.correctionLevel = correctionLevel.rawValue
+
+        guard let qrImage = qrFilter.outputImage else {
             return nil
         }
-        
-        filter.setValue(data, forKey: "inputMessage")
-        filter.setValue("Q", forKey: "inputCorrectionLevel")
-        
-        guard let qrImage = filter.outputImage else {
+
+        let colorFilter = CIFilter.falseColor()
+        colorFilter.inputImage = qrImage
+        colorFilter.color0 = CIColor(color: color)
+        colorFilter.color1 = CIColor(color: backgroundColor)
+
+        guard let coloredQRImage = colorFilter.outputImage else {
             return nil
         }
-        
-        let colorFilter = CIFilter(name: "CIFalseColor")
-        colorFilter?.setValue(qrImage, forKey: kCIInputImageKey)
-        colorFilter?.setValue(CIColor(color: color), forKey: "inputColor0")
-        colorFilter?.setValue(CIColor(color: backgroundColor), forKey: "inputColor1")
-        
-        guard let coloredQRImage = colorFilter?.outputImage else {
-            return nil
-        }
-        
+
         let scaledQRImage = coloredQRImage.transformed(by: CGAffineTransform(scaleX: 10, y: 10))
         guard let qrUIImage = convertToUIImage(from: scaledQRImage) else {
             return nil
         }
-        
+
         guard let logo else {
             return qrUIImage
         }
@@ -67,7 +94,6 @@ struct QRCodeImageGenerator: QRCodeImageGenerating {
     }
 
     private func convertToUIImage(from image: CIImage) -> UIImage? {
-        let context = CIContext(options: nil)
         guard let cgImage = context.createCGImage(image, from: image.extent) else { return nil }
         return UIImage(cgImage: cgImage)
     }
