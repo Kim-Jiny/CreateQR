@@ -35,11 +35,43 @@ class ScanQRTabViewController: UIViewController, StoryboardInstantiable, UIImage
     private var isCameraViewConfigured = false
     private var isScanningActive = false
     
+    private lazy var historyBtn: UIButton = {
+        let btn = UIButton(type: .system)
+        var config = UIButton.Configuration.filled()
+        config.image = UIImage(systemName: "clock.arrow.circlepath")
+        config.baseBackgroundColor = UIColor.black.withAlphaComponent(0.45)
+        config.baseForegroundColor = .white
+        config.cornerStyle = .capsule
+        btn.configuration = config
+        btn.addTarget(self, action: #selector(openScanHistory), for: .touchUpInside)
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        return btn
+    }()
+    private var isHistoryButtonAdded = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .systemBackground
         setupBindings()
+        setupHistoryButton()
         // Do any additional setup after loading the view.
+    }
+
+    private func setupHistoryButton() {
+        guard !isHistoryButtonAdded else { return }
+        isHistoryButtonAdded = true
+        view.addSubview(historyBtn)
+        historyBtn.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(12)
+            $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).inset(16)
+            $0.width.height.equalTo(44)
+        }
+    }
+
+    @objc private func openScanHistory() {
+        let vc = ScanHistoryViewController()
+        vc.viewModel = viewModel
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -202,6 +234,9 @@ class ScanQRTabViewController: UIViewController, StoryboardInstantiable, UIImage
     }
     
     func qrDataAlert(_ qrCode: String) {
+        // 스캔한 내용을 기록에 자동 저장(중복 연속 스캔은 스토어에서 무시)
+        viewModel?.addScanRecord(qrCode)
+
         // vCard 감지
         if qrCode.hasPrefix("BEGIN:VCARD") {
             showVCardAlert(qrCode)

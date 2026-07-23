@@ -154,6 +154,11 @@ protocol MainViewModelInput {
     func deleteFolder(_ name: String)
     func moveItem(_ item: QRItem, toFolder folderName: String?)
     func itemCount(forFolder folderName: String?) -> Int
+    // 스캔 기록
+    func loadScanHistory()
+    func addScanRecord(_ content: String)
+    func deleteScanRecord(id: String)
+    func clearScanHistory()
 }
 
 // Output 프로토콜: 뷰모델에서 뷰로 전달될 데이터들
@@ -166,6 +171,7 @@ protocol MainViewModelOutput {
     var photoLibraryOnlyAddPermission: Observable<Bool?> { get }
     var createQRItem: Observable<QRItem?> { get }
     var folders: Observable<[String]> { get }
+    var scanHistory: Observable<[ScanRecord]> { get }
 }
 
 // MainViewModel 타입: Input과 Output을 모두 결합한 타입
@@ -196,8 +202,10 @@ final class DefaultMainViewModel: MainViewModel {
     let photoLibraryOnlyAddPermission: Observable<Bool?> = Observable(nil) // 사진 라이브러리 추가 권한 상태
     var createQRItem: Observable<QRItem?> = Observable(nil) // QR 이미지
     let folders: Observable<[String]> = Observable([]) // 사용자 폴더 목록
+    let scanHistory: Observable<[ScanRecord]> = Observable([]) // 스캔 기록
 
     private let folderStore = FolderStore()
+    private let scanHistoryStore = ScanHistoryStore()
     
     // MARK: - Init (초기화)
     init(
@@ -328,6 +336,25 @@ final class DefaultMainViewModel: MainViewModel {
     /// Number of items in a folder (nil = Uncategorized, non-pinned).
     func itemCount(forFolder folderName: String?) -> Int {
         myQRItems.value.filter { $0.folderName == folderName }.count
+    }
+
+    // MARK: - Scan history
+
+    func loadScanHistory() {
+        scanHistory.value = scanHistoryStore.load()
+    }
+
+    func addScanRecord(_ content: String) {
+        scanHistory.value = scanHistoryStore.add(content: content, at: TimestampProvider().getCurrentTimestamp())
+    }
+
+    func deleteScanRecord(id: String) {
+        scanHistory.value = scanHistoryStore.delete(id: id)
+    }
+
+    func clearScanHistory() {
+        scanHistoryStore.clear()
+        scanHistory.value = []
     }
     
     // MARK: - Permissions Check (권한 확인)
