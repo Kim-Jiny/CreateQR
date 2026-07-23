@@ -119,29 +119,41 @@ struct CreateQRTypeViewFactory {
             return CreateQRYouTubeType()
         case .tiktok:
             return CreateQRTikTokType()
+        case .email:
+            return CreateQREmailType()
+        case .phone:
+            return CreateQRPhoneType()
+        case .sms:
+            return CreateQRSMSType()
         }
     }
 }
 
 class CreateQRTypeView: UIView {
     weak var delegate: QRTypeDelegate?
+
+    /// Name of the XIB to load. Defaults to the concrete class name.
+    /// Subclasses that reuse another type's layout (e.g. the single-field URL layout)
+    /// override this to point at that XIB.
+    class var nibName: String { String(describing: self) }
+
     // MARK: - Initialization
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         commonInit()
     }
-    
+
     // MARK: - XIB 로드 및 설정
-    
+
     func commonInit() {
         // XIB 로드
-        let nib = UINib(nibName: String(describing: Self.self), bundle: Bundle(for: type(of: self)))
+        let nib = UINib(nibName: Self.nibName, bundle: Bundle(for: type(of: self)))
         guard let loadedView = nib.instantiate(withOwner: self, options: nil).first as? UIView else {
             return
         }

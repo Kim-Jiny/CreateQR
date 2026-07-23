@@ -15,6 +15,9 @@ enum CreateType: Codable {
     case instagram
     case youtube
     case tiktok
+    case email
+    case phone
+    case sms
 }
 
 struct QRTypeItem: Equatable, Identifiable {

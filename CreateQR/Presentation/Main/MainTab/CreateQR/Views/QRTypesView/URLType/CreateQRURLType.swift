@@ -27,30 +27,43 @@ class CreateQRURLType: CreateQRTypeView, QRActionHandling {
     var shareActionButton: UIButton! { shareBtn }
     var colorActionButton: UIButton! { colorBtn }
     var logoActionButton: UIButton! { logoBtn }
-    
+
+    // MARK: - Subclass override points
+    // Single-field types (email/phone/SMS) reuse this layout and only customize
+    // the placeholder, keyboard, validation message, and how the payload is built.
+
+    /// Placeholder shown in the input field.
+    var inputPlaceholder: String { NSLocalizedString("https://yourURL.com", comment: "URL placeholder") }
+    /// Message shown when the field is empty on Generate.
+    var emptyInputMessage: String { NSLocalizedString("Please enter text or a URL to generate a QR code.", comment: "") }
+    /// Keyboard type for the input field.
+    var inputKeyboardType: UIKeyboardType { .default }
+    /// Builds the QR payload string from the trimmed user input. Default: the input verbatim.
+    func makePayload(from input: String) -> String { input }
+
     override func setupUI() {
-        
-        let placeholderText = NSLocalizedString("https://yourURL.com", comment: "URL placeholder")
+
         let attributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.speedMain3 // 플레이스홀더 색상 변경
         ]
 
-        let attributedPlaceholder = NSAttributedString(string: placeholderText, attributes: attributes)
+        let attributedPlaceholder = NSAttributedString(string: inputPlaceholder, attributes: attributes)
         urlTextField.attributedPlaceholder = attributedPlaceholder
-        
+        urlTextField.keyboardType = inputKeyboardType
+
         let scrollInset: CGFloat = 20
         mainScrollView.contentInset = UIEdgeInsets(top: scrollInset, left: 0, bottom: scrollInset, right: 0)
-        
+
         configureQRActionButtons()
         configureSaveIndicator()
     }
-    
+
     @IBAction func generateBtn(_ sender: Any) {
-        guard let url = trimmedText(from: urlTextField) else {
-            showInputAlert(message: NSLocalizedString("Please enter text or a URL to generate a QR code.", comment: ""))
+        guard let input = trimmedText(from: urlTextField) else {
+            showInputAlert(message: emptyInputMessage)
             return
         }
-        self.delegate?.generateQR(url: url)
+        self.delegate?.generateQR(url: makePayload(from: input))
     }
     
     @IBAction func saveBtn(_ sender: Any) {

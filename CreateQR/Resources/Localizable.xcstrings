@@ -2,6 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "[QR Controller] App Inquiry" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -43,6 +44,7 @@
     },
     "@channel" : {
       "comment" : "YouTube channel placeholder",
+      "extractionState" : "stale",
       "localizations" : {
         "ko" : {
           "stringUnit" : {
@@ -54,6 +56,7 @@
     },
     "@username" : {
       "comment" : "Instagram username placeholder\nTikTok username placeholder",
+      "extractionState" : "stale",
       "localizations" : {
         "ko" : {
           "stringUnit" : {
@@ -65,6 +68,7 @@
     },
     "010-1234-5678" : {
       "comment" : "Phone number placeholder",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -145,11 +149,9 @@
         }
       }
     },
-    "Add to Contacts" : {
-
-    },
     "An unknown error occurred." : {
       "comment" : "알 수 없는 오류가 발생했습니다.",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -191,6 +193,7 @@
     },
     "App Created" : {
       "comment" : "App Created",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -326,6 +329,7 @@
     },
     "Camera Permission Required" : {
       "comment" : "Camera Permission Required",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -529,22 +533,11 @@
         }
       }
     },
-    "Company" : {
-      "comment" : "Company"
-    },
-    "Company Name (Optional)" : {
-
-    },
     "Contact" : {
       "comment" : "Contact QR"
     },
-    "Contact Found" : {
-
-    },
-    "Contact QR" : {
-
-    },
     "Contact Us" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -627,6 +620,7 @@
     },
     "Created" : {
       "comment" : "Created",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -667,6 +661,7 @@
       }
     },
     "Current Version: %@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -747,9 +742,6 @@
         }
       }
     },
-    "Email" : {
-      "comment" : "Email"
-    },
     "Enter Wi-Fi name." : {
       "comment" : "Enter Wi-Fi name",
       "localizations" : {
@@ -792,6 +784,7 @@
       }
     },
     "Error" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -831,11 +824,9 @@
         }
       }
     },
-    "example@email.com (Optional)" : {
-
-    },
     "Failed to send the email." : {
       "comment" : "메일 전송에 실패하였습니다.",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -874,9 +865,6 @@
           }
         }
       }
-    },
-    "Full Name" : {
-
     },
     "Generate" : {
       "localizations" : {
@@ -973,14 +961,9 @@
     "Input Required" : {
       "comment" : "Input Required"
     },
-    "Instagram" : {
-      "comment" : "Instagram"
-    },
-    "Instagram Username" : {
-      "comment" : "Instagram Username"
-    },
     "instagram.com/username" : {
       "comment" : "SNS URL placeholder",
+      "extractionState" : "stale",
       "localizations" : {
         "ko" : {
           "stringUnit" : {
@@ -991,6 +974,7 @@
       }
     },
     "Latest version on store: %@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1031,6 +1015,7 @@
       }
     },
     "Mail Canceled" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1071,6 +1056,7 @@
       }
     },
     "Mail Failed" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1111,6 +1097,7 @@
       }
     },
     "Mail Saved" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1151,6 +1138,7 @@
       }
     },
     "Mail Sent" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1233,6 +1221,7 @@
     },
     "My wifi name" : {
       "comment" : "Wifi name placeholder",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1274,6 +1263,7 @@
     },
     "My wifi password" : {
       "comment" : "Wifi password placeholder",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1313,11 +1303,9 @@
         }
       }
     },
-    "Name" : {
-      "comment" : "Name"
-    },
     "No QR code found" : {
       "comment" : "No QR code found",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1398,9 +1386,6 @@
         }
       }
     },
-    "Open in Instagram" : {
-
-    },
     "Open in Safari" : {
       "comment" : "Open in Safari",
       "localizations" : {
@@ -1442,17 +1427,8 @@
         }
       }
     },
-    "Open in TikTok" : {
-
-    },
-    "Open in YouTube" : {
-
-    },
     "Others" : {
       "comment" : "Others"
-    },
-    "Phone" : {
-      "comment" : "Phone"
     },
     "Photo access permission is required to save the photo. Please change the permission in Settings." : {
       "comment" : "Photo access permission is required to save the photo. Please change the permission in Settings.",
@@ -1544,6 +1520,7 @@
     },
     "Please allow camera access to scan the QR code." : {
       "comment" : "Please allow camera access to scan the QR code.",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1624,31 +1601,12 @@
         }
       }
     },
-    "Please enter a name." : {
-      "comment" : "Alert message shown when the user tries to generate a QR code without entering a name.",
-      "isCommentAutoGenerated" : true
-    },
-    "Please enter a phone number." : {
-      "comment" : "Alert message shown when the user tries to generate a QR code without entering a phone number.",
-      "isCommentAutoGenerated" : true
-    },
-    "Please enter a TikTok username." : {
-      "comment" : "Alert message displayed when the user tries to generate a QR code without providing a TikTok username.",
-      "isCommentAutoGenerated" : true
-    },
-    "Please enter a YouTube channel handle." : {
-      "comment" : "Error message shown when the user does not enter a YouTube channel handle when generating a QR code.",
-      "isCommentAutoGenerated" : true
-    },
-    "Please enter an Instagram username." : {
-      "comment" : "Alert message shown when the user tries to generate a QR code without entering an Instagram username.",
-      "isCommentAutoGenerated" : true
-    },
     "Please enter text or a URL to generate a QR code." : {
       "comment" : "Alert message shown when the user tries to generate a QR code without providing any text or URL.",
       "isCommentAutoGenerated" : true
     },
     "Please write your inquiry regarding the app." : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1772,6 +1730,7 @@
     },
     "Read QR" : {
       "comment" : "Read QR",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1813,6 +1772,7 @@
     },
     "Remove" : {
       "comment" : "Remove",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1939,6 +1899,7 @@
     },
     "Save to app as QR code" : {
       "comment" : "Save to app as QR code",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2021,6 +1982,7 @@
     },
     "Saved by Scan" : {
       "comment" : "Saved by Scan",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2061,6 +2023,7 @@
       }
     },
     "Scan from Gallery" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2102,6 +2065,7 @@
     },
     "Scanned" : {
       "comment" : "Scanned",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2264,9 +2228,6 @@
         }
       }
     },
-    "SNS / Website" : {
-      "comment" : "SNS"
-    },
     "Square" : {
       "comment" : "Square",
       "localizations" : {
@@ -2310,6 +2271,7 @@
     },
     "The email has been saved as a draft." : {
       "comment" : "메일이 임시 저장되었습니다.",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2351,6 +2313,7 @@
     },
     "The email sending was canceled." : {
       "comment" : "메일 전송이 취소되었습니다.",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2392,6 +2355,7 @@
     },
     "The email was successfully sent." : {
       "comment" : "메일이 성공적으로 전송되었습니다.",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2432,6 +2396,7 @@
       }
     },
     "The feature will be available in the next version." : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2556,6 +2521,7 @@
       }
     },
     "This is the latest version." : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2595,13 +2561,8 @@
         }
       }
     },
-    "TikTok" : {
-      "comment" : "TikTok"
-    },
-    "TikTok Username" : {
-      "comment" : "TikTok Username"
-    },
     "Unable to send email." : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2686,6 +2647,7 @@
       }
     },
     "Update to the Latest Version" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2768,6 +2730,7 @@
     },
     "Wifi Name" : {
       "comment" : "Wifi Name",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2815,6 +2778,7 @@
     },
     "Wifi Password" : {
       "comment" : "Wifi Password",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2860,11 +2824,285 @@
         }
       }
     },
-    "YouTube" : {
-      "comment" : "YouTube"
+    "Email" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "E-Mail"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "E-mail"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "メール"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이메일"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "E-mel"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Email"
+          }
+        }
+      }
     },
-    "YouTube Channel" : {
-      "comment" : "YouTube Channel"
+    "Phone" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Telefon"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Téléphone"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "電話"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "전화"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Telefon"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Điện thoại"
+          }
+        }
+      }
+    },
+    "Message" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nachricht"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Message"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "メッセージ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "메시지"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesej"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tin nhắn"
+          }
+        }
+      }
+    },
+    "Please enter an email address." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bitte geben Sie eine E-Mail-Adresse ein."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Veuillez saisir une adresse e-mail."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "メールアドレスを入力してください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이메일 주소를 입력해 주세요."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sila masukkan alamat e-mel."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vui lòng nhập địa chỉ email."
+          }
+        }
+      }
+    },
+    "Please enter a phone number." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bitte geben Sie eine Telefonnummer ein."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Veuillez saisir un numéro de téléphone."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "電話番号を入力してください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "전화번호를 입력해 주세요."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sila masukkan nombor telefon."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vui lòng nhập số điện thoại."
+          }
+        }
+      }
+    },
+    "name@example.com" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "name@example.com"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "name@example.com"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "name@example.com"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "name@example.com"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "name@example.com"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "name@example.com"
+          }
+        }
+      }
+    },
+    "+1 234 567 8900" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+1 234 567 8900"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+1 234 567 8900"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+1 234 567 8900"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+1 234 567 8900"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+1 234 567 8900"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+1 234 567 8900"
+          }
+        }
+      }
     }
   },
   "version" : "1.1"
