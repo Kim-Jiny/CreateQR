@@ -116,19 +116,36 @@ class CreateQRContactType: CreateQRTypeView, QRActionHandling {
     }
 
     private func generateVCard(name: String, phone: String, email: String, company: String, url: String) -> String {
+        // vCard 3.0 text values must escape `\ ; ,` and newlines, otherwise contact apps
+        // truncate/split fields (e.g. a name "Smith, John; Jr" breaks into wrong components).
+        let escapedName = Self.escapeVCardValue(name)
+
+        // Emit a structured N: line so the name round-trips into family/given when re-scanned.
+        // N is family;given;additional;prefix;suffix — split the full name on the last space.
+        let nameComponents = name.split(separator: " ", omittingEmptySubsequences: true).map(String.init)
+        let structuredName: String
+        if nameComponents.count >= 2 {
+            let family = Self.escapeVCardValue(nameComponents.last ?? "")
+            let given = Self.escapeVCardValue(nameComponents.dropLast().joined(separator: " "))
+            structuredName = "\(family);\(given);;;"
+        } else {
+            structuredName = "\(escapedName);;;;"
+        }
+
         var vCard = """
         BEGIN:VCARD
         VERSION:3.0
-        FN:\(name)
+        N:\(structuredName)
+        FN:\(escapedName)
         TEL:\(formatPhoneNumber(phone))
         """
 
         if !email.isEmpty {
-            vCard += "\nEMAIL:\(email)"
+            vCard += "\nEMAIL:\(Self.escapeVCardValue(email))"
         }
 
         if !company.isEmpty {
-            vCard += "\nORG:\(company)"
+            vCard += "\nORG:\(Self.escapeVCardValue(company))"
         }
 
         if !url.isEmpty {
@@ -136,12 +153,27 @@ class CreateQRContactType: CreateQRTypeView, QRActionHandling {
             if !url.hasPrefix("http://") && !url.hasPrefix("https://") {
                 formattedURL = "https://" + url
             }
-            vCard += "\nURL:\(formattedURL)"
+            vCard += "\nURL:\(Self.escapeVCardValue(formattedURL))"
         }
 
         vCard += "\nEND:VCARD"
 
         return vCard
+    }
+
+    /// Escapes reserved characters in a vCard text value (RFC 6350 / vCard 3.0).
+    static func escapeVCardValue(_ value: String) -> String {
+        var result = ""
+        for character in value {
+            switch character {
+            case "\\": result.append("\\\\")
+            case ";": result.append("\\;")
+            case ",": result.append("\\,")
+            case "\n": result.append("\\n")
+            default: result.append(character)
+            }
+        }
+        return result
     }
 
     private func formatPhoneNumber(_ phone: String) -> String {

@@ -60,10 +60,27 @@ class CreateQRWifiType: CreateQRTypeView, QRActionHandling {
         
         let password = wifiPwTextField.text ?? ""
         let wifiType = password.isEmpty ? "nopass" : "WPA"
-        
-        let qrContent = "WIFI:T:\(wifiType);S:\(ssid);P:\(password);;"
-        
+
+        let qrContent = "WIFI:T:\(wifiType);S:\(Self.escapeWifiValue(ssid));P:\(Self.escapeWifiValue(password));;"
+
         delegate?.generateQR(url: qrContent)
+    }
+
+    /// Escapes reserved characters in a WIFI: URI field per the MECARD/WIFI scheme.
+    /// The characters `\ ; , : "` are structural delimiters and must be backslash-escaped
+    /// when they appear inside an SSID or password, otherwise scanners misparse the payload.
+    static func escapeWifiValue(_ value: String) -> String {
+        var result = ""
+        for character in value {
+            switch character {
+            case "\\", ";", ",", ":", "\"":
+                result.append("\\")
+                result.append(character)
+            default:
+                result.append(character)
+            }
+        }
+        return result
     }
 
     

@@ -18,9 +18,11 @@ class PhotoLibraryPermissionDataSource {
            // 이미 권한이 허용된 경우
            completion(true)
        case .notDetermined:
-           // 권한이 결정되지 않은 경우, 권한 요청
+           // 권한이 결정되지 않은 경우, 권한 요청 (콜백은 백그라운드 스레드 → 메인으로 전환)
            PHPhotoLibrary.requestAuthorization(for: .addOnly) { newStatus in
-               completion(newStatus == .authorized)
+               DispatchQueue.main.async {
+                   completion(newStatus == .authorized || newStatus == .limited)
+               }
            }
            
        case .denied, .restricted:
@@ -42,9 +44,11 @@ class PhotoLibraryPermissionDataSource {
             completion(true)
             
         case .notDetermined:
-            // 권한이 결정되지 않은 경우, 권한 요청
+            // 권한이 결정되지 않은 경우, 권한 요청 (콜백은 백그라운드 스레드 → 메인으로 전환)
             PHPhotoLibrary.requestAuthorization { newStatus in
-                completion(newStatus == .authorized)
+                DispatchQueue.main.async {
+                    completion(newStatus == .authorized)
+                }
             }
             
         case .denied, .restricted, .limited:

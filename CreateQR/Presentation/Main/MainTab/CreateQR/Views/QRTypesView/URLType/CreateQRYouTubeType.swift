@@ -60,7 +60,8 @@ class CreateQRYouTubeType: CreateQRTypeView, QRActionHandling {
         }
 
         // @ 제거 및 URL 생성
-        let cleanChannel = channel.hasPrefix("@") ? channel : "@\(channel)"
+        let rawChannel = channel.hasPrefix("@") ? channel : "@\(channel)"
+        let cleanChannel = rawChannel.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? rawChannel
 
         // YouTube URL 생성
         let youtubeURL = "https://youtube.com/\(cleanChannel)"

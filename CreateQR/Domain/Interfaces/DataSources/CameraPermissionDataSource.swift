@@ -22,8 +22,11 @@ class CameraPermissionDataSource {
 
         case .notDetermined:
             // 권한이 결정되지 않은 경우, 권한 요청
+            // requestAccess 콜백은 임의의 백그라운드 스레드에서 호출되므로 메인 스레드로 전환.
             AVCaptureDevice.requestAccess(for: .video) { granted in
-                completion(granted)
+                DispatchQueue.main.async {
+                    completion(granted)
+                }
             }
 
         case .denied, .restricted:

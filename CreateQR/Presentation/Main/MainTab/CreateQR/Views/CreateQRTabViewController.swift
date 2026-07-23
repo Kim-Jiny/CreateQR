@@ -97,7 +97,8 @@ class CreateQRTabViewController: UIViewController, StoryboardInstantiable {
                 }
             })
         }
-        viewModel.createQRItem.observe(on: self) { qritem in
+        viewModel.createQRItem.observe(on: self) { [weak self] qritem in
+            guard let self else { return }
             guard let imgData = qritem?.qrImageData, let img = UIImage(data: imgData) else {
                 print("QR 이미지 데이터가 없습니다.")
                 return

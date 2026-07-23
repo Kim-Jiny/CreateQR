@@ -34,6 +34,9 @@ final class Observable<Value> {
     }
     
     private func notifyObservers() {
+        // Drop observers whose owner has been deallocated so their blocks no longer fire
+        // and the array can't grow unbounded.
+        observers = observers.filter { $0.observer != nil }
         for observer in observers {
             observer.block(self.value)
         }

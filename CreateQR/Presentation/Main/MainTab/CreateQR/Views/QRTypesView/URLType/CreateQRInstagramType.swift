@@ -60,7 +60,8 @@ class CreateQRInstagramType: CreateQRTypeView, QRActionHandling {
         }
 
         // @ 제거
-        let cleanUsername = username.hasPrefix("@") ? String(username.dropFirst()) : username
+        let rawUsername = username.hasPrefix("@") ? String(username.dropFirst()) : username
+        let cleanUsername = rawUsername.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? rawUsername
 
         // Instagram deeplink URL 생성
         // 앱이 설치되어 있으면 앱으로 열리고, 없으면 웹으로 열림

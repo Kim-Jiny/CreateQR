@@ -60,7 +60,8 @@ class CreateQRTikTokType: CreateQRTypeView, QRActionHandling {
         }
 
         // @ 제거
-        let cleanUsername = username.hasPrefix("@") ? String(username.dropFirst()) : username
+        let rawUsername = username.hasPrefix("@") ? String(username.dropFirst()) : username
+        let cleanUsername = rawUsername.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? rawUsername
 
         // TikTok URL 생성
         let tiktokURL = "https://tiktok.com/@\(cleanUsername)"
