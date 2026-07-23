@@ -102,6 +102,7 @@
 		30E4AE4C2CEAD42800B6C503 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 30E4AE4B2CEAD42800B6C503 /* GoogleMobileAds */; };
 		30E4AE4F2CEAD53E00B6C503 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E4AE4E2CEAD53E00B6C503 /* Config.swift */; };
 		30E4AE512CEB1E4900B6C503 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30E4AE502CEB1E4900B6C503 /* GoogleService-Info.plist */; };
+		30FACE0000000000000000A2 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 30FACE0000000000000000A1 /* PrivacyInfo.xcprivacy */; };
 		30E4AE542CEB1F2600B6C503 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 30E4AE532CEB1F2600B6C503 /* FirebaseAnalytics */; };
 		30E4AE562CEB1F2600B6C503 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 30E4AE552CEB1F2600B6C503 /* FirebaseCore */; };
 		30E4AE582CEB1F2600B6C503 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 30E4AE572CEB1F2600B6C503 /* FirebaseCrashlytics */; };
@@ -230,6 +231,7 @@
 		30C44DFC2CEE03FB004EEA79 /* CreateQR.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CreateQR.entitlements; sourceTree = "<group>"; };
 		30E4AE4E2CEAD53E00B6C503 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		30E4AE502CEB1E4900B6C503 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		30FACE0000000000000000A1 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		30E4AE5B2CEB2B2400B6C503 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		30E4AE5C2CEB2B2400B6C503 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		30E4AE5D2CEB2B2500B6C503 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -574,6 +576,7 @@
 			isa = PBXGroup;
 			children = (
 				30E4AE502CEB1E4900B6C503 /* GoogleService-Info.plist */,
+				30FACE0000000000000000A1 /* PrivacyInfo.xcprivacy */,
 				30BBA9FC2CB501E400A84090 /* LaunchScreen.storyboard */,
 				30BBA9FF2CB501E400A84090 /* Info.plist */,
 				30BBA9FA2CB501E400A84090 /* Assets.xcassets */,
@@ -886,6 +889,7 @@
 				30BBAA592CB522FA00A84090 /* AppColors.xcassets in Resources */,
 				3033991C2CE71D8400977E8A /* Localizable.xcstrings in Resources */,
 				30E4AE512CEB1E4900B6C503 /* GoogleService-Info.plist in Resources */,
+				30FACE0000000000000000A2 /* PrivacyInfo.xcprivacy in Resources */,
 				30E4AE642CEB2D0800B6C503 /* CreateQRBetaType.xib in Resources */,
 				30BBAA552CB517E400A84090 /* MainViewController.storyboard in Resources */,
 				303398D02CDDE76800977E8A /* QRTypeCollectionViewCell.xib in Resources */,
