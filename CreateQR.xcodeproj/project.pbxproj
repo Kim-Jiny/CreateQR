@@ -39,6 +39,8 @@
 		30FACE0000000000000000B2 /* CreateQREmailType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30FACE0000000000000000B1 /* CreateQREmailType.swift */; };
 		30FACE0000000000000000C2 /* CreateQRPhoneType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30FACE0000000000000000C1 /* CreateQRPhoneType.swift */; };
 		30FACE0000000000000000D2 /* CreateQRSMSType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30FACE0000000000000000D1 /* CreateQRSMSType.swift */; };
+		30FACE0000000000000000A6 /* CreateQRGeoType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30FACE0000000000000000A5 /* CreateQRGeoType.swift */; };
+		30FACE0000000000000000B6 /* CreateQRCalendarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30FACE0000000000000000B5 /* CreateQRCalendarType.swift */; };
 		303398D82CDDFA1E00977E8A /* CreateQRTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303398D72CDDFA1E00977E8A /* CreateQRTypeView.swift */; };
 		303398DB2CDDFA8000977E8A /* CreateQRURLType.xib in Resources */ = {isa = PBXBuildFile; fileRef = 303398DA2CDDFA8000977E8A /* CreateQRURLType.xib */; };
 		303398DD2CDDFD2A00977E8A /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303398DC2CDDFD2A00977E8A /* UIView+Extensions.swift */; };
@@ -171,6 +173,8 @@
 		30FACE0000000000000000B1 /* CreateQREmailType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQREmailType.swift; sourceTree = "<group>"; };
 		30FACE0000000000000000C1 /* CreateQRPhoneType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQRPhoneType.swift; sourceTree = "<group>"; };
 		30FACE0000000000000000D1 /* CreateQRSMSType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQRSMSType.swift; sourceTree = "<group>"; };
+		30FACE0000000000000000A5 /* CreateQRGeoType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQRGeoType.swift; sourceTree = "<group>"; };
+		30FACE0000000000000000B5 /* CreateQRCalendarType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQRCalendarType.swift; sourceTree = "<group>"; };
 		303398D72CDDFA1E00977E8A /* CreateQRTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQRTypeView.swift; sourceTree = "<group>"; };
 		303398DA2CDDFA8000977E8A /* CreateQRURLType.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateQRURLType.xib; sourceTree = "<group>"; };
 		303398DC2CDDFD2A00977E8A /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
@@ -374,6 +378,8 @@
 				30FACE0000000000000000B1 /* CreateQREmailType.swift */,
 				30FACE0000000000000000C1 /* CreateQRPhoneType.swift */,
 				30FACE0000000000000000D1 /* CreateQRSMSType.swift */,
+				30FACE0000000000000000A5 /* CreateQRGeoType.swift */,
+				30FACE0000000000000000B5 /* CreateQRCalendarType.swift */,
 				303398DA2CDDFA8000977E8A /* CreateQRURLType.xib */,
 				303398F82CE3287900977E8A /* CreateQRCardType.swift */,
 				303398FA2CE328AE00977E8A /* CreateQRCardType.xib */,
@@ -1008,6 +1014,8 @@
 				30FACE0000000000000000B2 /* CreateQREmailType.swift in Sources */,
 				30FACE0000000000000000C2 /* CreateQRPhoneType.swift in Sources */,
 				30FACE0000000000000000D2 /* CreateQRSMSType.swift in Sources */,
+				30FACE0000000000000000A6 /* CreateQRGeoType.swift in Sources */,
+				30FACE0000000000000000B6 /* CreateQRCalendarType.swift in Sources */,
 				30BBAA772CB90A5C00A84090 /* AccessibilityIdentifier.swift in Sources */,
 				3033990B2CE472D400977E8A /* QRItemRepository.swift in Sources */,
 				30E4AE4F2CEAD53E00B6C503 /* Config.swift in Sources */,

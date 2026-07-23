@@ -18,6 +18,8 @@ enum CreateType: Codable {
     case email
     case phone
     case sms
+    case geo
+    case calendar
 }
 
 struct QRTypeItem: Equatable, Identifiable {

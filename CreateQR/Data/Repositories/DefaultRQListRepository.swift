@@ -31,7 +31,9 @@ extension DefaultRQListRepository: QRListRepository {
         let emailType = QRTypeItem(id: "emailType", title: NSLocalizedString("Email", comment: "Email QR"), titleImage: UIImage(systemName: "envelope"), detailImage: nil, type: .email)
         let phoneType = QRTypeItem(id: "phoneType", title: NSLocalizedString("Phone", comment: "Phone QR"), titleImage: UIImage(systemName: "phone"), detailImage: nil, type: .phone)
         let smsType = QRTypeItem(id: "smsType", title: NSLocalizedString("Message", comment: "SMS QR"), titleImage: UIImage(systemName: "message"), detailImage: nil, type: .sms)
-        completion(.success([urlType, wifiType, contactType, emailType, phoneType, smsType, instagramType, youtubeType, tiktokType]))
+        let geoType = QRTypeItem(id: "geoType", title: NSLocalizedString("Location", comment: "Geo QR"), titleImage: UIImage(systemName: "mappin.and.ellipse"), detailImage: nil, type: .geo)
+        let calendarType = QRTypeItem(id: "calendarType", title: NSLocalizedString("Event", comment: "Calendar QR"), titleImage: UIImage(systemName: "calendar"), detailImage: nil, type: .calendar)
+        completion(.success([urlType, wifiType, contactType, emailType, phoneType, smsType, geoType, calendarType, instagramType, youtubeType, tiktokType]))
         
         return task
     }

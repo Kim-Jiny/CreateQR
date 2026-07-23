@@ -125,6 +125,10 @@ struct CreateQRTypeViewFactory {
             return CreateQRPhoneType()
         case .sms:
             return CreateQRSMSType()
+        case .geo:
+            return CreateQRGeoType()
+        case .calendar:
+            return CreateQRCalendarType()
         }
     }
 }
