@@ -85,6 +85,8 @@
 		30BBAA3F2CB509A100A84090 /* BackButtonEmptyTitleNavigationBarBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBAA3E2CB509A100A84090 /* BackButtonEmptyTitleNavigationBarBehavior.swift */; };
 		30BBAA412CB509D100A84090 /* BlackStyleNavigationBarBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBAA402CB509D100A84090 /* BlackStyleNavigationBarBehavior.swift */; };
 		30BBAA492CB5140F00A84090 /* MypageTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBAA462CB5140F00A84090 /* MypageTabViewController.swift */; };
+		30FACE0000000000000000F2 /* QRFolderListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30FACE0000000000000000F1 /* QRFolderListViewController.swift */; };
+		30FACE0000000000000000E2 /* FolderStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30FACE0000000000000000E1 /* FolderStore.swift */; };
 		30BBAA4F2CB5143F00A84090 /* CreateQRTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBAA4C2CB5143F00A84090 /* CreateQRTabViewController.swift */; };
 		30BBAA532CB517AA00A84090 /* StoryboardInstantiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBAA522CB517AA00A84090 /* StoryboardInstantiable.swift */; };
 		30BBAA552CB517E400A84090 /* MainViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30BBAA542CB517E400A84090 /* MainViewController.storyboard */; };
@@ -217,6 +219,8 @@
 		30BBAA3E2CB509A100A84090 /* BackButtonEmptyTitleNavigationBarBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButtonEmptyTitleNavigationBarBehavior.swift; sourceTree = "<group>"; };
 		30BBAA402CB509D100A84090 /* BlackStyleNavigationBarBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackStyleNavigationBarBehavior.swift; sourceTree = "<group>"; };
 		30BBAA462CB5140F00A84090 /* MypageTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageTabViewController.swift; sourceTree = "<group>"; };
+		30FACE0000000000000000F1 /* QRFolderListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRFolderListViewController.swift; sourceTree = "<group>"; };
+		30FACE0000000000000000E1 /* FolderStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderStore.swift; sourceTree = "<group>"; };
 		30BBAA4C2CB5143F00A84090 /* CreateQRTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQRTabViewController.swift; sourceTree = "<group>"; };
 		30BBAA522CB517AA00A84090 /* StoryboardInstantiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardInstantiable.swift; sourceTree = "<group>"; };
 		30BBAA542CB517E400A84090 /* MainViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainViewController.storyboard; sourceTree = "<group>"; };
@@ -606,6 +610,7 @@
 				30BBAA4C2CB5143F00A84090 /* CreateQRTabViewController.swift */,
 				303398DE2CE19EE200977E8A /* ScanQRTabViewController.swift */,
 				30BBAA462CB5140F00A84090 /* MypageTabViewController.swift */,
+				30FACE0000000000000000F1 /* QRFolderListViewController.swift */,
 				30BBAA5D2CB8FFCE00A84090 /* AppSettingTabViewController.swift */,
 			);
 			path = Views;
@@ -681,6 +686,7 @@
 				30E4AE4D2CEAD53100B6C503 /* Admob */,
 				30BBAA7A2CB911CE00A84090 /* Utils */,
 				30BBAA812CB9131700A84090 /* DefaultRQListRepository.swift */,
+				30FACE0000000000000000E1 /* FolderStore.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -985,6 +991,8 @@
 				30BBAA4F2CB5143F00A84090 /* CreateQRTabViewController.swift in Sources */,
 				303399142CE4A89700977E8A /* QRDetailView.swift in Sources */,
 				30BBAA492CB5140F00A84090 /* MypageTabViewController.swift in Sources */,
+				30FACE0000000000000000F2 /* QRFolderListViewController.swift in Sources */,
+				30FACE0000000000000000E2 /* FolderStore.swift in Sources */,
 				30BBAA822CB9131700A84090 /* DefaultRQListRepository.swift in Sources */,
 				303399012CE44CD900977E8A /* QRItem.swift in Sources */,
 				30E4AE662CEB2D6A00B6C503 /* AdmobManager.swift in Sources */,

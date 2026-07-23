@@ -8,22 +8,25 @@ import UIKit
 
 // MypageTabViewController는 마이 페이지에서 QR 목록을 보여주는 역할을 함
 class MypageTabViewController: UIViewController, StoryboardInstantiable {
-    private enum QRSection: Int, CaseIterable {
-        case pinned
-        case regular
-
-        var title: String {
-            switch self {
-            case .pinned:
-                return NSLocalizedString("Pinned", comment: "Pinned")
-            case .regular:
-                return NSLocalizedString("Others", comment: "Others")
-            }
-        }
-    }
-    
     // MainViewModel과 연동하기 위한 뷰모델 속성
     var viewModel: MainViewModel?
+
+    /// Which folder's contents this screen shows. Set before pushing.
+    var folderFilter: FolderFilter = .uncategorized
+
+    /// Navigation title for the current filter.
+    private var filterTitle: String {
+        switch folderFilter {
+        case .pinned: return NSLocalizedString("Pinned", comment: "Pinned")
+        case .uncategorized: return NSLocalizedString("Uncategorized", comment: "Uncategorized")
+        case .folder(let name): return name
+        }
+    }
+
+    /// Items belonging to the current filter, in display order.
+    private var filteredItems: [QRItem] {
+        (viewModel?.myQRItems.value ?? []).filter { folderFilter.matches($0) }
+    }
     
     // QR 목록을 보여줄 테이블 뷰 아웃렛
     @IBOutlet weak var myQRTableView: UITableView!
@@ -44,11 +47,13 @@ class MypageTabViewController: UIViewController, StoryboardInstantiable {
         }
         // 키보드 알림 설정
         setupKeyboardObservers()
+        title = filterTitle
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel?.fetchMyQRList()
+        title = filterTitle
     }
     
     private func setupView() {
@@ -104,56 +109,19 @@ class MypageTabViewController: UIViewController, StoryboardInstantiable {
     
     // 테이블 뷰의 데이터를 업데이트
     private func updateItems() {
-        emptyView.isHidden = viewModel?.myQRItems.value.count != 0
+        emptyView.isHidden = !filteredItems.isEmpty
         myQRTableView.reloadData()
     }
 
-    private func items(in section: QRSection) -> [QRItem] {
-        let items = viewModel?.myQRItems.value ?? []
-        switch section {
-        case .pinned:
-            return items.filter(\.isPinned)
-        case .regular:
-            return items.filter { !$0.isPinned }
-        }
-    }
-
-    private func qrSection(at index: Int) -> QRSection? {
-        QRSection(rawValue: index)
-    }
-
-    private func section(for item: QRItem) -> QRSection {
-        item.isPinned ? .pinned : .regular
-    }
-
     private func item(at indexPath: IndexPath) -> QRItem? {
-        guard let section = qrSection(at: indexPath.section) else { return nil }
-        let sectionItems = items(in: section)
-        guard sectionItems.indices.contains(indexPath.row) else { return nil }
-        return sectionItems[indexPath.row]
+        let items = filteredItems
+        guard items.indices.contains(indexPath.row) else { return nil }
+        return items[indexPath.row]
     }
 
-    private func flatIndex(for indexPath: IndexPath) -> Int? {
-        guard let item = item(at: indexPath) else { return nil }
-        return viewModel?.myQRItems.value.firstIndex(where: { $0.id == item.id })
-    }
-
-    private func insertionFlatIndex(for indexPath: IndexPath) -> Int? {
-        guard let section = qrSection(at: indexPath.section), let viewModel else { return nil }
-        let allItems = viewModel.myQRItems.value
-        let sectionItems = items(in: section)
-        let safeRow = min(indexPath.row, sectionItems.count)
-
-        if safeRow < sectionItems.count, let targetItem = item(at: IndexPath(row: safeRow, section: indexPath.section)) {
-            return allItems.firstIndex(where: { $0.id == targetItem.id })
-        }
-
-        switch section {
-        case .pinned:
-            return allItems.firstIndex(where: { !$0.isPinned }) ?? allItems.count
-        case .regular:
-            return allItems.count
-        }
+    /// Index of the item in the full myQRItems array.
+    private func globalIndex(of item: QRItem) -> Int? {
+        viewModel?.myQRItems.value.firstIndex(where: { $0.id == item.id })
     }
     
     // QR 상세 뷰를 추가하고 이미 있는 경우 추가하지 않음
@@ -274,14 +242,13 @@ class MypageTabViewController: UIViewController, StoryboardInstantiable {
 // 테이블 뷰 데이터 소스 및 델리게이트 구현
 extension MypageTabViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        QRSection.allCases.count
+        1
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let currentSection = qrSection(at: section) else { return 0 }
-        return items(in: currentSection).count
+        filteredItems.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MyQRTableViewCell.id, for: indexPath) as? MyQRTableViewCell,
               let item = item(at: indexPath) else {
@@ -291,11 +258,6 @@ extension MypageTabViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
 
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        guard let currentSection = qrSection(at: section), !items(in: currentSection).isEmpty else { return nil }
-        return currentSection.title
-    }
-    
     // 테이블 셀 클릭 시 QR 상세 뷰를 표시
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let data = item(at: indexPath) {
@@ -316,9 +278,61 @@ extension MypageTabViewController: UITableViewDelegate, UITableViewDataSource {
         }
         pinAction.backgroundColor = item.isPinned ? .systemGray : .systemOrange
 
-        let configuration = UISwipeActionsConfiguration(actions: [pinAction])
+        let moveAction = UIContextualAction(style: .normal, title: NSLocalizedString("Move", comment: "Move to folder")) { [weak self] _, _, completion in
+            self?.presentMoveToFolder(for: item)
+            completion(true)
+        }
+        moveAction.backgroundColor = .speedMain0
+
+        let configuration = UISwipeActionsConfiguration(actions: [pinAction, moveAction])
         configuration.performsFirstActionWithFullSwipe = false
         return configuration
+    }
+
+    /// Presents an action sheet to move the item into a folder (or create one / uncategorize).
+    private func presentMoveToFolder(for item: QRItem) {
+        guard let viewModel else { return }
+        let sheet = UIAlertController(title: NSLocalizedString("Move to Folder", comment: "Move to Folder"), message: nil, preferredStyle: .actionSheet)
+
+        for folder in viewModel.folders.value where folder != item.folderName {
+            sheet.addAction(UIAlertAction(title: folder, style: .default) { _ in
+                viewModel.moveItem(item, toFolder: folder)
+            })
+        }
+
+        if item.folderName != nil {
+            sheet.addAction(UIAlertAction(title: NSLocalizedString("Remove from Folder", comment: ""), style: .default) { _ in
+                viewModel.moveItem(item, toFolder: nil)
+            })
+        }
+
+        sheet.addAction(UIAlertAction(title: NSLocalizedString("New Folder…", comment: ""), style: .default) { [weak self] _ in
+            self?.promptNewFolder { name in
+                viewModel.addFolder(name)
+                viewModel.moveItem(item, toFolder: name)
+            }
+        })
+
+        sheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel"), style: .cancel))
+
+        if let popover = sheet.popoverPresentationController {
+            popover.sourceView = view
+            popover.sourceRect = CGRect(x: view.bounds.midX, y: view.bounds.midY, width: 0, height: 0)
+        }
+        present(sheet, animated: true)
+    }
+
+    /// Prompts for a new folder name.
+    private func promptNewFolder(completion: @escaping (String) -> Void) {
+        let alert = UIAlertController(title: NSLocalizedString("New Folder", comment: "New Folder"), message: nil, preferredStyle: .alert)
+        alert.addTextField { $0.placeholder = NSLocalizedString("Folder name", comment: "Folder name") }
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel"), style: .cancel))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Create", comment: "Create"), style: .default) { _ in
+            let name = alert.textFields?.first?.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+            guard !name.isEmpty else { return }
+            completion(name)
+        })
+        present(alert, animated: true)
     }
 }
 
@@ -334,26 +348,32 @@ extension MypageTabViewController: UITableViewDragDelegate, UITableViewDropDeleg
     }
     
     func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
-        guard let viewModel = viewModel else { return }
-        guard let destinationIndexPath = coordinator.destinationIndexPath else { return }
+        guard let viewModel = viewModel,
+              let destinationIndexPath = coordinator.destinationIndexPath else { return }
 
-        for item in coordinator.items {
-            if let sourceIndexPath = item.sourceIndexPath,
-               sourceIndexPath.section == destinationIndexPath.section,
-               let sourceFlatIndex = flatIndex(for: sourceIndexPath),
-               let destinationFlatIndex = insertionFlatIndex(for: destinationIndexPath) {
+        let items = filteredItems
+        for dropItem in coordinator.items {
+            guard let sourceIndexPath = dropItem.sourceIndexPath,
+                  let sourceItem = self.item(at: sourceIndexPath),
+                  let sourceGlobal = globalIndex(of: sourceItem) else { continue }
 
-                let sourceItem = viewModel.myQRItems.value.remove(at: sourceFlatIndex)
-                let adjustedDestinationIndex = sourceFlatIndex < destinationFlatIndex
-                    ? max(destinationFlatIndex - 1, 0)
-                    : destinationFlatIndex
-                let safeDestinationIndex = min(adjustedDestinationIndex, viewModel.myQRItems.value.count)
-                viewModel.myQRItems.value.insert(sourceItem, at: safeDestinationIndex)
-
-                updateItems()
+            // Map the destination row (within the filtered list) to a global insertion index.
+            let destinationGlobal: Int
+            if destinationIndexPath.row < items.count,
+               let targetGlobal = globalIndex(of: items[destinationIndexPath.row]) {
+                destinationGlobal = targetGlobal
+            } else {
+                destinationGlobal = viewModel.myQRItems.value.count
             }
+
+            var all = viewModel.myQRItems.value
+            let moved = all.remove(at: sourceGlobal)
+            let adjusted = sourceGlobal < destinationGlobal ? max(destinationGlobal - 1, 0) : destinationGlobal
+            all.insert(moved, at: min(adjusted, all.count))
+            viewModel.myQRItems.value = all
+            updateItems()
         }
-        
+
         viewModel.saveMyQRList() // 변경된 순서를 저장
     }
 
@@ -362,12 +382,6 @@ extension MypageTabViewController: UITableViewDragDelegate, UITableViewDropDeleg
     }
 
     func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
-        if let destinationIndexPath,
-           let draggedItem = session.localDragSession?.items.first?.localObject as? QRItem,
-           let destinationSection = qrSection(at: destinationIndexPath.section),
-           section(for: draggedItem) != destinationSection {
-            return UITableViewDropProposal(operation: .cancel)
-        }
         return tableView.hasActiveDrag ? UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath) : UITableViewDropProposal(operation: .forbidden)
     }
 }

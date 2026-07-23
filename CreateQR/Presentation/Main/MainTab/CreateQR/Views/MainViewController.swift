@@ -42,7 +42,7 @@ class MainViewController: UITabBarController, StoryboardInstantiable {
         secondVC.tabBarItem = UITabBarItem(title: NSLocalizedString("QR Scan", comment: "QR Scan"), image: UIImage(systemName: "qrcode.viewfinder"), tag: 1)
         secondVC.viewModel = viewModel
         
-        let thirdVC = MypageTabViewController.instantiateViewController(from: UIStoryboard(name: "MainViewController", bundle: nil))
+        let thirdVC = QRFolderListViewController()
         thirdVC.tabBarItem = UITabBarItem(title: NSLocalizedString("My QR", comment: "My QR"), image: UIImage(systemName: "star.square.on.square"), tag: 2)
         thirdVC.viewModel = viewModel
         

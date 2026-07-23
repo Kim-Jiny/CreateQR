@@ -147,6 +147,13 @@ protocol MainViewModelInput {
     func togglePinned(_ item: QRItem)
     func loadLatestVersion(completion: @escaping (String?) -> Void)
     func generateQR(from string: String, color: UIColor, backgroundColor: UIColor, logo: UIImage?, logoStyle: LogoStyle) -> UIImage?
+    // 폴더 정리
+    func loadFolders()
+    func addFolder(_ name: String)
+    func renameFolder(_ old: String, to new: String)
+    func deleteFolder(_ name: String)
+    func moveItem(_ item: QRItem, toFolder folderName: String?)
+    func itemCount(forFolder folderName: String?) -> Int
 }
 
 // Output 프로토콜: 뷰모델에서 뷰로 전달될 데이터들
@@ -158,6 +165,7 @@ protocol MainViewModelOutput {
     var photoLibraryPermission: Observable<Bool?> { get }
     var photoLibraryOnlyAddPermission: Observable<Bool?> { get }
     var createQRItem: Observable<QRItem?> { get }
+    var folders: Observable<[String]> { get }
 }
 
 // MainViewModel 타입: Input과 Output을 모두 결합한 타입
@@ -187,6 +195,9 @@ final class DefaultMainViewModel: MainViewModel {
     let photoLibraryPermission: Observable<Bool?> = Observable(nil) // 사진 라이브러리 권한 상태
     let photoLibraryOnlyAddPermission: Observable<Bool?> = Observable(nil) // 사진 라이브러리 추가 권한 상태
     var createQRItem: Observable<QRItem?> = Observable(nil) // QR 이미지
+    let folders: Observable<[String]> = Observable([]) // 사용자 폴더 목록
+
+    private let folderStore = FolderStore()
     
     // MARK: - Init (초기화)
     init(
@@ -271,6 +282,52 @@ final class DefaultMainViewModel: MainViewModel {
         let updatedItem = myQRItems.value[index]
         qrItemUseCase.updateQRItem(updatedItem)
         myQRItems.value = orderedForDisplay(myQRItems.value)
+    }
+
+    // MARK: - Folders (My QR 폴더 정리)
+
+    /// Reloads the persisted folder list into `folders`.
+    func loadFolders() {
+        folders.value = folderStore.loadFolders()
+    }
+
+    func addFolder(_ name: String) {
+        guard folderStore.addFolder(name) != nil else { return }
+        loadFolders()
+    }
+
+    func renameFolder(_ old: String, to new: String) {
+        guard let newName = folderStore.renameFolder(old, to: new) else { return }
+        // Reassign every item currently in `old` to the new folder name.
+        for item in myQRItems.value where item.folderName == old {
+            var updated = item
+            updated.folderName = newName
+            updateQRItem(updated)
+        }
+        loadFolders()
+    }
+
+    /// Deletes a folder and moves its items back to Uncategorized.
+    func deleteFolder(_ name: String) {
+        folderStore.deleteFolder(name)
+        for item in myQRItems.value where item.folderName == name {
+            var updated = item
+            updated.folderName = nil
+            updateQRItem(updated)
+        }
+        loadFolders()
+    }
+
+    /// Moves a QR item into a folder (nil = Uncategorized).
+    func moveItem(_ item: QRItem, toFolder folderName: String?) {
+        var updated = item
+        updated.folderName = folderName
+        updateQRItem(updated)
+    }
+
+    /// Number of items in a folder (nil = Uncategorized, non-pinned).
+    func itemCount(forFolder folderName: String?) -> Int {
+        myQRItems.value.filter { $0.folderName == folderName }.count
     }
     
     // MARK: - Permissions Check (권한 확인)
