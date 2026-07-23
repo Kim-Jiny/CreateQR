@@ -10,6 +10,7 @@ import UIKit
 import AVFoundation
 import Contacts
 import ContactsUI
+import Vision
 
 class ScanQRTabViewController: UIViewController, StoryboardInstantiable, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     var viewModel: MainViewModel?
@@ -156,23 +157,48 @@ class ScanQRTabViewController: UIViewController, StoryboardInstantiable, UIImage
         }
     }
 
-    // QR 코드 스캔 함수
+    // QR 코드 스캔 함수 (갤러리 이미지) — Vision 프레임워크 사용
     func scanQRCode(from image: UIImage) {
-        guard let ciImage = CIImage(image: image) else { return }
-        
-        let detector = CIDetector(ofType: CIDetectorTypeQRCode, context: nil, options: [CIDetectorAccuracy: CIDetectorAccuracyHigh])
-        let features = detector?.features(in: ciImage) as? [CIQRCodeFeature]
-        
-        if let qrCode = features?.first?.messageString {
-            // QR 코드 스캔 성공, QR 코드 내용을 처리합니다.
-            print("QR 코드 내용: \(qrCode)")
-            qrDataAlert(qrCode)
-        } else {
-            print("QR 코드가 없습니다.")
-            let alert = UIAlertController(title: NSLocalizedString("No QR code found", comment:"No QR code found"), message: nil, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment:"OK"), style: .default, handler: nil))
-            present(alert, animated: true, completion: nil)
+        guard let cgImage = image.cgImage else {
+            showNoQRCodeAlert()
+            return
         }
+
+        let request = VNDetectBarcodesRequest { [weak self] request, _ in
+            let payload = (request.results as? [VNBarcodeObservation])?
+                .first(where: { $0.symbology == .qr })?
+                .payloadStringValue
+
+            DispatchQueue.main.async {
+                guard let self else { return }
+                if let payload, !payload.isEmpty {
+                    print("QR 코드 내용: \(payload)")
+                    self.qrDataAlert(payload)
+                } else {
+                    print("QR 코드가 없습니다.")
+                    self.showNoQRCodeAlert()
+                }
+            }
+        }
+        request.symbologies = [.qr]
+
+        // Vision 작업은 백그라운드에서 수행
+        DispatchQueue.global(qos: .userInitiated).async {
+            let handler = VNImageRequestHandler(cgImage: cgImage, orientation: image.cgImageOrientation, options: [:])
+            do {
+                try handler.perform([request])
+            } catch {
+                DispatchQueue.main.async { [weak self] in
+                    self?.showNoQRCodeAlert()
+                }
+            }
+        }
+    }
+
+    private func showNoQRCodeAlert() {
+        let alert = UIAlertController(title: NSLocalizedString("No QR code found", comment:"No QR code found"), message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment:"OK"), style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
     
     func qrDataAlert(_ qrCode: String) {
@@ -605,5 +631,23 @@ class ScanQRTabViewController: UIViewController, StoryboardInstantiable, UIImage
 extension ScanQRTabViewController: CNContactViewControllerDelegate {
     func contactViewController(_ viewController: CNContactViewController, didCompleteWith contact: CNContact?) {
         viewController.dismiss(animated: true)
+    }
+}
+
+private extension UIImage {
+    /// Maps the UIImage orientation to the CGImagePropertyOrientation that Vision expects,
+    /// so QR codes in rotated photos are still detected.
+    var cgImageOrientation: CGImagePropertyOrientation {
+        switch imageOrientation {
+        case .up: return .up
+        case .down: return .down
+        case .left: return .left
+        case .right: return .right
+        case .upMirrored: return .upMirrored
+        case .downMirrored: return .downMirrored
+        case .leftMirrored: return .leftMirrored
+        case .rightMirrored: return .rightMirrored
+        @unknown default: return .up
+        }
     }
 }
